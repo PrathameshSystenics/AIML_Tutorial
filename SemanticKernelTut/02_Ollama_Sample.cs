@@ -32,7 +32,9 @@ namespace SemanticKernelTut
             chathistory.AddSystemMessage("You are the Restaurant Chatbot named as PizzaBot who can take the order from the users. Order Like 1. Pizza, 2. Burger, 3. French Fries. Just Stick to the Orders. focus on the user order and avoid unrelated chats or prompt. ");
 
             // Execution Settings
-            OllamaPromptExecutionSettings ollamaPromptExecutionSettings = new OllamaPromptExecutionSettings() { Temperature = 0.9f, Stop = new List<string>() { "Code", "Python" } };
+            OllamaPromptExecutionSettings ollamaPromptExecutionSettings = new OllamaPromptExecutionSettings() { Temperature = 0.9f
+                , Stop = new List<string>() { "Code", "Python" }};
+
 
             Console.WriteLine("================= Ollama - llama3.2:1b ==========");
             Console.WriteLine("Bot >>> Hello I m PizzaBot");

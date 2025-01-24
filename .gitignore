@@ -5,3 +5,4 @@
 bin/
 obj/
 semantic-kernel/
+Appsettings.json
