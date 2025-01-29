@@ -10,8 +10,8 @@ IConfiguration config = new ConfigurationBuilder().AddJsonFile(path).Build();
 #endregion
 
 #region Ollama Model
-_02_Ollama_Sample ollamamodel = new _02_Ollama_Sample();
-await ollamamodel.RunModel();
+/*_02_Ollama_Sample ollamamodel = new _02_Ollama_Sample();
+await ollamamodel.RunModel();*/
 #endregion
 
 #region Ollama Model - Plugin   => Not Working / Needs to Check
@@ -22,5 +22,10 @@ await ollamamodel.RunModel();*/
 #region AzureOpenAI Connector 
 /*_05_AzureOpenAI_Connector azureopenai = new _05_AzureOpenAI_Connector(config);
 await azureopenai.RunModel();*/
+#endregion
+
+#region Hand Digit Recognition 
+_06_ImagetoText_Sample imagetotext = new _06_ImagetoText_Sample(config);
+await imagetotext.RunModel();
 #endregion
 

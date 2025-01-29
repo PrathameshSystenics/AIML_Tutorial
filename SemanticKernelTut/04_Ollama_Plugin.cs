@@ -8,6 +8,7 @@ namespace SemanticKernelTut
     public class _04_Ollama_Plugin
     {
         private Kernel _kernel;
+
         public _04_Ollama_Plugin()
         {
             IKernelBuilder kernelbuilder = Kernel.CreateBuilder();

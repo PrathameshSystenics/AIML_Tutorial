@@ -11,9 +11,19 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
 		<PackageReference Include="Microsoft.SemanticKernel" Version="1.33.0" />
-		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.34.0-alpha" />
+		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.33.0-alpha" />
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.33.0" />
-		<PackageReference Include="Microsoft.SemanticKernel.PromptTemplates.Handlebars" Version="1.34.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.PromptTemplates.Handlebars" Version="1.33.0" />
+
+		<!--Removing the Reference form the Actual Project-->
+		<Content Remove="HandDigitRecoginition\**" />
+		<Compile Remove="HandDigitRecoginition\**" />
+		<EmbeddedResource Remove="HandDigitRecoginition\**" />
+		<None Remove="HandDigitRecoginition\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="HandDigitRecoginition\HandDigitRecoginition.csproj" />
 	</ItemGroup>
 
 </Project>
