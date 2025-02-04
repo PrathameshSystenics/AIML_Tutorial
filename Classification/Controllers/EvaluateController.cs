@@ -2,7 +2,7 @@
 using Classification.SemanticKernel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Classification.Controllers
 {
@@ -36,10 +36,12 @@ namespace Classification.Controllers
             return Json(new Dictionary<string, object>() { { "Content", "Successfully Set the Model" } });
         }
 
-        [Route("api/{action}")]
         [HttpGet]
         public async Task EvalResult()
         {
+            try
+            {
+
             // Implementing the Server Sent Events
             Response.ContentType = "text/event-stream";
 
@@ -48,7 +50,7 @@ namespace Classification.Controllers
             string jsondata = new StreamReader(evaljsonfile).ReadToEnd();
 
             // Deserializing it using newtonsoft.json lib.
-            EvaluationList evallist = JsonConvert.DeserializeObject<EvaluationList>(jsondata);
+            EvaluationList evallist = JsonSerializer.Deserialize<EvaluationList>(jsondata);
 
             Classify classify = new Classify(_config, _logger);
 
@@ -62,7 +64,7 @@ namespace Classification.Controllers
             // if model name gets the value as none then give the error message for selecting the correct model
             if (modelselected == Model.None)
             {
-                await WriteEventAsync(new EvalResult()
+                 await WriteEventAsync(new EvalResult()
                 {
                     Result = "Select the Model First",
                     Status = "Error"
@@ -156,20 +158,26 @@ namespace Classification.Controllers
 
             // Sending the Server Events as complete
             await WriteEventAsync(completedevalresult, true);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
 
         private async Task WriteEventAsync(object data, bool iscompleted = false)
         {
             // sents the events asyncrohonusly
-            var json = JsonConvert.SerializeObject(data);
+            var json = JsonSerializer.Serialize(data);
             await Response.WriteAsync($"data: {json}\n\n");
 
 
             // if the data is completed then complete the response.
             if (iscompleted)
             {
-                await Response.WriteAsync("retry: 0\n\n");
+                //await Response.WriteAsync("retry: 0\n\n");
                 await Response.Body.FlushAsync();
                 // Complete the response to prevent further data from being sent
                 await HttpContext.Response.CompleteAsync();

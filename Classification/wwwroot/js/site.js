@@ -82,7 +82,7 @@ $(function () {
             $(this).prop("disabled", true)
 
             // Capturing the Events emitted by the server
-            var eventsource = new EventSource("/api/evalresult");
+            var eventsource = new EventSource("/Evaluate/EvalResult");
 
             // Listening to the event sent by the server
             eventsource.onmessage = function (event) {

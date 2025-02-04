@@ -53,7 +53,6 @@ namespace Classification.Controllers
                 {
                     return Json(new ClassificationResult() { ResultStatus = Status.Error, Content = "Select the Correct Model Name" });
                 }
-
                 // gets the result from the model
                 result = await classify.GetResult(modelselected, modelcallparameters.UserInput);
 
