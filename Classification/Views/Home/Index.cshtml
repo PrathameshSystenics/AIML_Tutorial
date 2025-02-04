@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+
+
+<div class="mt-3">
+    <div>
+        <form>
+            <div class="mb-3">
+                <label for="inputprompt" class="form-label fw-bold">Input or Prompt: </label>
+                <textarea class="form-control" id="inputprompt" rows="10" placeholder="Enter the Text"></textarea>
+            </div>
+            <div>
+                <label for="" class="form-label fw-bold">Model Selection : </label>
+                <div class="options-model mb-3">
+                    <input type="radio" name="model" value="AzureOpenAI" class="" id="opt1" />
+                    <label for="opt1" class="border-1 border-dark">AzureOpenAI - Gpt-4o-mini</label>
+                    <input type="radio" name="model" value="OllamaDeepSeek" class="" id="opt2" />
+                    <label for="opt2" class="border-1 border-dark">OllamaDeepSeek-r1:1.5b</label>
+                    <input type="radio" name="model" value="AzureDeepSeek" class="" id="opt3" />
+                    <label for="opt3" class="border-1 border-dark">AzureDeepSeek-r1</label>
+                </div>
+            </div>
+            <div class="d-grid mb-3">
+                <button class="btn btn-primary" id="classify-btn" type="button">
+                    <span class="classify-btn-text">Classify</span>
+                    <span class="spinner-border spinner-border-sm spinner visually-hidden" aria-hidden="true"></span>
+                </button>
+            </div>
+        </form>
+        <div class="">
+            <p class="fw-bold">Classification Result:</p>
+            <div class="border-1 h-100 rounded-1 p-2" id="classification-result">
+            </div>
+        </div>
+    </div>
+
+    <div>
+    </div>
+</div>
