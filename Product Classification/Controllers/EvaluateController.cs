@@ -1,10 +1,10 @@
-﻿using Classification.Models;
-using Classification.SemanticKernel;
+﻿using ProductClassification.Models;
+using ProductClassification.SemanticKernel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Text.Json;
 
-namespace Classification.Controllers
+namespace ProductClassification.Controllers
 {
     public class EvaluateController : Controller
     {
@@ -58,11 +58,11 @@ namespace Classification.Controllers
             string modelName = HttpContext.Session.GetString("ModelName") ?? "";
 
             // parsing the model name to enum
-            Model modelselected = Model.None;
-            Enum.TryParse<Model>(modelName, true, out modelselected);
+            ModelEnum modelselected = ModelEnum.None;
+            Enum.TryParse<ModelEnum>(modelName, true, out modelselected);
 
             // if model name gets the value as none then give the error message for selecting the correct model
-            if (modelselected == Model.None)
+            if (modelselected == ModelEnum.None)
             {
                  await WriteEventAsync(new EvalResult()
                 {

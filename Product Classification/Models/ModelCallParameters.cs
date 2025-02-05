@@ -1,4 +1,4 @@
-﻿namespace Classification.Models
+﻿namespace ProductClassification.Models
 {
     public class ModelCallParameters
     {

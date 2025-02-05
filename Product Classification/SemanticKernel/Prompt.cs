@@ -1,4 +1,4 @@
-﻿namespace Classification.SemanticKernel
+﻿namespace ProductClassification.SemanticKernel
 {
     /// <summary>
     /// Various Types of Prompts.

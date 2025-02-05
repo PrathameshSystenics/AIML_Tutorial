@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Classification.Models
+namespace ProductClassification.Models
 {
     public class Evaluation
     {
@@ -14,6 +14,6 @@ namespace Classification.Models
     public class EvaluationList
     {
         [JsonPropertyName("Evaluate")]
-        public Evaluation[] Evaluate { get; set; }
+        public Evaluation[] Evaluate { get; set; } = [];
     }
 }

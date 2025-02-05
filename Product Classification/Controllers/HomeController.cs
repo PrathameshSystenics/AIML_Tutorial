@@ -1,20 +1,21 @@
 using System.Diagnostics;
 using System.Text.Json;
-using Classification.Models;
-using Classification.SemanticKernel;
+using ProductClassification.Models;
+using ProductClassification.SemanticKernel;
 using Microsoft.AspNetCore.Mvc;
+using ProductClassification.Services;
 
-namespace Classification.Controllers
+namespace ProductClassification.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IConfiguration _config;
+        private readonly ClassificationService _classificationService;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration iconfig)
+        public HomeController(ILogger<HomeController> logger, ClassificationService classificationservice)
         {
             _logger = logger;
-            _config = iconfig;
+            _classificationService = classificationservice;
         }
 
         public IActionResult Index()
@@ -28,42 +29,36 @@ namespace Classification.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [Route("api/{action}")]
         [HttpPost]
         public async Task<IActionResult> Result([FromForm] ModelCallParameters modelcallparameters)
         {
             try
             {
-                // classes initialization
-                Classify classify = new Classify(_config, _logger);
-                ClassificationResult result = new ClassificationResult() { Content = "No Output" };
-
-                // Validating the Input got from the user.
+                // Validating the Input/Prompt got from the user.
                 if (String.IsNullOrWhiteSpace(modelcallparameters.UserInput))
                 {
-                    return Json(new ClassificationResult() { ResultStatus = Status.Warning, Content = "Input or Prompt is Required" });
+                    return BadRequest(new ClassificationResult() { ResultStatus = StatusEnum.Warning, Content = "Input or Prompt is Required" });
                 }
 
                 // parsing the model name to enum
-                Model modelselected = Model.None;
-                Enum.TryParse<Model>(modelcallparameters.ModelName, true, out modelselected);
+                ModelEnum modelselected = ModelEnum.None;
+                Enum.TryParse<ModelEnum>(modelcallparameters.ModelName, true, out modelselected);
 
-                // if model name gets the value as none then give the error message for selecting the correct model
-                if (modelselected == Model.None)
+                if (modelselected == ModelEnum.None)
                 {
-                    return Json(new ClassificationResult() { ResultStatus = Status.Error, Content = "Select the Correct Model Name" });
+                    return BadRequest(new ClassificationResult() { ResultStatus = StatusEnum.Error, Content = "Select the Correct Model Name" });
                 }
-                // gets the result from the model
-                result = await classify.GetResult(modelselected, modelcallparameters.UserInput);
 
-                return Json(result);
+                // gets the result from the model
+                ClassificationResult result = await _classificationService.ClassifyCategoryFromDescription(modelcallparameters.UserInput, modelselected);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                // Logging the Error
                 _logger.LogError(ex.Message);
 
-                return Json(new ClassificationResult() { Content = "Failed to Get the Result", ResultStatus = Status.Error });
+                return Json(new ClassificationResult() { Content = "Failed to Get the Result", ResultStatus = StatusEnum.Error });
             }
         }
 
