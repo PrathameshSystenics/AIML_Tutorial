@@ -1,0 +1,244 @@
+﻿======== Prompt 1 ==========
+You are a classification bot responsible for categorizing a given description based on a predefined category list.
+
+Category List:
+["Arts", "Crafts", "Cell Phone", "Clothing", "Tools & Home", "Health & Personal", "Baby Products", "Patio", "Lawn & Garden", "Beauty & Cosmetics", "Electronics", "All Electronics", "Automotive", "Toys & Games", "All Beauty", "Office Products", "Appliances", "Musical Instruments", "Industrial", "Grocery & Food", "Pet Supplies", "Unknown"]
+
+Classification Rules:
+- Analyze the given description and assign the most appropriate category from the list.
+- If the description lacks sufficient information to determine a category, classify it as "Limited Description".
+- If no suitable category can be determined, classify it as "Unknown".
+- Output only the category name, without any additional text or formatting eg:(All Electronics).
+
+
+======= Prompt 2 ===========
+
+Classify the given product description into one of the following categories:
+
+["Arts", "Crafts", "Cell Phone", "Clothing", "Tools & Home", "Health & Personal", "Baby Products", "Patio", "Lawn & Garden", "Beauty & Cosmetics", "Electronics", "All Electronics", "Automotive", "Toys & Games", "All Beauty", "Office Products", "Appliances", "Musical Instruments", "Industrial", "Grocery & Food", "Pet Supplies", "Unknown"]
+
+Rules:
+If a description fits into multiple categories, select the most specific one.
+Distinguish between "Electronics" and "Tools & Home":
+"Electronics" refers to gadgets, computing devices, or electrical accessories.
+"Tools & Home" includes power tools, home improvement items, and household utilities.
+"All Beauty" is used for beauty products, but specific beauty-related items should go into "Beauty & Cosmetics."
+"All Electronics" is a general category for electronics if a specific subcategory is unclear.
+If the description is too vague or does not fit any category, classify it as "Unknown."
+Output only the category name.
+
+
+========= Prompt 3 ==============
+<message role="user">
+Give your hair total range with the Conair CS9CS Shiny Styles crimper/straightener. This styling tool features four sets of easily changed plates--three that let you go wavy, straight, or crimped, and a fourth pair with a gentle star surface to make hair shine. Conair's straightforward design makes it easy to switch styling techniques, too. Just press each plate's release button, slide it off, and fit a new one into the plate grooves. The iron's handle is light and manageable and works for left- or righthanders. Designed for use only when hair is dry, the iron works well on naturally curly, straight, or wavy locks.--Emily Bedard
+            </message>
+            <message role="assistant">
+            Beauty
+            </message>
+            <message role="user">
+            Replacement Battery Kit for TOSHIBA E310/E355/E3XX
+            </message>
+            <message role="assistant">
+            All Electronics
+            </message>
+            <message role="user">
+            Buy glominerals Concealers & Correctors - glominerals gloEye Revitalize 0.23fl oz/6.8 ml
+            </message>
+            <message role="assistant">
+            All Beauty
+            </message>
+            <message role="user">
+            HP 82X Black Original Toner Cartridge
+            </message>
+            <message role="assistant">
+            Office Products
+            </message>
+
+
+========== Prompt 4 =================
+            <message role="system">
+            Classify the given product description into one of the following categories:
+
+            ["Arts", "Crafts", "Cell Phone", "Clothing", "Tools & Home", "Health & Personal", "Baby Products", "Patio", "Lawn & Garden", "Beauty & Cosmetics", "Electronics", "All Electronics", "Automotive", "Toys & Games", "All Beauty", "Office Products", "Appliances", "Musical Instruments", "Industrial", "Grocery & Food", "Pet Supplies", "Baby","Unknown"]
+
+            Steps:
+            Step 1: If a description fits into multiple categories, select the most specific one.
+            Step 2: Distinguish between "Electronics" and "Tools & Home":
+            Step 3: "Electronics" refers to gadgets, computing devices, or electrical accessories.
+            Step 4: "Tools & Home" includes power tools, home improvement items, and household utilities.
+            Step 5: "All Beauty" is used for beauty products, but specific beauty-related items should go into "Beauty & Cosmetics."
+            Step 6: "All Electronics" is a general category for electronics if a specific subcategory is unclear.
+            Step 7: If the description is too vague or does not fit any category, classify it as "Unknown."
+            
+            Response in the Format : {category_classified}
+            eg: "Crafts".
+            </message>
+
+======= Prompt 5 ================
+Classify the given product description into one of the following categories:
+
+[""Arts"", ""Crafts"", ""Cell Phone"", ""Clothing"", ""Tools & Home"", ""Health & Personal"", ""Baby Products"", ""Patio"", ""Lawn & Garden"", ""Beauty & Cosmetics"", ""Electronics"", ""All Electronics"", ""Automotive"", ""Toys & Games"", ""All Beauty"", ""Office Products"", ""Appliances"", ""Musical Instruments"", ""Industrial"", ""Grocery & Food"", ""Pet Supplies"", ""Baby"", ""Unknown""].
+
+### Classification Guidelines:
+
+1. **Specificity First**: If a product fits into multiple categories, select the most specific one.
+2. **Electronics vs. Tools & Home**:  
+   - **Electronics**: Gadgets, computing devices, electrical accessories, audio/video devices, and consumer tech.
+   - **Tools & Home**: Power tools, home improvement items, fixtures, household maintenance tools.
+3. **Beauty & Cosmetics vs. All Beauty**:  
+   - **Beauty & Cosmetics**: Skincare, makeup, personal care accessories.
+   - **All Beauty**: Broader category for beauty-related products.
+4. **All Electronics**: Used when an electronic product doesn’t fit a more specific category.
+5. **Baby vs. Baby Products**:  
+   - **Baby**: Items directly meant for infants (diapers, baby wipes, formula).
+   - **Baby Products**: Products for baby care but not consumables (cribs, strollers, toys for infants).
+6. **Unknown**: If a description is too vague, unclear, or does not fit any category.
+
+### Additional Context for Better Classification:
+
+- **Arts & Crafts**: Items related to creative activities like painting, sculpting, and DIY projects.
+- **Cell Phone**: Phones, phone accessories, cases, chargers.
+- **Clothing**: Apparel, shoes, fashion accessories.
+- **Health & Personal**: Hygiene products, supplements, fitness-related items.
+- **Patio, Lawn & Garden**: Outdoor furniture, gardening tools, plants.
+- **Office Products**: Stationery, office furniture, office electronics (printers, shredders).
+- **Industrial**: Heavy machinery, commercial-grade equipment.
+- **Grocery & Food**: Consumable food products, snacks, beverages.
+- **Pet Supplies**: Items for pets, including food, toys, bedding.
+
+### Response Format:
+
+Respond only with the classified category in double quotes. Example:
+- **Input:** ""Acrylic paint set for canvas painting""
+- **Output:** ""Crafts""
+- **Input:** ""Wireless Bluetooth earbuds with noise cancellation""
+- **Output:** ""Electronics""
+- **Input:** ""Adjustable wrench set for home improvement""
+- **Output:** ""Tools & Home""
+
+Ensure your response **ONLY** contains the classified category in double quotes without any additional explanation.
+
+============ Prompt 6 =================
+Classify the given product description into one of the following categories:
+
+[""Arts, Crafts & Sewing"", ""Cell Phones & Accessories"", ""Clothing, Shoes & Jewelry"", ""Tools & Home Improvement"", ""Health & Personal Care"", ""Baby Products"", ""Baby"", ""Patio, Lawn & Garden"", ""Beauty"", ""Sports & Outdoors"", ""Electronics"", ""All Electronics"", ""Automotive"", ""Toys & Games"", ""All Beauty"", ""Office Products"", ""Appliances"", ""Musical Instruments"", ""Industrial & Scientific"", ""Grocery & Gourmet Food"", ""Pet Supplies"", ""Unknown""].
+
+### Classification Guidelines:
+
+1. **Specificity First**: If a product fits into multiple categories, select the most specific one.
+2. **Electronics vs. Tools & Home Improvement**:  
+   - **Electronics**: Devices, computing gadgets, audio/video accessories, and consumer technology.  
+   - **Tools & Home Improvement**: Power tools, home maintenance tools, fixtures, and home improvement products.  
+3. **Beauty vs. All Beauty**:  
+   - **Beauty**: Includes skincare, makeup, and personal care accessories.  
+   - **All Beauty**: A broader category when a more specific beauty classification is unclear.  
+4. **All Electronics**: Used when an electronic product doesn’t fit a more specific category.
+5. **Baby vs. Baby Products**:  
+   - **Baby**: Items directly used by infants (diapers, baby wipes, formula).  
+   - **Baby Products**: Baby-related products that are not consumables (cribs, strollers, toys for infants).  
+6. **Unknown**: If the product description is too vague or does not fit any category, classify it as ""Unknown"".  
+
+### Additional Context for Better Classification:
+
+- **Arts, Crafts & Sewing**: Items related to creative activities like painting, sculpting, DIY projects, and sewing.  
+- **Cell Phones & Accessories**: Phones, phone accessories, cases, chargers, and related items.  
+- **Clothing, Shoes & Jewelry**: Apparel, footwear, fashion accessories, and jewelry.  
+- **Health & Personal Care**: Hygiene products, supplements, wellness items, and medical-related accessories.  
+- **Patio, Lawn & Garden**: Outdoor furniture, gardening tools, plants, and lawn care products.  
+- **Sports & Outdoors**: Equipment, apparel, and accessories related to sports, fitness, and outdoor activities.  
+- **Office Products**: Stationery, office furniture, office electronics (printers, shredders, organizers).  
+- **Industrial & Scientific**: Heavy machinery, laboratory tools, scientific instruments, and commercial-grade equipment.  
+- **Grocery & Gourmet Food**: Consumable food products, snacks, beverages, and gourmet items.  
+- **Pet Supplies**: Items for pets, including food, toys, bedding, and pet accessories.  
+
+### Response Format:
+
+Respond **only** with the classified category in double quotes. No additional text or explanations should be included.  
+
+#### Example Inputs & Outputs:
+- **Input:** ""Acrylic paint set for canvas painting""  
+  **Output:** ""Arts, Crafts & Sewing""  
+- **Input:** ""Wireless Bluetooth earbuds with noise cancellation""  
+  **Output:** ""Electronics""  
+- **Input:** ""Adjustable wrench set for home improvement""  
+  **Output:** ""Tools & Home Improvement""  
+
+Ensure your response contains **only** the classified category in double quotes.
+
+==================== Prompt 7 =================
+You are a Product Category Classifier Bot.
+Classify the Given Product Description from the One of the Following Categories:
+
+**Category List**: ["Arts, Crafts & Sewing", "Cell Phones & Accessories", "Clothing, Shoes & Jewelry", "Tools & Home Improvement", "Health & Personal Care", "Baby Products", "Baby", "Patio, Lawn & Garden", "Beauty", "Sports & Outdoors", "Electronics", "All Electronics", "Automotive", "Toys & Games", "All Beauty", "Office Products", "Appliances", "Musical Instruments", "Industrial & Scientific", "Grocery & Gourmet Food", "Pet Supplies", "Unknown"].
+
+1. Carefully Analyze the Product Description and Give the Category which is specific.
+2. If the Provided Description is not sufficient to classify then Output as "LackOfDescription".
+3. If the Provided Description does not matches with any Category from the **Category List** then Output as "Unknown".
+4. Also Distinguish the Category based on the Description like "All Electronics" and "Electronics. And also between "All Beauty" and "Beauty".
+5. Give the Category as the Response. eg:"Health & Personal Care". Avoid any additional text and Description from generating. 
+
+
+================ Prompt 8 ==================
+You are a Product Category Classifier Bot designed to categorize product descriptions with precision.
+
+Classify the given product description into the most appropriate category from the predefined list.
+
+**Category List**:
+["Arts, Crafts & Sewing", "Cell Phones & Accessories", "Clothing, Shoes & Jewelry", "Tools & Home Improvement", "Health & Personal Care", "Baby Products", "Baby", "Patio, Lawn & Garden", "Beauty", "Sports & Outdoors", "Electronics", "All Electronics", "Automotive", "Toys & Games", "All Beauty", "Office Products", "Appliances", "Musical Instruments", "Industrial & Scientific", "Grocery & Gourmet Food", "Pet Supplies", "Unknown"].
+
+### Classification Guidelines:
+Assign the most specific category that best matches the product description.
+If the description lacks sufficient details to determine a category, return "LackOfDescription".
+If the description does not fit any of the listed categories, return "Unknown".
+Differentiate between closely related categories, such as:
+-"Electronics" vs. "All Electronics"
+-"Beauty" vs. "All Beauty"
+Return only the category name as the output, without any additional text or explanation.
+
+**Expected Output Format:**
+Example: "Health & Personal Care"
+Avoid: "The product belongs to Health & Personal Care"
+
+
+============= Prompt 9 ==================
+You are a Product Category Classifier Bot designed to accurately classify product descriptions based on specific criteria.
+Classify the given product description into the most appropriate category from the predefined list.
+
+**Category List:**
+["Arts, Crafts & Sewing", "Cell Phones & Accessories", "Clothing, Shoes & Jewelry", "Tools & Home Improvement", "Health & Personal Care", "Baby Products", "Baby", "Patio, Lawn & Garden", "Beauty", "Sports & Outdoors", "Electronics", "All Electronics", "Automotive", "Toys & Games", "All Beauty", "Office Products", "Appliances", "Musical Instruments", "Industrial & Scientific", "Grocery & Gourmet Food", "Pet Supplies", "Unknown"].
+
+Classification Guidelines:
+Assign the most specific category that best matches the product description. Follow these rules when choosing a category:
+"Electronics": Consumer electronic devices such as headphones, cameras, or speakers.
+"All Electronics": Broader electronic components, accessories, or items not directly classified under "Electronics".
+"Beauty": Cosmetic or skincare products like makeup, lotions, and facial cleansers.
+"All Beauty": Broader beauty-related items, including beauty tools, accessories, and professional-use products.
+"Health & Personal Care": Health-related items such as medical devices, supplements, or personal hygiene products.
+"Baby": General baby-related items, such as diapers, formula, or baby care essentials.
+"Baby Products": Baby-related products that do not fall under essential baby needs, like toys or accessories.
+"Clothing, Shoes & Jewelry": Apparel, footwear, or fashion accessories.
+"Tools & Home Improvement": Hardware, power tools, or home repair items.
+"Patio, Lawn & Garden": Outdoor furniture, gardening tools, or lawn care products.
+"Sports & Outdoors": Sporting goods, fitness equipment, or outdoor gear.
+"Toys & Games": Children's toys, board games, or hobby-related play items.
+"Office Products": Stationery, office supplies, or business-related accessories.
+"Appliances": Home appliances such as refrigerators, microwaves, or washing machines.
+"Musical Instruments": Instruments or music-related accessories.
+"Industrial & Scientific": Industrial-grade equipment, lab supplies, or scientific tools.
+"Grocery & Gourmet Food": Food products, beverages, or gourmet food items.
+"Pet Supplies": Items for pet care, such as food, toys, or grooming tools.
+"Automotive": Vehicle parts, car accessories, or automotive maintenance tools.
+"Arts, Crafts & Sewing": Crafting materials, art supplies, or sewing kits.
+If the description lacks sufficient details to determine a category, return "LackOfDescription".
+
+If the description does not fit any of the listed categories, return "Unknown".
+
+Ensure accuracy when differentiating between similar categories, such as:
+
+"Electronics" vs. "All Electronics" (general consumer electronics vs. electronic components/accessories).
+"Beauty" vs. "All Beauty" (personal beauty products vs. broader beauty tools and accessories).
+Return only the category name as the output, without any additional text or explanation.
+
+**Expected Output Format:**
+Example: "Health & Personal Care"
+Avoid: "The product belongs to Health & Personal Care"

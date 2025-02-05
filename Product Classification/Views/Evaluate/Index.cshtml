@@ -1,0 +1,29 @@
+﻿@{
+
+    ViewData["Title"] = "Eval";
+}
+
+<div class="mt-3">
+    <h3>Evaluation</h3>
+
+    <div class="mt-3">
+        <label for="" class="form-label fw-bold">Model Selection : </label>
+        <div class="options-model-eval options-model mb-3">
+            <input type="radio" name="model" value="AzureOpenAI" class="" id="opt1" />
+            <label for="opt1" class="border-1 border-dark">AzureOpenAI - Gpt-4o-mini</label>
+            <input type="radio" name="model" value="OllamaDeepSeek" class="" id="opt2" />
+            <label for="opt2" class="border-1 border-dark">OllamaDeepSeek-r1:1.5b</label>
+            <input type="radio" name="model" value="AzureDeepSeek" class="" id="opt3" />
+            <label for="opt3" class="border-1 border-dark">AzureDeepSeek-r1</label>
+        </div>
+    </div>
+    <div>
+        <h3>Evaluation Result : </h3>
+        <div id="eval-result">
+
+        </div>
+    </div>
+    <div class="d-grid">
+        <button class="btn btn-success" id="evaluate">Evaluate</button>
+    </div>
+</div>

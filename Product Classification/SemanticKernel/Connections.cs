@@ -25,7 +25,6 @@ namespace Classification.SemanticKernel
         {
             // Ollama Chat Completion
             Kernel kernel = this._kernelbuilder.AddOllamaChatCompletion(
-                
                 modelId: _config["DeepSeekLocal:ModelName"] ?? "",
                 endpoint: new Uri(_config["DeepSeekLocal:Url"] ?? "")
                 ).Build();
@@ -38,7 +37,6 @@ namespace Classification.SemanticKernel
         {
             // Azure OpenAI Chat Completion
             Kernel kernel = this._kernelbuilder.AddAzureOpenAIChatCompletion(
-
                 deploymentName: _config["AzureOpenAI:ModelName"].ToString(),
                 endpoint: _config["AzureOpenAI:Url"].ToString(),
                 apiKey: _config["AzureOpenAI:ApiKey"].ToString(),
