@@ -1,6 +1,7 @@
 ﻿$(function () {
     var classifybtn = $("#classify-btn");
     var resultbox = $("#classification-result")
+    var thinkingresultbox = $("#thinking-result")
 
     classifybtn.on("click", function () {
 
@@ -16,10 +17,13 @@
             // getting the model value which is currently selected
             let value = $(".options-model input[type=radio]:checked").val()
 
+            // empty the result stored in the resultbox and thinking result box
+            resultbox.html("")
+            thinkingresultbox.html("")
 
-            // ajax call to get the model result
+            // ajax call to classify category
             $.ajax({
-                url: "/api/result",
+                url: "/Home/ClassifyProductCategory",
                 method: "POST",
                 dataType: "json",
                 data: { "ModelName": value, "UserInput": $("#inputprompt").val() },
@@ -30,13 +34,22 @@
                     classifybtn.prop("disabled", false)
                 },
                 error: function (err) {
-                    showToast("Danger", "Some Error Occured while Getting the Result")
+                    showToast("Danger", err?.responseJSON.content ? err?.responseJSON.content : "Some Error Occured While Getting the Result");
                 },
                 success: function (data) {
                     if (data?.status === "Error") {
                         showToast("Danger", data?.content)
                     } else {
-                        resultbox.html(data?.content)
+                        let modelresult = new String(data?.content).split("</think>");
+
+                        // if the result contains the thinking steps then show them in different html box
+                        if (modelresult.length === 2) {
+                            thinkingresultbox.html(modelresult[0])
+                            resultbox.html(modelresult[1])
+                        } else {
+                            resultbox.html(data?.content)
+                        }
+
                     }
                 }
             })

@@ -4,7 +4,10 @@
     {
         Success,
         Error,
-        Warning
+        Warning,
+        Correct,
+        Wrong,
+        Complete
     }
 
     public class ClassificationResult

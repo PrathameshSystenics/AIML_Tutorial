@@ -30,8 +30,7 @@
         background-color: #f0f0f0;
     }
 
-#classification-result{
+#classification-result,#thinking-result{
     border:2px solid black;
     min-height:150px;
-    
 }

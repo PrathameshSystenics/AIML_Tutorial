@@ -4,24 +4,26 @@ using ProductClassification.SemanticKernel;
 
 namespace ProductClassification.Services
 {
-
-    // TODO: Inject these Service
     public class ClassificationService
     {
         private ILogger<ClassificationService> _logger;
+        private readonly AIConnectorService _connectorService;
+        private Kernel _kernel;
 
-        public ClassificationService(ILogger<ClassificationService> logger)
+        public ClassificationService(ILogger<ClassificationService> logger, AIConnectorService aiconnectorservice)
         {
             _logger = logger;
+            _connectorService = aiconnectorservice;
+            _kernel = _connectorService.BuildModels();
         }
 
         public async Task<ClassificationResult> ClassifyCategoryFromDescription(string description, ModelEnum selectedmodel)
         {
             try
             {
-                Kernel kernel = new Kernel();
-
                 string serviceid = Enum.GetName(typeof(ModelEnum), selectedmodel) ?? "";
+
+                _logger.LogInformation("Kernel Connected to => " + serviceid);
 
                 // If ServiceID found to be empty or null then return the result as error.
                 if (string.IsNullOrWhiteSpace(serviceid))
@@ -38,9 +40,9 @@ namespace ProductClassification.Services
 
                 // Invoking the Prompt
                 description = $"""<message role="user">**Description**: {description} </message>""";
-                var result = await kernel.InvokePromptAsync(Prompt.BasePrompt + description, arguments);
+                var result = await _kernel.InvokePromptAsync(Prompt.BasePrompt + description, arguments);
 
-                return new ClassificationResult() { Content = result.ToString(), ResultStatus = StatusEnum.Success, ModelId = Enum.GetName<ModelEnum>(selectedmodel) ?? "", Extras = result.Metadata };
+                return new ClassificationResult() { Content = result.ToString(), ResultStatus = StatusEnum.Success, ModelId = serviceid, Extras = result.Metadata };
             }
             catch (Exception ex)
             {

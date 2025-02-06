@@ -1,0 +1,13 @@
+﻿@model Dictionary<string,string>
+
+<div>
+    <label for="" class="form-label fw-bold">Model Selection : </label>
+    <div class="options-model mb-3">
+
+        @foreach (var dict in Model)
+        {
+            <input type="radio" name="model" value="@dict.Key" class="" id="@dict.Key.ToLower()" />
+            <label for="@dict.Key.ToLower()" class="border-1 border-dark">@dict.Value</label>
+        }
+    </div>
+</div>

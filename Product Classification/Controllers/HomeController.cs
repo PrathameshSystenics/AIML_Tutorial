@@ -11,15 +11,21 @@ namespace ProductClassification.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ClassificationService _classificationService;
+        private readonly IConfiguration _config;
 
-        public HomeController(ILogger<HomeController> logger, ClassificationService classificationservice)
+        public HomeController(ILogger<HomeController> logger, ClassificationService classificationservice,IConfiguration config)
         {
             _logger = logger;
             _classificationService = classificationservice;
+            _config = config;
         }
 
         public IActionResult Index()
         {
+            // Retrieving the Models names from the configuration
+            Dictionary<string, string> modelselector = _config.MapConfigurationToClass<Dictionary<string, string>>("Models");
+            ViewBag.ModelNameWithValue = modelselector;
+
             return View();
         }
 
@@ -30,7 +36,7 @@ namespace ProductClassification.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Result([FromForm] ModelCallParameters modelcallparameters)
+        public async Task<IActionResult> ClassifyProductCategory([FromForm] ModelCallParameters modelcallparameters)
         {
             try
             {
@@ -58,7 +64,7 @@ namespace ProductClassification.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                return Json(new ClassificationResult() { Content = "Failed to Get the Result", ResultStatus = StatusEnum.Error });
+                return BadRequest(new ClassificationResult() { Content = "Failed to Get the Result", ResultStatus = StatusEnum.Error });
             }
         }
 

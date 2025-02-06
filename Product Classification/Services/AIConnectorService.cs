@@ -3,16 +3,15 @@ using ProductClassification.SemanticKernel;
 
 namespace ProductClassification.Services
 {
-    // TODO: Inject These Service
     /// <summary>
     /// Various Connectors to Connected with the System.
     /// </summary>
     public class AIConnectorService
     {
         private IConfiguration _config;
-        private ILogger _logger;
+        private ILogger<AIConnectorService> _logger;
 
-        public AIConnectorService(IConfiguration config, ILogger logger)
+        public AIConnectorService(IConfiguration config, ILogger<AIConnectorService> logger)
         {
             _config = config;
             _logger = logger;

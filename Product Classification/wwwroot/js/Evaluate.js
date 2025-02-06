@@ -10,8 +10,16 @@
             $(this).prop("disabled", true)
 
             // Capturing the Events emitted by the server
-            var eventsource = new EventSource("/Evaluate/EvalResult");
+            var eventsource = new EventSource("/Evaluate/EvaluateAndStreamResults");
 
+
+            // Listening to the event sent by the server
+            eventsource.addEventListener("message", function (event) {
+                console.log(event.data)
+
+
+
+            })
             // Listening to the event sent by the server
             eventsource.onmessage = function (event) {
 
@@ -100,9 +108,9 @@
 
 
     // When the Model is Selected then Calls the api request to the Server
-    $(".options-model-eval").on("change", function () {
+    $(".options-model").on("change", function () {
         $.ajax({
-            url: "/api/setmodel",
+            url: "/Evaluate/SetModelForEvaluation",
             method: "POST",
             data: { "ModelName": $(".options-model input[type=radio]:checked").val() },
             success: function (data) {

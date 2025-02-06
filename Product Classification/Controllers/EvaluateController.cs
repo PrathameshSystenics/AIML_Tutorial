@@ -3,6 +3,7 @@ using ProductClassification.SemanticKernel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Text.Json;
+using ProductClassification.Services;
 
 namespace ProductClassification.Controllers
 {
@@ -10,183 +11,94 @@ namespace ProductClassification.Controllers
     {
         private readonly ILogger<EvaluateController> _logger;
         private readonly IConfiguration _config;
-        private string _modelname;
+        private readonly EvaluationService _evaluationService;
 
-        public EvaluateController(ILogger<EvaluateController> logger, IConfiguration iconfig)
+        public EvaluateController(ILogger<EvaluateController> logger, IConfiguration iconfig, EvaluationService evalservice)
         {
             _logger = logger;
             _config = iconfig;
+            _evaluationService = evalservice;
         }
 
         public IActionResult Index()
         {
+            // Retrieving the Models names from the configuration
+            Dictionary<string, string> modelselector = _config.MapConfigurationToClass<Dictionary<string, string>>("Models");
+            ViewBag.ModelNameWithValue = modelselector;
             return View();
         }
 
         [HttpPost]
-        [Route("api/{action}")]
-        public JsonResult SetModel([FromForm] string ModelName)
+        public ObjectResult SetModelForEvaluation([FromForm] string ModelName)
         {
             if (String.IsNullOrWhiteSpace(ModelName))
             {
-                return Json(new Dictionary<string, object>() { { "Content", "Select the Model" } });
+                return BadRequest(new Dictionary<string, object>() { { "Content", "Select the Model" } });
             }
             // storing the modelname in the session
             HttpContext.Session.SetString("ModelName", ModelName);
-            return Json(new Dictionary<string, object>() { { "Content", "Successfully Set the Model" } });
+            return Ok(new Dictionary<string, object>() { { "Content", "Successfully Set the Model" } });
         }
 
         [HttpGet]
-        public async Task EvalResult()
+        public async Task EvaluateAndStreamResults()
         {
+            Response.ContentType = "text/event-stream";
             try
             {
+                // Retrieve model name from session
+                string modelName = HttpContext.Session.GetString("ModelName") ?? "";
 
-            // Implementing the Server Sent Events
-            Response.ContentType = "text/event-stream";
+                // parsing the model name to enum
+                ModelEnum modelselected = ModelEnum.None;
+                Enum.TryParse<ModelEnum>(modelName, true, out modelselected);
 
-            // Reading the Evaluation.json File
-            string evaljsonfile = "D:\\Training\\AIML\\Classification\\SemanticKernel\\Evaluation.json";
-            string jsondata = new StreamReader(evaljsonfile).ReadToEnd();
-
-            // Deserializing it using newtonsoft.json lib.
-            EvaluationList evallist = JsonSerializer.Deserialize<EvaluationList>(jsondata);
-
-            Classify classify = new Classify(_config, _logger);
-
-            // Retrieve model name from session
-            string modelName = HttpContext.Session.GetString("ModelName") ?? "";
-
-            // parsing the model name to enum
-            ModelEnum modelselected = ModelEnum.None;
-            Enum.TryParse<ModelEnum>(modelName, true, out modelselected);
-
-            // if model name gets the value as none then give the error message for selecting the correct model
-            if (modelselected == ModelEnum.None)
-            {
-                 await WriteEventAsync(new EvalResult()
+                // if model name gets the value as none then give the error message for selecting the correct model
+                if (modelselected == ModelEnum.None)
                 {
-                    Result = "Select the Model First",
-                    Status = "Error"
-                }, true);
-            }
-
-            int index = 0;
-            bool isEvalCompleted = false;
-            int totalquestion = evallist.Evaluate.Length;
-            int countforcorrect = 0;
-            bool isAnswerEquals = false;
-
-            // Looping thorough each Description
-            while (!isEvalCompleted)
-            {
-                isAnswerEquals = false;
-                // Get the current evaluation Answer and Description
-                Evaluation current = evallist.Evaluate[index];
-                ClassificationResult result = new ClassificationResult();
-                try
-                {
-                    // classify the result
-                    result = await classify.GetResult(modelselected, current.Description);
-
-                    // if the result contains the answer then increment the correct question and answer equals
-                    if (result.Content.Contains(current.Answer))
-                    {
-                        countforcorrect++;
-                        isAnswerEquals = true;
-                    }
-
+                    await SentSSEEventAsync(
+                        new EvaluatedResult()
+                        {
+                            Result = "Select the Model First",
+                        }, "error"
+                    );
+                    return;
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex.Message + "\nType => " + ex.GetType().ToString());
-                }
-                finally
-                {
-                    index++;
 
-                    // if all eval questions are completed then stop the loop
-                    if (totalquestion == index)
+                IAsyncEnumerable<EvaluatedResult> evaluationTask = _evaluationService.RunCategoryEvaluationBatch(modelselected);
+
+                await foreach (var results in evaluationTask)
+                {
+                    await SentSSEEventAsync(results);
+
+                    if (results.EvaluationMetrics != null)
                     {
-                        isEvalCompleted = true;
-
+                        await SentSSEEventAsync(results.EvaluationMetrics, "complete");
                     }
                 }
-
-                // If the answer is correct then yield the answer.
-                if (isAnswerEquals)
-                {
-
-                    EvalResult evaluationresult = new EvalResult()
-                    {
-                        Status = "Correct",
-                        Description = current.Description,
-                        Expected = current.Answer,
-                        Result = result.Content,
-                        Correct = countforcorrect,
-                        Total = totalquestion
-                    };
-
-                    // Sending the Server Events
-                    await WriteEventAsync(evaluationresult);
-                }
-                else
-                {
-                    EvalResult evaluationresult = new EvalResult
-                    {
-                        Status = "Wrong",
-                        Description = current.Description,
-                        Expected = current.Answer,
-                        Result = result.Content,
-                        Correct = countforcorrect,
-                        Total = totalquestion
-                    };
-
-                    // Sending the Server Events
-                    await WriteEventAsync(evaluationresult);
-                }
-            }
-
-            // return the final answer with Accuracy
-            EvalResult completedevalresult = new EvalResult
-            {
-                Status = "Complete",
-                Correct = countforcorrect,
-                Total = totalquestion,
-                Accuracy = (((double)countforcorrect / totalquestion) * 100)
-            };
-
-            // Sending the Server Events as complete
-            await WriteEventAsync(completedevalresult, true);
-
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex.Message);
             }
         }
 
 
-        private async Task WriteEventAsync(object data, bool iscompleted = false)
+        private async Task SentSSEEventAsync(object data, string customevent = "message")
         {
-            // sents the events asyncrohonusly
-            var json = JsonSerializer.Serialize(data);
-            await Response.WriteAsync($"data: {json}\n\n");
-
-
-            // if the data is completed then complete the response.
-            if (iscompleted)
+            try
             {
-                //await Response.WriteAsync("retry: 0\n\n");
+                var json = JsonSerializer.Serialize(data);
+                await Response.WriteAsync($"event: {customevent}\n\n");
+                await Response.WriteAsync($"data: {json}\n\n");
                 await Response.Body.FlushAsync();
-                // Complete the response to prevent further data from being sent
-                await HttpContext.Response.CompleteAsync();
-                return;
             }
-            else
+            catch (Exception ex)
             {
-                await Response.Body.FlushAsync();
+                _logger.LogError(ex.Message);
             }
         }
+
     }
 }
+
