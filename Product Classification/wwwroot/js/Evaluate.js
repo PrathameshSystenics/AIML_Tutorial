@@ -12,93 +12,89 @@
             // Capturing the Events emitted by the server
             var eventsource = new EventSource("/Evaluate/EvaluateAndStreamResults");
 
-
             // Listening to the event sent by the server
-            eventsource.addEventListener("message", function (event) {
-                console.log(event.data)
-
-
-
-            })
-            // Listening to the event sent by the server
-            eventsource.onmessage = function (event) {
-
+            eventsource.addEventListener("result", function (event) {
                 var val = JSON.parse(event.data);
-
-                if (val.Status === "Error") {
-                    showToast("Danger", "Select the Model First")
-                    eventsource.close();
-                    return;
-                }
+                console.log(val)
 
                 var container = $("#eval-result")
 
                 // Check if description exists (skip any null descriptions)
-                if (val.Description) {
+                if (val?.EvaluationData?.Description) {
 
                     // Create a card for each description
                     var card = $('<div class="card mb-3"></div>');
                     var cardBody = $('<div class="card-body"></div>');
 
                     // Add the description text
-                    var descriptionEl = $('<p class="card-text"></p>').html(val.Description);
+                    var descriptionEl = $('<p class="card-text"></p>').html(val?.EvaluationData?.Description);
                     cardBody.append(descriptionEl);
 
                     // Create labels for Expected and Actual answers
-                    var expectedLabel = $('<span class="badge mr-2"></span>')
-                        .text('Expected: ' + val.Expected)
+                    var expectedLabel = $('<div class="alert alert-success p-0 p-2 mb-1" role="alert"></div>')
+                        .text('Expected: ' + val?.EvaluationData?.Answer)
                         // Add the same background if needed
-                        .addClass("bg-warning text-dark");
+                        .addClass("");
 
-                    var actualLabel = $('<span class="badge"></span>')
-                        .text('Result: ' + val.Result)
-                        .addClass((val.Status === "Correct") ? "bg-success text-white" : "bg-danger text-white");
+                    // Checking if result contains the Thinking Steps.
+                    var thinkingsteps = new String(val?.Result).split("</think>");
+
+                    var actualLabel = $('<div class="alert mr-2 p-0 p-2 mb-1" role="alert"></div>')
+                        .addClass(val.IsCorrect ? "alert-success" : "alert-danger");
+
+                    var thinkingdivbox = $('<div class="bg-light text-black mb-2 p-3"></div>')
+                    thinkingdivbox.append($('<p class="fw-bold m-0">Thinking Result:</p>'))
+
+                    if (thinkingsteps.length === 2) {
+                        let modelthinkingresult_withoutTag = thinkingsteps[0].replace("<think>", "").replace("</think>", "")
+
+                        actualLabel.html('Result: ' + thinkingsteps[1])
+                        thinkingdivbox.append(modelthinkingresult_withoutTag);
+                        cardBody.append(thinkingdivbox);
+                    } else {
+                        actualLabel.html('Result: ' + val?.Result);
+                    }
 
                     // Append labels to the card body
-                    cardBody.append(expectedLabel).append("</br>").append(actualLabel).append("</br>");
+                    cardBody.append(expectedLabel).append(actualLabel);
 
                     card.append(cardBody);
                     container.append(card);
-                    container.animate({ scrollTop: container.prop("scrollHeight") }, 500)
+
+                    // Scroll to Bottom whenever the data arrives
+                    $('html,body').animate({ scrollTop: 9999 }, 'slow');
                 }
 
-                // Retrieve overall accuracy from the object with status "Complete"
-                // (Assuming the accuracy is stored in the last item with status "Complete")
-                var overallAccuracy = 0;
-                var totalQuestion = 0;
-                var totalCorrect = 0;
-                var incorrect = 0;
-
-                if (val.Status === "Complete") {
-                    overallAccuracy = val.Accuracy;
-                    totalQuestion = val.Total;
-                    totalCorrect = val.Correct;
-                    incorrect = totalQuestion - totalCorrect;
-
-                    $("#evaluate").text("Evaluating..... Please Wait");
-                    $("#evaluate").prop("hidden", true)
-
-                    showToast("Success", "Successfully Evaluated")
-
-                    eventsource.close();
-
-                    // displaying the dashboard after completing the event
-                    var accuracyhtml = $("<div></div>").html("Score : " + overallAccuracy).addClass("fw-bold")
-                    var totalqueshtml = $("<div></div>").html("Total Questions : " + totalQuestion).addClass("fw-bold")
-                    var correcthtml = $("<div></div>").html("Total Correct : " + totalCorrect).addClass("fw-bold text-sucess");
-                    var incorrecthtml = $("<div></div>").html("Incorrect : " + incorrect).addClass("fw-bold text-danger")
-                    container.prepend([accuracyhtml, totalqueshtml, correcthtml, incorrecthtml]);
-                }
+            })
 
 
-            }
+            eventsource.addEventListener("error", function (event) {
+                showToast("Danger", "Some Error Occured While Evaluating")
+                console.log(event)
+                $("#evaluate").text("Evaluate");
+                $("#evaluate").prop("disabled", false)
 
-            // if the event found any error
-            eventsource.onerror = function (event) {
-                showToast("Danger", "Error Occured while getting the Result")
                 eventsource.close();
-            }
+            })
 
+            eventsource.addEventListener("completed", function (event) {
+                var val = JSON.parse(event.data);
+                console.log(val);
+
+                $("#evaluate").prop("hidden", true)
+                showToast("Success", "Successfully Evaluated the Model");
+
+                // displaying the dashboard after completing the event
+                var accuracyhtml = $("<div></div>").html("Score : " + val?.Accuracy).addClass("fw-bold")
+                var totalqueshtml = $("<div></div>").html("Total Questions : " + val?.Total).addClass("fw-bold")
+                var correcthtml = $("<div></div>").html("Total Correct : " + val?.Correct).addClass("fw-bold text-sucess");
+                var incorrecthtml = $("<div></div>").html("Incorrect : " + val?.InCorrect).addClass("fw-bold text-danger")
+
+                $("#eval-result").prepend([accuracyhtml, totalqueshtml, correcthtml, incorrecthtml]);
+
+                eventsource.close();
+
+            })
 
         } else {
             showToast("Danger", "Select the Model First")

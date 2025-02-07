@@ -48,7 +48,7 @@ namespace ProductClassification.Services
             {
                 _logger.LogError(ex.Message);
 
-                return new ClassificationResult() { Content = "Error Occured while Classifying the Category", ResultStatus = StatusEnum.Error, ModelId = Enum.GetName<ModelEnum>(selectedmodel) ?? "" };
+                throw;
             }
         }
     }

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Text.Json;
 using ProductClassification.Services;
+using Microsoft.EntityFrameworkCore;
+using ProductClassification.Data;
 
 namespace ProductClassification.Controllers
 {
@@ -12,12 +14,14 @@ namespace ProductClassification.Controllers
         private readonly ILogger<EvaluateController> _logger;
         private readonly IConfiguration _config;
         private readonly EvaluationService _evaluationService;
+        private readonly EvaluationDataRepository _evaldatarepo;
 
-        public EvaluateController(ILogger<EvaluateController> logger, IConfiguration iconfig, EvaluationService evalservice)
+        public EvaluateController(ILogger<EvaluateController> logger, IConfiguration iconfig, EvaluationService evalservice, EvaluationDataRepository evaldatarepo)
         {
             _logger = logger;
             _config = iconfig;
             _evaluationService = evalservice;
+            _evaldatarepo = evaldatarepo;
         }
 
         public IActionResult Index()
@@ -69,27 +73,35 @@ namespace ProductClassification.Controllers
 
                 await foreach (var results in evaluationTask)
                 {
-                    await SentSSEEventAsync(results);
-
                     if (results.EvaluationMetrics != null)
                     {
-                        await SentSSEEventAsync(results.EvaluationMetrics, "complete");
+                        await SentSSEEventAsync(results.EvaluationMetrics, "completed");
+                    }
+                    else
+                    {
+                        await SentSSEEventAsync(results);
                     }
                 }
+            }
+            catch (DbUpdateException dbex)
+            {
+                _logger.LogError(dbex.Message);
+                await SentSSEEventAsync(new EvaluatedResult() { Result = "Failed to Save the Model Evaluation Result" }, "error");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                await SentSSEEventAsync(new EvaluatedResult() { Result = "Failed to Evaluate the Model" }, "error");
             }
         }
 
 
-        private async Task SentSSEEventAsync(object data, string customevent = "message")
+        private async Task SentSSEEventAsync(object data, string customevent = "result")
         {
             try
             {
                 var json = JsonSerializer.Serialize(data);
-                await Response.WriteAsync($"event: {customevent}\n\n");
+                await Response.WriteAsync($"event: {customevent}\n");
                 await Response.WriteAsync($"data: {json}\n\n");
                 await Response.Body.FlushAsync();
             }
@@ -97,6 +109,33 @@ namespace ProductClassification.Controllers
             {
                 _logger.LogError(ex.Message);
             }
+        }
+
+        public async Task<IActionResult> PreviousEvalResult()
+        {
+            List<EvaluationBatch> batches = await _evaldatarepo.GetEvaluationBatchesWithMetrics();
+            return View(batches);
+        }
+
+        public IActionResult EvalResultByBatch(int id)
+        {
+            EvaluationBatch batch = _evaldatarepo.GetEvaluationResultsByBatch(id);
+            if (batch == null)
+            {
+                return RedirectToAction("PreviousEvalResult");
+            }
+
+            // Getting the total time Taken to Complete the Evaluation
+            var timeDifference = batch.EvaluatedResults.LastOrDefault()?.CreatedAt
+                        .Subtract(batch.EvaluatedResults.FirstOrDefault()?.CreatedAt ?? DateTime.MinValue);
+
+            string formattedTime = timeDifference.HasValue
+                ? $"{timeDifference.Value.Hours}h {timeDifference.Value.Minutes}m {timeDifference.Value.Seconds}s {timeDifference.Value.Milliseconds}ms"
+                : "N/A";
+
+            ViewData["totalEvalTime"] = formattedTime;
+
+            return View(batch);
         }
 
     }

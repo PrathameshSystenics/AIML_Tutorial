@@ -30,7 +30,16 @@
         background-color: #f0f0f0;
     }
 
-#classification-result,#thinking-result{
-    border:2px solid black;
-    min-height:150px;
+#classification-result, #thinking-result {
+    border: 2px solid black;
+    min-height: 150px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.card-border {
+    border: 1px solid black;
+    border-radius: 19px;
 }

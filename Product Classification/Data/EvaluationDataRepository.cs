@@ -27,12 +27,8 @@ namespace ProductClassification.Data
 
         public int GetNewEvaluationBatchID()
         {
-            EvaluationBatch lastbatch = _dbcontext.EvaluationBatch.OrderBy(batch => batch.ID).LastOrDefault();
-            if (lastbatch == null)
-            {
-                return 1;
-            }
-            return lastbatch.ID + 1;
+            int lastbatchid = _dbcontext.EvaluationBatch.Max(eval => eval.ID);
+            return lastbatchid + 1;
         }
 
         public void AddEvaluationResult(string result, int batchid, int evaldataid, bool isCorrect)
@@ -53,6 +49,64 @@ namespace ProductClassification.Data
         {
             await _dbcontext.EvaluatedResult.AddRangeAsync(evalresultlist);
             await _dbcontext.SaveChangesAsync();
+        }
+
+        public async Task<List<EvaluationBatch>> GetEvaluationBatchesWithMetrics()
+        {
+            var query = from batch in _dbcontext.EvaluationBatch
+                        join evalres in _dbcontext.EvaluatedResult
+                        on batch.ID equals evalres.EvaluationBatchID into batchresults
+                        orderby batch.CreatedAt descending
+                        select new EvaluationBatch()
+                        {
+                            CreatedAt = batch.CreatedAt,
+                            ID = batch.ID,
+                            ModelName = batch.ModelName,
+                            Metrics = new EvaluationMetrics()
+                            {
+                                Correct = batchresults.Where(res => res.IsCorrect).Count(),
+                                Total = batchresults.Count(),
+                            }
+                        };
+            return await query.ToListAsync();
+        }
+
+        public EvaluationBatch GetEvaluationResultsByBatch(int batchID)
+        {
+            var query = (from eb in _dbcontext.EvaluationBatch
+                         where eb.ID == batchID
+                         select new EvaluationBatch
+                         {
+                             ID = eb.ID,
+                             CreatedAt = eb.CreatedAt,
+                             ModelName = eb.ModelName,
+                             EvaluatedResults = (from er in eb.EvaluatedResults
+                                                 orderby er.EvaluationDataID
+                                                 select new EvaluatedResult
+                                                 {
+                                                     ID = er.ID,
+                                                     EvaluationBatchID = er.EvaluationBatchID,
+                                                     EvaluationDataID = er.EvaluationDataID,
+                                                     CreatedAt = er.CreatedAt,
+                                                     Result = er.Result,
+                                                     IsCorrect = er.IsCorrect,
+                                                     EvaluationData = new EvaluationData
+                                                     {
+                                                         ID = er.EvaluationData.ID,
+                                                         Description = er.EvaluationData.Description,
+                                                         Answer = er.EvaluationData.Answer,
+                                                         Reason = er.EvaluationData.Reason,
+                                                     }
+                                                 }).ToList()
+,
+                             Metrics = new EvaluationMetrics()
+                             {
+                                 Correct = eb.EvaluatedResults.Where(res => res.IsCorrect).Count(),
+                                 Total = eb.EvaluatedResults.Count()
+                             }
+                         }).FirstOrDefault();
+
+            return query;
         }
 
 
