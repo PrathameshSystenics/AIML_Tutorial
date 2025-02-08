@@ -15,26 +15,20 @@
             // Listening to the event sent by the server
             eventsource.addEventListener("result", function (event) {
                 var val = JSON.parse(event.data);
-                console.log(val)
 
                 var container = $("#eval-result")
 
                 // Check if description exists (skip any null descriptions)
                 if (val?.EvaluationData?.Description) {
 
-                    // Create a card for each description
                     var card = $('<div class="card mb-3"></div>');
                     var cardBody = $('<div class="card-body"></div>');
-
-                    // Add the description text
+               
                     var descriptionEl = $('<p class="card-text"></p>').html(val?.EvaluationData?.Description);
                     cardBody.append(descriptionEl);
 
-                    // Create labels for Expected and Actual answers
                     var expectedLabel = $('<div class="alert alert-success p-0 p-2 mb-1" role="alert"></div>')
                         .text('Expected: ' + val?.EvaluationData?.Answer)
-                        // Add the same background if needed
-                        .addClass("");
 
                     // Checking if result contains the Thinking Steps.
                     var thinkingsteps = new String(val?.Result).split("</think>");
@@ -70,7 +64,7 @@
 
             eventsource.addEventListener("error", function (event) {
                 showToast("Danger", "Some Error Occured While Evaluating")
-                console.log(event)
+
                 $("#evaluate").text("Evaluate");
                 $("#evaluate").prop("disabled", false)
 
@@ -79,7 +73,6 @@
 
             eventsource.addEventListener("completed", function (event) {
                 var val = JSON.parse(event.data);
-                console.log(val);
 
                 $("#evaluate").prop("hidden", true)
                 showToast("Success", "Successfully Evaluated the Model");

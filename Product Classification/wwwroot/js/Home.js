@@ -28,7 +28,7 @@
                 dataType: "json",
                 data: { "ModelName": value, "UserInput": $("#inputprompt").val() },
                 complete: function (data) {
-                    // setting the button as it is
+                    // setting the button as it was previous
                     $("#classify-btn .classify-btn-text").text("Classify")
                     $("#classify-btn .spinner").addClass("visually-hidden");
                     classifybtn.prop("disabled", false)

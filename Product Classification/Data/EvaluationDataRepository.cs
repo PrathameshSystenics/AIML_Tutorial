@@ -27,8 +27,12 @@ namespace ProductClassification.Data
 
         public int GetNewEvaluationBatchID()
         {
-            int lastbatchid = _dbcontext.EvaluationBatch.Max(eval => eval.ID);
-            return lastbatchid + 1;
+            int lastbatchid = 1;
+            if (_dbcontext.EvaluationBatch.Any())
+            {
+                lastbatchid = _dbcontext.EvaluationBatch.Max(eval => eval.ID);
+            }
+            return lastbatchid;
         }
 
         public void AddEvaluationResult(string result, int batchid, int evaldataid, bool isCorrect)
@@ -45,7 +49,7 @@ namespace ProductClassification.Data
         }
 
 
-        public async Task AddEvaluationResultAsync(List<EvaluatedResult> evalresultlist)
+        public async Task AddEvaluationResultsAsync(List<EvaluatedResult> evalresultlist)
         {
             await _dbcontext.EvaluatedResult.AddRangeAsync(evalresultlist);
             await _dbcontext.SaveChangesAsync();
@@ -53,21 +57,21 @@ namespace ProductClassification.Data
 
         public async Task<List<EvaluationBatch>> GetEvaluationBatchesWithMetrics()
         {
-            var query = from batch in _dbcontext.EvaluationBatch
-                        join evalres in _dbcontext.EvaluatedResult
-                        on batch.ID equals evalres.EvaluationBatchID into batchresults
-                        orderby batch.CreatedAt descending
-                        select new EvaluationBatch()
-                        {
-                            CreatedAt = batch.CreatedAt,
-                            ID = batch.ID,
-                            ModelName = batch.ModelName,
-                            Metrics = new EvaluationMetrics()
-                            {
-                                Correct = batchresults.Where(res => res.IsCorrect).Count(),
-                                Total = batchresults.Count(),
-                            }
-                        };
+            IQueryable<EvaluationBatch> query = from batch in _dbcontext.EvaluationBatch
+                                                join evalres in _dbcontext.EvaluatedResult
+                                                on batch.ID equals evalres.EvaluationBatchID into batchresults
+                                                orderby batch.CreatedAt descending
+                                                select new EvaluationBatch()
+                                                {
+                                                    CreatedAt = batch.CreatedAt,
+                                                    ID = batch.ID,
+                                                    ModelName = batch.ModelName,
+                                                    Metrics = new EvaluationMetrics()
+                                                    {
+                                                        Correct = batchresults.Where(res => res.IsCorrect).Count(),
+                                                        Total = batchresults.Count(),
+                                                    }
+                                                };
             return await query.ToListAsync();
         }
 
@@ -108,9 +112,5 @@ namespace ProductClassification.Data
 
             return query;
         }
-
-
-
-
     }
 }

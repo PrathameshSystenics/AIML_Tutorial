@@ -4,7 +4,7 @@ using ProductClassification.SemanticKernel;
 namespace ProductClassification.Services
 {
     /// <summary>
-    /// Various Connectors to Connected with the System.
+    /// Various Connectors to Connect with the Kernel.
     /// </summary>
     public class AIConnectorService
     {

@@ -18,89 +18,7 @@ namespace ProductClassification.Services
             _evaluationdatarepo = evalrepo;
         }
 
-        /*public async IAsyncEnumerable<EvaluatedResult> RunCategoryEvaluationBatch(ModelEnum selectedmodel)
-        {
-            // Add New Evaluation Batch
-            int evalbatchid = this._evaluationdatarepo.GetNewEvaluationBatchID();
-
-            // Retreiving the Eval Question
-            List<EvaluationData> evaldata = this._evaluationdatarepo.GetEvalQuestions();
-
-            List<EvaluatedResult> evalresultslist = new List<EvaluatedResult>();
-
-            int index = 0;
-            bool isEvalCompleted = false;
-            int totalquestion = evaldata.Count();
-            bool isErrorOccured = false;
-
-            // Looping through each Description
-            while (!isEvalCompleted && totalquestion > 0)
-            {
-                isErrorOccured = false;
-
-                // Get the current evaluation Answer and Description
-                EvaluationData current = evaldata[index];
-
-                _logger.LogInformation("Evaluating for Data =>" + current.ID + " With ModelID=" + Enum.GetName<ModelEnum>(selectedmodel));
-
-                ClassificationResult result = new ClassificationResult();
-                EvaluatedResult currentevalresult;
-
-                try
-                {
-                    // classify the result
-                    result = await _classificationservice.ClassifyCategoryFromDescription(current.Description, selectedmodel);
-
-                    isEvalCompleted = result.ResultStatus == StatusEnum.Error ? true : false;
-                }
-                catch (Exception ex)
-                {
-                    isErrorOccured = true;
-                    _logger.LogError(ex.Message + "\nType => " + ex.GetType().ToString());
-                }
-                finally
-                {
-                    index++;
-
-                    // if all eval questions are completed then stop the loop
-                    if (totalquestion == index)
-                    {
-                        isEvalCompleted = true;
-
-                    }
-                }
-
-                if (!isErrorOccured)
-                {
-                    currentevalresult = new EvaluatedResult()
-                    {
-                        CreatedAt = DateTime.Now,
-                        EvaluationData = current,
-                        EvaluationBatchID = evalbatchid,
-                        Result = result.Content,
-                        IsCorrect = CompareResults(result.Content, current.Answer) ? true : false
-                    };
-
-                    evalresultslist.Add(currentevalresult);
-
-                    yield return currentevalresult;
-                }
-
-            }
-
-            // Insert all the results into the database
-            if (totalquestion == index)
-            {
-                yield return new EvaluatedResult() { EvaluationMetrics = GetMetricsFromEvaluationResults(evalresultslist) };
-
-                _evaluationdatarepo.AddNewEvaluationBatch(Enum.GetName<ModelEnum>(selectedmodel) ?? "", evalbatchid);
-                await _evaluationdatarepo.AddEvaluationResultAsync(evalresultslist);
-
-            }
-        }
-*/
-
-        public async IAsyncEnumerable<EvaluatedResult> RunCategoryEvaluationBatch(ModelEnum selectedmodel)
+        public async IAsyncEnumerable<EvaluatedResult> EvaluateProductCategoryBatch(ModelEnum selectedmodel)
         {
             // Get new evaluation Batch iD
             int evalbatchid = this._evaluationdatarepo.GetNewEvaluationBatchID();
@@ -112,7 +30,7 @@ namespace ProductClassification.Services
             bool isErrorOccured = false;
             foreach (var current in evaldata)
             {
-                _logger.LogInformation($"Evaluating for Data => {current.ID} With ModelID={Enum.GetName<ModelEnum>(selectedmodel)}");
+                _logger.LogInformation($"Evaluating for Data => {current.ID} With ModelID = {Enum.GetName<ModelEnum>(selectedmodel)}");
 
                 ClassificationResult result = new ClassificationResult();
                 EvaluatedResult currentevalresult;
@@ -153,7 +71,7 @@ namespace ProductClassification.Services
             {
 
                 _evaluationdatarepo.AddNewEvaluationBatch(Enum.GetName<ModelEnum>(selectedmodel) ?? "", evalbatchid);
-                await _evaluationdatarepo.AddEvaluationResultAsync(evalresultslist);
+                await _evaluationdatarepo.AddEvaluationResultsAsync(evalresultslist);
 
                 yield return new EvaluatedResult() { EvaluationMetrics = GetMetricsFromEvaluationResults(evalresultslist) };
             }

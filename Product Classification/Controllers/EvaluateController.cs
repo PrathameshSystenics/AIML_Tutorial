@@ -16,10 +16,10 @@ namespace ProductClassification.Controllers
         private readonly EvaluationService _evaluationService;
         private readonly EvaluationDataRepository _evaldatarepo;
 
-        public EvaluateController(ILogger<EvaluateController> logger, IConfiguration iconfig, EvaluationService evalservice, EvaluationDataRepository evaldatarepo)
+        public EvaluateController(ILogger<EvaluateController> logger, IConfiguration config, EvaluationService evalservice, EvaluationDataRepository evaldatarepo)
         {
             _logger = logger;
-            _config = iconfig;
+            _config = config;
             _evaluationService = evalservice;
             _evaldatarepo = evaldatarepo;
         }
@@ -69,7 +69,7 @@ namespace ProductClassification.Controllers
                     return;
                 }
 
-                IAsyncEnumerable<EvaluatedResult> evaluationTask = _evaluationService.RunCategoryEvaluationBatch(modelselected);
+                IAsyncEnumerable<EvaluatedResult> evaluationTask = _evaluationService.EvaluateProductCategoryBatch(modelselected);
 
                 await foreach (var results in evaluationTask)
                 {
@@ -83,11 +83,6 @@ namespace ProductClassification.Controllers
                     }
                 }
             }
-            catch (DbUpdateException dbex)
-            {
-                _logger.LogError(dbex.Message);
-                await SentSSEEventAsync(new EvaluatedResult() { Result = "Failed to Save the Model Evaluation Result" }, "error");
-            }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
@@ -95,12 +90,16 @@ namespace ProductClassification.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Sends the Data using Server Sent Events
+        /// </summary>
+        /// <param name="data"> want to send continuously to the client</param>
+        /// <param name="customevent">Event to apply to it.</param>
         private async Task SentSSEEventAsync(object data, string customevent = "result")
         {
             try
             {
-                var json = JsonSerializer.Serialize(data);
+                string json = JsonSerializer.Serialize(data);
                 await Response.WriteAsync($"event: {customevent}\n");
                 await Response.WriteAsync($"data: {json}\n\n");
                 await Response.Body.FlushAsync();

@@ -242,3 +242,6 @@ Return only the category name as the output, without any additional text or expl
 **Expected Output Format:**
 Example: "Health & Personal Care"
 Avoid: "The product belongs to Health & Personal Care"
+
+
+========== Prompt 10 =============

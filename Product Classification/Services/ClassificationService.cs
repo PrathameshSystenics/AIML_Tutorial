@@ -40,7 +40,7 @@ namespace ProductClassification.Services
 
                 // Invoking the Prompt
                 description = $"""<message role="user">**Description**: {description} </message>""";
-                var result = await _kernel.InvokePromptAsync(Prompt.BasePrompt + description, arguments);
+                FunctionResult result = await _kernel.InvokePromptAsync(Prompt.BasePrompt + description, arguments);
 
                 return new ClassificationResult() { Content = result.ToString(), ResultStatus = StatusEnum.Success, ModelId = serviceid, Extras = result.Metadata };
             }
