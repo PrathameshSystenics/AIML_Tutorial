@@ -15,8 +15,8 @@ builder.Services.AddMvc();
 builder.Services.AddSession();
 
 // Injecting the Required Service
-builder.Services.AddSingleton<AIConnectorService>();
-builder.Services.AddSingleton<ClassificationService>();
+builder.Services.AddScoped<AIConnectorService>();
+builder.Services.AddScoped<ClassificationService>();
 
 // Adding the DB Support
 builder.Services.AddDbContext<ApplicationDBContext>(options =>

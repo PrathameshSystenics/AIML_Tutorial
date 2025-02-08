@@ -9,7 +9,8 @@
         OllamaDeepSeek,
         AzureOpenAI,
         AzureDeepSeek,
-        OllamaQwen4b,
-        OllamaPhi3_8b
+        OllamaQwen1_8b,
+        OllamaPhi3_8b,
+        GeminiFlash2
     }
 }

@@ -30,7 +30,7 @@ namespace ProductClassification.Data
             int lastbatchid = 1;
             if (_dbcontext.EvaluationBatch.Any())
             {
-                lastbatchid = _dbcontext.EvaluationBatch.Max(eval => eval.ID);
+                lastbatchid = _dbcontext.EvaluationBatch.Max(eval => eval.ID)+1;
             }
             return lastbatchid;
         }

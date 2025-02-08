@@ -33,7 +33,10 @@ namespace ProductClassification.Services
 
                 PromptExecutionSettings executionSettings = new PromptExecutionSettings()
                 {
-                    ServiceId = serviceid
+                    ServiceId = serviceid,
+                    ExtensionData = new Dictionary<string, object>() {
+                        { "Temperature" ,0.0}
+                    }
                 };
 
                 KernelArguments arguments = new KernelArguments(executionSettings);

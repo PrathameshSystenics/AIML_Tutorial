@@ -31,7 +31,9 @@ namespace ProductClassification.Services
 
                 LLMConnectionConfig OllamaPhi3_8bConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaPhi3_8b) ?? "");
 
-                LLMConnectionConfig OllamaQwen4bConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaQwen4b) ?? "");
+                LLMConnectionConfig OllamaQwen4bConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaQwen1_8b) ?? "");
+
+                LLMConnectionConfig GeminiFlash2Configs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GeminiFlash2) ?? "");
 
                 #endregion
 
@@ -69,9 +71,16 @@ namespace ProductClassification.Services
 
                     // Ollama Qwen Models
                     .AddOllamaChatCompletion(
-                        serviceId: Enum.GetName(ModelEnum.OllamaQwen4b),
+                        serviceId: Enum.GetName(ModelEnum.OllamaQwen1_8b),
                         modelId: OllamaQwen4bConfigs.ModelName,
                         endpoint: new Uri(OllamaQwen4bConfigs.Url)
+                    )
+
+                    // Gemini flash 2
+                    .AddGoogleAIGeminiChatCompletion(
+                        modelId: GeminiFlash2Configs.ModelName,
+                        serviceId: Enum.GetName<ModelEnum>(ModelEnum.GeminiFlash2),
+                        apiKey: GeminiFlash2Configs.ApiKey
                     );
 
                 return _kernelbuilder.Build();

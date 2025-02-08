@@ -55,14 +55,14 @@
 
                 @if (!String.IsNullOrWhiteSpace(modelThinkingResult))
                 {
-                    <div class="accordion mb-3" id="@res.ID+Accordion">
+                    <div class="accordion mb-3" id="Accordion-@res.ID">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed bg-warning text-dark p-2" type="button" data-bs-toggle="collapse" data-bs-target="#(@res.ID)Accordion" aria-expanded="true" aria-controls="(@res.ID)collapse">
+                                <button class="accordion-button collapsed bg-warning text-dark p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@res.ID" aria-expanded="true" aria-controls="collapse-@res.ID">
                                     Thinking Steps
                                 </button>
                             </h2>
-                            <div id="(@res.ID)collapse" class="accordion-collapse collapse" data-bs-parent="(@res.ID)Accordion">
+                            <div id="collapse-@res.ID" class="accordion-collapse collapse" data-bs-parent="Accordion-@res.ID">
                                 <div class="accordion-body p-2">
                                     @modelThinkingResult
                                 </div>
