@@ -11,6 +11,8 @@
         AzureDeepSeek,
         OllamaQwen1_8b,
         OllamaPhi3_8b,
-        GeminiFlash2
+        GeminiFlash2,
+        GeminiFlash1_5,
+        GeminiFlash2_0Thinking
     }
 }

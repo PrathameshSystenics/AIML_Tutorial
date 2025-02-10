@@ -35,6 +35,10 @@ namespace ProductClassification.Services
 
                 LLMConnectionConfig GeminiFlash2Configs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GeminiFlash2) ?? "");
 
+                LLMConnectionConfig GeminiFlash1_5Configs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GeminiFlash1_5) ?? "");
+
+                LLMConnectionConfig GeminiFlash2_ThinkingConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GeminiFlash2_0Thinking) ?? "");
+
                 #endregion
 
                 _kernelbuilder = _kernelbuilder
@@ -76,11 +80,25 @@ namespace ProductClassification.Services
                         endpoint: new Uri(OllamaQwen4bConfigs.Url)
                     )
 
-                    // Gemini flash 2
+                    // Gemini flash 2 model
                     .AddGoogleAIGeminiChatCompletion(
                         modelId: GeminiFlash2Configs.ModelName,
                         serviceId: Enum.GetName<ModelEnum>(ModelEnum.GeminiFlash2),
                         apiKey: GeminiFlash2Configs.ApiKey
+                    )
+
+                    // Gemini Flash 1.5 Models
+                    .AddGoogleAIGeminiChatCompletion(
+                        modelId: GeminiFlash1_5Configs.ModelName,
+                        serviceId: Enum.GetName<ModelEnum>(ModelEnum.GeminiFlash1_5),
+                        apiKey: GeminiFlash1_5Configs.ApiKey
+                    )
+
+                    // Gemini Flash 2.0 Thinkings Models
+                    .AddGoogleAIGeminiChatCompletion(
+                        modelId: GeminiFlash2_ThinkingConfigs.ModelName,
+                        serviceId: Enum.GetName<ModelEnum>(ModelEnum.GeminiFlash2_0Thinking),
+                        apiKey: GeminiFlash2_ThinkingConfigs.ApiKey
                     );
 
                 return _kernelbuilder.Build();

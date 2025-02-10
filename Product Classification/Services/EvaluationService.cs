@@ -72,6 +72,7 @@ namespace ProductClassification.Services
 
                 _evaluationdatarepo.AddNewEvaluationBatch(Enum.GetName<ModelEnum>(selectedmodel) ?? "", evalbatchid);
                 await _evaluationdatarepo.AddEvaluationResultsAsync(evalresultslist);
+                _evaluationdatarepo.AddSystemPromptForBatch(evalbatchid, Prompt.BasePrompt);
 
                 yield return new EvaluatedResult() { EvaluationMetrics = GetMetricsFromEvaluationResults(evalresultslist) };
             }

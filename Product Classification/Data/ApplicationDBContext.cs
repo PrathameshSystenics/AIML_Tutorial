@@ -8,6 +8,7 @@ namespace ProductClassification.Data
         public DbSet<EvaluationData> EvaluationData { get; set; }
         public DbSet<EvaluationBatch> EvaluationBatch { get; set; }
         public DbSet<EvaluatedResult> EvaluatedResult { get; set; }
+        public DbSet<PromptData> PromptData { get; set; }
 
         
     }

@@ -112,8 +112,17 @@ namespace ProductClassification.Controllers
 
         public async Task<IActionResult> PreviousEvalResult()
         {
-            List<EvaluationBatch> batches = await _evaldatarepo.GetEvaluationBatchesWithMetrics();
-            return View(batches);
+            try
+            {
+
+                List<EvaluationBatch> batches = await _evaldatarepo.GetEvaluationBatchesWithMetrics();
+                return View(batches);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult EvalResultByBatch(int id)

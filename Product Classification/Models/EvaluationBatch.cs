@@ -12,5 +12,7 @@ namespace ProductClassification.Models
 
         [NotMapped]
         public EvaluationMetrics Metrics { get; set; }
+
+        public PromptData PromptData { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace ProductClassification.Data
             int lastbatchid = 1;
             if (_dbcontext.EvaluationBatch.Any())
             {
-                lastbatchid = _dbcontext.EvaluationBatch.Max(eval => eval.ID)+1;
+                lastbatchid = _dbcontext.EvaluationBatch.Max(eval => eval.ID) + 1;
             }
             return lastbatchid;
         }
@@ -48,6 +48,16 @@ namespace ProductClassification.Data
             _dbcontext.SaveChanges();
         }
 
+
+        public void AddSystemPromptForBatch(int batchid, string prompt)
+        {
+            _dbcontext.PromptData.Add(new PromptData()
+            {
+                EvaluationBatchID = batchid,
+                SystemPrompt = prompt
+            });
+            _dbcontext.SaveChanges();
+        }
 
         public async Task AddEvaluationResultsAsync(List<EvaluatedResult> evalresultlist)
         {
@@ -107,7 +117,10 @@ namespace ProductClassification.Data
                              {
                                  Correct = eb.EvaluatedResults.Where(res => res.IsCorrect).Count(),
                                  Total = eb.EvaluatedResults.Count()
-                             }
+                             },
+                             PromptData = (from prompt in _dbcontext.PromptData
+                                           where prompt.EvaluationBatchID == eb.ID
+                                           select prompt).First()
                          }).FirstOrDefault();
 
             return query;

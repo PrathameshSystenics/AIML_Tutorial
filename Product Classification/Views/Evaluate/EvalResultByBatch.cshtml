@@ -37,7 +37,7 @@
                 <p class="card-text">
                     @res.EvaluationData.Description
                 </p>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                <span class="position-absolute top-0 start-0 fs-6 translate-middle badge rounded-pill bg-primary">
                     @res.EvaluationData.ID
                 </span>
 
@@ -81,4 +81,15 @@
             </div>
         }
     </div>
+
+    @if (Model.PromptData != null)
+    {
+
+        <div class="mt-3">
+            <h5>System Prompt: </h5>
+            <div>
+                @Model.PromptData.SystemPrompt
+            </div>
+        </div>
+    }
 </div>

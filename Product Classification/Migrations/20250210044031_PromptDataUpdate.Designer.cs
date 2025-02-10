@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductClassification.Data;
@@ -11,9 +12,11 @@ using ProductClassification.Data;
 namespace ProductClassification.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250210044031_PromptDataUpdate")]
+    partial class PromptDataUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,8 +120,7 @@ namespace ProductClassification.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EvaluationBatchID")
-                        .IsUnique();
+                    b.HasIndex("EvaluationBatchID");
 
                     b.ToTable("PromptData");
                 });
@@ -145,8 +147,8 @@ namespace ProductClassification.Migrations
             modelBuilder.Entity("ProductClassification.Models.PromptData", b =>
                 {
                     b.HasOne("ProductClassification.Models.EvaluationBatch", "EvaluationBatch")
-                        .WithOne("PromptData")
-                        .HasForeignKey("ProductClassification.Models.PromptData", "EvaluationBatchID")
+                        .WithMany()
+                        .HasForeignKey("EvaluationBatchID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -156,9 +158,6 @@ namespace ProductClassification.Migrations
             modelBuilder.Entity("ProductClassification.Models.EvaluationBatch", b =>
                 {
                     b.Navigation("EvaluatedResults");
-
-                    b.Navigation("PromptData")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductClassification.Models.EvaluationData", b =>

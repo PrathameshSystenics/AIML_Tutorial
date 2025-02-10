@@ -35,7 +35,7 @@ namespace ProductClassification.Services
                 {
                     ServiceId = serviceid,
                     ExtensionData = new Dictionary<string, object>() {
-                        { "Temperature" ,0.0}
+                        { "temperature" ,0.0}
                     }
                 };
 

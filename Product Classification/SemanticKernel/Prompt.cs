@@ -27,7 +27,6 @@
             "Baby Products" - Non-essential baby items such as toys, rattles, baby clothing, or baby accessories.
 
             </message>
-            
             """;
 
 
