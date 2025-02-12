@@ -5,6 +5,9 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<NoWarn>SKEXP0070,SKEXP0001</NoWarn>
+		<UserSecretsId>42598f63-fb18-4e01-b4e8-71053c30a261</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>.</DockerfileContext>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,6 +22,7 @@
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.35.0" />
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Google" Version="1.35.0-alpha" />
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.35.0-alpha" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
 
 	</ItemGroup>
