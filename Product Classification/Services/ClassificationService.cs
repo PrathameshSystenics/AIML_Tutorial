@@ -39,10 +39,10 @@ namespace ProductClassification.Services
                     }
                 };
 
-                KernelArguments arguments = new KernelArguments(executionSettings);
+                KernelArguments arguments = new KernelArguments(executionSettings) { { "description", description } };
 
                 // Invoking the Prompt
-                description = $"""<message role="user">**Description**: {description} </message>""";
+                description = """<message role="user">**Description**: {{$description}} </message>""";
                 FunctionResult result = await _kernel.InvokePromptAsync(Prompt.BasePrompt + description, arguments);
 
                 return new ClassificationResult() { Content = result.ToString(), ResultStatus = StatusEnum.Success, ModelId = serviceid, Extras = result.Metadata };
