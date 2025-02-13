@@ -1,0 +1,18 @@
+﻿@page "/container"
+@inject OllamaService ollamaservice
+
+<h3>Container</h3>
+
+<div>Displaying the Container Endpoint</div>
+<div>@message</div>
+
+@code {
+    private object message;
+    private string imagePrefix = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        message = await ollamaservice.CallOllamaMessage();
+    }
+}

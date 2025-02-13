@@ -13,19 +13,6 @@ public class ProductDataContext : DbContext
     public DbSet<Product> Product { get; set; } = default!;
 }
 
-public static class Extensions
-{
-    public static void CreateDbIfNotExists(this IHost host)
-    {
-        using var scope = host.Services.CreateScope();
-
-        var services = scope.ServiceProvider;
-        var context = services.GetRequiredService<ProductDataContext>();
-        context.Database.EnsureCreated();
-        DbInitializer.Initialize(context);
-    }
-}
-
 
 public static class DbInitializer
 {

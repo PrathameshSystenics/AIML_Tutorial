@@ -5,14 +5,19 @@ using Products.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 
 // Add services to the container.
 builder.Services.AddSingleton<RandomFailureMiddleware>();
 
-
+// Give the Name for adding the support of the Postgres
+builder.AddNpgsqlDbContext<ProductDataContext>("productcontext");
 
 // Add services to the container.
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
@@ -21,8 +26,6 @@ app.UseMiddleware<RandomFailureMiddleware>();
 app.MapProductEndpoints();
 
 app.UseStaticFiles();
-
-app.CreateDbIfNotExists();
 
 app.Run();
 
