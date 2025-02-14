@@ -37,7 +37,11 @@ var ollama = builder.AddContainer("ollama", "ollama/ollama")
                     .WithContainerName("ollama-aspire")
                     .WithHttpEndpoint(11434, 11434, "ollamaendpoint")
                     .WithLifetime(ContainerLifetime.Persistent)
-                    ;
+                    .WithVolume("ollmodels","/root/.ollama")
+                    .WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
+                    .WithEntrypoint("/bin/sh")
+                    .WithArgs("/ollamasetup.sh");
+;
 
 // Adding the database to the created postgres db. Here we need to specify the connection string name and database name
 var productdb = postgres.AddDatabase("productcontext", "productdb")

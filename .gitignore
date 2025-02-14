@@ -5,6 +5,5 @@
 bin/
 obj/
 semantic-kernel/
-appsettings.json
 /Aspirenet/StarterTemplate/*
 /Aspirenet/Sample/*
