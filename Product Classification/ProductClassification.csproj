@@ -12,6 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
 		<PackageReference Include="bootstrap" Version="5.3.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
@@ -26,6 +27,22 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
 
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="ProductClassification.AppHost\**" />
+		<Compile Remove="ProductClassification.ServiceDefaults\**" />
+		<Content Remove="ProductClassification.AppHost/*"></Content>
+		<Content Remove="ProductClassification.AppHost\**" />
+		<Content Remove="ProductClassification.ServiceDefaults\**" />
+		<EmbeddedResource Remove="ProductClassification.AppHost\**" />
+		<EmbeddedResource Remove="ProductClassification.ServiceDefaults\**" />
+		<None Remove="ProductClassification.AppHost\**" />
+		<None Remove="ProductClassification.ServiceDefaults\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj" />
 	</ItemGroup>
 
 </Project>

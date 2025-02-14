@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-ProductClassificationDatabase.MigrationService-d30dfd36-8ae3-45c6-88ac-848c6b945762</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Product Classification\ProductClassification.csproj" />
+    <ProjectReference Include="..\Product Classification\ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>

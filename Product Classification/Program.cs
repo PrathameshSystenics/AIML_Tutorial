@@ -4,6 +4,8 @@ using ProductClassification.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -19,15 +21,14 @@ builder.Services.AddScoped<AIConnectorService>();
 builder.Services.AddScoped<ClassificationService>();
 
 // Adding the DB Support
-builder.Services.AddDbContext<ApplicationDBContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb");
 
 builder.Services.AddScoped<EvaluationDataRepository>();
 builder.Services.AddScoped<EvaluationService>();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -50,26 +51,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-using (var scope = app.Services.CreateScope())
-{
-    var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-
-    // Check and apply pending migrations
-    var pendingMigrations = dbcontext.Database.GetPendingMigrations();
-    if (pendingMigrations.Any())
-    {
-        Console.WriteLine("Applying pending migrations...");
-        dbcontext.Database.Migrate();
-        // seed the data
-        DBInitializer.Initialize(dbcontext);
-        Console.WriteLine("Migrations applied successfully.");
-    }
-    else
-    {
-        Console.WriteLine("No pending migrations found.");
-    }
-}
 
 
 app.Run();
