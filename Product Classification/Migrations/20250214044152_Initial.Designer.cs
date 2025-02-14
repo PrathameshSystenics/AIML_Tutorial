@@ -12,8 +12,8 @@ using ProductClassification.Data;
 namespace ProductClassification.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250210044031_PromptDataUpdate")]
-    partial class PromptDataUpdate
+    [Migration("20250214044152_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,7 +120,8 @@ namespace ProductClassification.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EvaluationBatchID");
+                    b.HasIndex("EvaluationBatchID")
+                        .IsUnique();
 
                     b.ToTable("PromptData");
                 });
@@ -147,8 +148,8 @@ namespace ProductClassification.Migrations
             modelBuilder.Entity("ProductClassification.Models.PromptData", b =>
                 {
                     b.HasOne("ProductClassification.Models.EvaluationBatch", "EvaluationBatch")
-                        .WithMany()
-                        .HasForeignKey("EvaluationBatchID")
+                        .WithOne("PromptData")
+                        .HasForeignKey("ProductClassification.Models.PromptData", "EvaluationBatchID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -158,6 +159,9 @@ namespace ProductClassification.Migrations
             modelBuilder.Entity("ProductClassification.Models.EvaluationBatch", b =>
                 {
                     b.Navigation("EvaluatedResults");
+
+                    b.Navigation("PromptData")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductClassification.Models.EvaluationData", b =>

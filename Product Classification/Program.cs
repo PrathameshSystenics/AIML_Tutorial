@@ -54,8 +54,21 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-    // seed the data
-    DBInitializer.Initialize(dbcontext);
+
+    // Check and apply pending migrations
+    var pendingMigrations = dbcontext.Database.GetPendingMigrations();
+    if (pendingMigrations.Any())
+    {
+        Console.WriteLine("Applying pending migrations...");
+        dbcontext.Database.Migrate();
+        // seed the data
+        DBInitializer.Initialize(dbcontext);
+        Console.WriteLine("Migrations applied successfully.");
+    }
+    else
+    {
+        Console.WriteLine("No pending migrations found.");
+    }
 }
 
 

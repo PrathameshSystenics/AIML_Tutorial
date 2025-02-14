@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ProductClassification.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,6 +39,26 @@ namespace ProductClassification.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EvaluationData", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PromptData",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EvaluationBatchID = table.Column<int>(type: "integer", nullable: false),
+                    SystemPrompt = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PromptData", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_PromptData_EvaluationBatch_EvaluationBatchID",
+                        column: x => x.EvaluationBatchID,
+                        principalTable: "EvaluationBatch",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,6 +99,12 @@ namespace ProductClassification.Migrations
                 name: "IX_EvaluatedResult_EvaluationDataID",
                 table: "EvaluatedResult",
                 column: "EvaluationDataID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PromptData_EvaluationBatchID",
+                table: "PromptData",
+                column: "EvaluationBatchID",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -88,10 +114,13 @@ namespace ProductClassification.Migrations
                 name: "EvaluatedResult");
 
             migrationBuilder.DropTable(
-                name: "EvaluationBatch");
+                name: "PromptData");
 
             migrationBuilder.DropTable(
                 name: "EvaluationData");
+
+            migrationBuilder.DropTable(
+                name: "EvaluationBatch");
         }
     }
 }
