@@ -1,0 +1,42 @@
+{
+  "projectPath": ".",
+  "outputPath": "aspirate-output",
+  "containerImageTags": [
+    "latest"
+  ],
+  "imagePullPolicy": "IfNotPresent",
+  "containerBuilder": "docker",
+  "outputFormat": "compose",
+  "skipFinalKustomizeGeneration": false,
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": true,
+  "useCustomNamespace": false,
+  "secrets": {
+    "salt": "KuC\u002BWp6EJMuCz8HS",
+    "hash": "PUzmvbKulff/qoTp2UF/8Qxp43BJomzQsU8IcG5QAbk=",
+    "secrets": {
+      "postgres-password": {
+        "value": "KuC\u002BWp6EJMuCz8HS0Xj8Tx3K3X5QSfU/Q7vbTq5LbEU="
+      },
+      "postgres-username": {
+        "value": "KuC\u002BWp6EJMuCz8HS0Xj8Tx3K3X5QSfU/Q7vbTq5LbEU="
+      },
+      "smtpmail": {
+        "value": "KuC\u002BWp6EJMuCz8HS0Xj8Tx3K3X5QSfU/Q7vbTq5LbEU="
+      },
+      "postgres": {
+        "POSTGRES_PASSWORD": "KuC\u002BWp6EJMuCz8HS0Xj8Tx3K3X5QSfU/Q7vbTq5LbEU="
+      },
+      "ollama": {},
+      "productcontext": {},
+      "products": {
+        "ConnectionStrings__productcontext": "KuC\u002BWp6EJMuCz8HSzVpjxgj\u002B8fNM8fCrDUNBfJNXekNzrN6VCFtU/r39CcLuiu673hLSq8b7HKCny9VbJ1ZljlgzLZQ787nQMcXQneJnGu/t1qGb9uJQNeKIMQvnGXKQYbg="
+      },
+      "migrationservice": {
+        "ConnectionStrings__productcontext": "KuC\u002BWp6EJMuCz8HSzVpjxgj\u002B8fNM8fCrDUNBfJNXekNzrN6VCFtU/r39CcLuiu673hLSq8b7HKCny9VbJ1ZljlgzLZQ787nQMcXQneJnGu/t1qGb9uJQNeKIMQvnGXKQYbg="
+      },
+      "store": {}
+    }
+  },
+  "processAllComponents": true
+}

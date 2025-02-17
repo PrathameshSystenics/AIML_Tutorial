@@ -41,14 +41,10 @@ var ollama = builder.AddContainer("ollama", "ollama/ollama")
                     .WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
                     .WithEntrypoint("/bin/sh")
                     .WithArgs("/ollamasetup.sh");
-;
 
 // Adding the database to the created postgres db. Here we need to specify the connection string name and database name
 var productdb = postgres.AddDatabase("productcontext", "productdb")
                         .WithClearDatabaseDataCommand();
-
-
-
 
 // Adding the Product Project in to the Aspire Orchestrator
 // Here we added the support for the Postgres Database to the Products Project
