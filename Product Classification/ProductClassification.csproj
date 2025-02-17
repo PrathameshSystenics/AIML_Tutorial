@@ -44,5 +44,15 @@
 	<ItemGroup>
 	  <ProjectReference Include="ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Update="Data\Evaluation.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </None>
+	</ItemGroup>
+	
+	
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Aspire.Hosting;
+using Npgsql;
 
 namespace ProductClassification.AppHost
 {
@@ -31,8 +32,19 @@ namespace ProductClassification.AppHost
         {
             string connectionstring = await builder.Resource.GetConnectionStringAsync();
 
+            using var connection = new NpgsqlConnection(connectionstring);
 
-            
+            await connection.OpenAsync();
+            connection.ChangeDatabase("promptevaluationdb");
+
+            string sql = """
+delete from "EvaluationData";
+delete from "EvaluationBatch";
+delete from "PromptData";
+""";
+            NpgsqlCommand command = new NpgsqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+
             return CommandResults.Success();
         }
     }

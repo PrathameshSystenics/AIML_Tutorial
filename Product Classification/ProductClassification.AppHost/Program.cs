@@ -7,6 +7,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 var postgresPasswordParameterResource = builder.AddParameter("postgres-password", secret: true);
 var postgresUsernameParameterResource = builder.AddParameter("postgres-user", secret: true);
 
+
 var postgres = builder.AddPostgres("postgres", postgresUsernameParameterResource, postgresPasswordParameterResource)
                       .WithPgAdmin(containerName: "postgresadmin")
                       .WithLifetime(ContainerLifetime.Persistent)
