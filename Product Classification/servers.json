@@ -1,0 +1,16 @@
+{
+    "Servers": {
+      "1": {
+        "Name": "PromptEvaluation",
+        "Group": "Servers",
+        "Host": "postgres-db",            
+        "Port": 5432,
+        "MaintenanceDB": "PromptEvaluationDB",
+        "Username": "user",
+        "SSLMode": "prefer",
+        "Password":"user",
+        "SavePassword": "True"
+      }
+    }
+  }
+  

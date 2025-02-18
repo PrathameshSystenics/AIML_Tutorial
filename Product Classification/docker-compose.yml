@@ -4,8 +4,6 @@ services:
     container_name: productclassification
     ports:
       - 8080:8080
-    networks:
-      - db-networks
     depends_on:
       - postgres-db
 
@@ -13,30 +11,36 @@ services:
     image: postgres:16
     container_name: postgres-db
     environment:
-    - POSTGRES_USER=user
-    - POSTGRES_PASSWORD=user
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=user
     ports:
-      - 5432:5432
+      - target: 5432
     volumes:
       - db-data:/var/lib/postgresql/data
-    networks:
-      - db-networks
 
   ollamamodels:
     image: ollama/ollama
     container_name: ollamacontainer
     ports:
-      - 11434:11434
+      - target: 11434
     volumes:
       - ollama-models:/root/.ollama
-      - ./ollamasetup.sh:/ollamasetup.sh:ro
-    entrypoint: ["/bin/sh", "/ollamasetup.sh"]
-    networks:
-      - db-networks
-  
+      - ./ollamasetup.sh:/ollamasetup.sh
+    entrypoint: [ "/bin/bash","/ollamasetup.sh" ]
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-interface
+    ports:
+      - 8081:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    depends_on:
+      - postgres-db
+
 volumes:
   db-data:
   ollama-models:
-
-networks:
- db-networks:
