@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using System.Text.Json;
+using ProductClassification.Extensions;
 using ProductClassification.Models;
 using ProductClassification.SemanticKernel;
 using Microsoft.AspNetCore.Mvc;

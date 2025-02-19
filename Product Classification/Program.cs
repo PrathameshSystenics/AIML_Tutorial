@@ -21,7 +21,13 @@ builder.Services.AddScoped<AIConnectorService>();
 builder.Services.AddScoped<ClassificationService>();
 
 // Adding the DB Support
-builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb");
+builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb", configureDbContextOptions: options =>
+{
+    options.UseNpgsql(builder =>
+    {
+        builder.UseVector();
+    });
+});
 
 builder.Services.AddScoped<EvaluationDataRepository>();
 builder.Services.AddScoped<EvaluationService>();

@@ -1,0 +1,54 @@
+﻿{
+  "Evaluate": [
+    {
+      "Description": "Make Plastic Items Like New Again! Recommended By Tupperware. Use Regularly To: Remove Red Stains and Odors! Clean and Freshen Dishwasher! Safely removes red stains and odors from your plastic containers, dishes, cutting boards, and utensils - plus the plastic interior of your dishwasher! Made in USA.",
+      "Answer": "Health & Personal Care",
+      "Reason": "It might seem like a household cleaning product but it is categorized under health and personal care due to its specific cleaning purpose."
+    },
+    {
+      "Description": "Adidas Daily Energizing Face Lotion for men. It will revitalize your skin with antioxidant vitamins to recharge the athlete in you.",
+      "Answer": "Beauty",
+      "Reason": "While Adidas is known for sports products, this is a skincare product categorized under Beauty."
+    },
+    {
+      "Description": "Extra long needle threader for hard-to-reach needles. Fits most serger needles.",
+      "Answer": "Arts, Crafts & Sewing",
+      "Reason": "It is a tool specifically designed for sewing, making it part of the arts and crafts category."
+    },
+    {
+      "Description": "21.7 Cu. Ft. Side-by-Side Refrigerator (Color: Black) ENERGY STAR",
+      "Answer": "Appliances",
+      "Reason": "It is a household appliance used for refrigeration and storage."
+    },
+    {
+      "Description": "The Starrett 120B-12 dial caliper measures 0 to 12 inches with high accuracy, featuring stainless steel construction for durability.",
+      "Answer": "Industrial & Scientific",
+      "Reason": "A precision measuring tool primarily used in engineering and manufacturing."
+    },
+    {
+      "Description": "The copy paper that's friendly to your budget and the environment. Acid-free for archival quality. A good choice for general copying, proofing, internal memos, and faxes.",
+      "Answer": "Office Products",
+      "Reason": "Copy paper is an essential office supply, making it fit in the office products category."
+    },
+    {
+      "Description": "H06E-30 is a 30-Inch universal replacement thermocouple for water heater use and heating devices with a standing pilot.",
+      "Answer": "Industrial & Scientific",
+      "Reason": "A specialized component used in industrial heating systems, not a household item."
+    },
+    {
+      "Description": "Lifetime's folding tables are durable, lightweight, and built for indoor or outdoor use. Made in the U.S., backed by a five-year warranty.",
+      "Answer": "Patio, Lawn & Garden",
+      "Reason": "Primarily used in outdoor and patio settings, making it suitable for this category."
+    },
+    {
+      "Description": "Nonacid Bowl And Bathroom Cleaner, 32oz Flip-Top Spout Bottle. Cleans, disinfects, deodorizes, and controls mildew on hard surfaces.",
+      "Answer": "Health & Personal Care",
+      "Reason": "A cleaning product designed for hygiene and sanitation purposes."
+    },
+    {
+      "Description": "With its numbered deck of 57 cards, Rook, the classic card game, has elements of everything: bridge, pinochle, and lots of trumping and trick-taking.",
+      "Answer": "Toys & Games",
+      "Reason": "A card game designed for entertainment, making it part of the toys and games category."
+    }
+  ]
+}

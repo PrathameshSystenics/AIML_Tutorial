@@ -1,11 +1,10 @@
-﻿using ProductClassification.Models;
-using ProductClassification.SemanticKernel;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Text.Json;
-using ProductClassification.Services;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductClassification.Data;
+using ProductClassification.Models;
+using ProductClassification.SemanticKernel;
+using ProductClassification.Services;
+using System.Text.Json;
+using ProductClassification.Extensions;
 
 namespace ProductClassification.Controllers
 {

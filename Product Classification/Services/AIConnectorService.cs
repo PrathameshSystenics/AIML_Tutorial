@@ -1,5 +1,6 @@
 ﻿using Microsoft.SemanticKernel;
 using ProductClassification.SemanticKernel;
+using ProductClassification.Extensions;
 
 namespace ProductClassification.Services
 {

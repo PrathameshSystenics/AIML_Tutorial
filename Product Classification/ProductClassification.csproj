@@ -26,6 +26,7 @@
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.35.0-alpha" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+		<PackageReference Include="Pgvector.EntityFrameworkCore" Version="0.2.1" />
 
 	</ItemGroup>
 
@@ -51,6 +52,10 @@
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </None>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Data\Samples\" />
 	</ItemGroup>
 	
 	

@@ -1,0 +1,54 @@
+﻿{
+  "Evaluate": [
+    {
+      "Description": "Mollard P14RW P-14In.Rosewood White Baton",
+      "Answer": "Musical Instruments",
+      "Reason": "It is a musical instrument."
+    },
+    {
+      "Description": "These lightweight cotton socks provide a great combination of high quality materials and excellent artwork.",
+      "Answer": "Clothing, Shoes & Jewelry",
+      "Reason": "Socks are clothing items."
+    },
+    {
+      "Description": "MXR ZW44 Zakk Wylde Overdrive Pedal Whether on his groundbreaking work with Ozzy Osbourne or with his own Black Label Society, Zakk Wylde's guitar playing is loud, tough, and relentless. Zakk's take-no-prisoners attitude extends to his quest for tone, too. When he wanted to develop his signature overdrive pedal, he looked no further than Dunlop. The result is the new Wylde Overdrive. This muscular stompbox will turn your clean amp into a heavy, chunky crunch machine. Or, use it like Zakk does and kick it in front of a dirty amp for a screaming, sustaining lead tone. The three simple controls - Output, Tone, and Drive - make getting up and running easy, so you can concentrate on the business at hand. MXR ZW44 Zakk Wylde Overdrive Controls Footswitch toggles effect on/hardwire bypass (red LED indicates on) Output knob sets total output level Drive knob controls amount of distortion Tone knob tailors overall EQ",
+      "Answer": "Musical Instruments",
+      "Reason": "It is a guitar pedal, which is a musical instrument accessory."
+    },
+    {
+      "Description": "Source of Life is an incredible nutritional breakthrough which emulates nature's wholesome goodness with a powerful blend of nutrients. With its powerful, revitalizing, energy-giving ingredients, Source of Life is no ordinary multi-vitamin. And, with Source of Life, you will experience a Burst of Energy and The Feeling of Nutritional Well-Being. Source of Life has a perfect blend of vitamins, minerals, lipids, bioflavonoids, enzymes, plant pigments, amino acids, nucleic acids and herbs. Whole brown rice, spirulina, bee pollen, young barley leaves, sunflower oil, carrots and black currant seeds are other ingredients which offer the most health-giving, life-supporting nutrients. All these have been ingeniously combined in this formula to create powerful, synergistic effects that will result in a Burst of Energy you'll want to experience every day!",
+      "Answer": "Health & Personal Care",
+      "Reason": "It is a nutritional supplement."
+    },
+    {
+      "Description": "Natural wooden baby spoons. Enjoy these handcrafted wooden spoons with unique hand design. Made here in the USA with Pennsylvania light wood. We special-ordered these baby spoons unfinished (normally they are finished w/ mineral oil which we don't like to use for babies), so this way you can decide if you would like a finish applied or not. Some people like to use olive oil or coconut oil, or we have an all-natural beeswax polish available at the bottom of the page (or we can apply the beeswax to your spoon at no extra cost). For care of wood spoons, avoid prolonged periods of moisture (wash briefly without soaking, and dry w/ towel after use). We ship the spoons in a padded recycled-paper jewelry box for extra protection (the box also looks nice when the spoon is for a baby gift)\n\nEvery item is made from the finest materials including, 18/10 Stainless Steel, Porcelain, Hand Crafted Clay and many others. We strive to bring each consumer an item that has been tested and used by our staff and insured to be enjoyed by you and your family.",
+      "Answer": "Baby Products",
+      "Reason": "These are baby spoons."
+    },
+    {
+      "Description": "Dry sanding only, on machine or by hand. Used for finishing plastic filler and scratch refinement of bare metal. For non-critical, short-term application.",
+      "Answer": "Industrial & Scientific",
+      "Reason": "It is a sanding product used in industrial applications."
+    },
+    {
+      "Description": "The V2 Supporter by It’s You Babe provides clinically proven compression therapy for Vulvar Varicosities or the feeling that 'everything is going to fall out the bottom'.  It is also a safe and effective therapy for Lymphedema, Perineal Edema, Incontinence, or External Prolapse Bladder or Uterus.  Wearing the V2 Supporter before rising in the morning helps prevent excessive swelling of the vulvar veins.",
+      "Answer": "Health & Personal Care",
+      "Reason": "It is a medical support device."
+    },
+    {
+      "Description": "Take the Silly Billyz Basic Bib and add a colorful, food-catching pocket. These bibs combine all the features of the basic bib with a practical pocket and a whimsical flair. Made from high quality anti pill fleece with a strong nylon (never rip) backing and snap closure. With so many colors to choose from, they are guaranteed to color coordinate with any of your child's clothing. PVC free.",
+      "Answer": "Baby Products",
+      "Reason": "It is a baby bib."
+    },
+    {
+      "Description": "Counter Depth Side by Side Refrigerator with Dispenser - KSCS25FV",
+      "Answer": "Appliances",
+      "Reason": "It is a refrigerator, a household appliance."
+    },
+    {
+      "Description": "Pore Refining Toner visibly reduces the appearance of pores. This Alpha and Beta Hydroxy formula is dermatologist tested to deliver visible results. First, it sweeps away dead surface skin and refines rough, uneven patches. Then, it penetrates deep into pores so they appear smaller and less visible. Skin is soft, smooth and refreshed.",
+      "Answer": "Beauty",
+      "Reason": "It is a skin toner, a beauty product."
+    }
+  ]
+}
