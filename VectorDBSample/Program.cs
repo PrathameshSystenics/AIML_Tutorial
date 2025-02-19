@@ -28,7 +28,7 @@ await productcollections.CreateCollectionIfNotExistsAsync();
 
 // Reading the top 500 products list
 ProductCSVReader reader = new ProductCSVReader();
-IEnumerable<ProductCSVModel> products = reader.GetProducts(); // Process all rows
+IEnumerable<ProductCSVModel> products = reader.GetProducts().Skip(15992); // Process all rows
 
 foreach (ProductCSVModel product in products)
 {
@@ -47,3 +47,5 @@ foreach (ProductCSVModel product in products)
 
     Console.WriteLine($"{inserted} Inserted");
 }
+
+// FIXME : HIT it again after the Rows 15992
