@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProductClassification.Data;
+using ProductClassification.Extensions;
 using ProductClassification.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,21 +17,16 @@ builder.Logging.AddConsole();
 builder.Services.AddMvc();
 builder.Services.AddSession();
 
-// Injecting the Required Service
-builder.Services.AddScoped<AIConnectorService>();
-builder.Services.AddScoped<ClassificationService>();
-
 // Adding the DB Support
-builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb", configureDbContextOptions: options =>
-{
-    options.UseNpgsql(builder =>
-    {
-        builder.UseVector();
-    });
-});
+builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb");
+builder.AddServicesRequiredForAI();
 
+
+// Injecting the Required Service
 builder.Services.AddScoped<EvaluationDataRepository>();
-builder.Services.AddScoped<EvaluationService>();
+builder.AddVectorDbSupport(builder.Configuration);
+
+
 
 var app = builder.Build();
 

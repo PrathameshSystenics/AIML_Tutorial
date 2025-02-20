@@ -87,9 +87,20 @@
 
         <div class="mt-3">
             <h5>System Prompt: </h5>
-            <div>
-                @Model.PromptData.SystemPrompt
+            <div id="system-prompt-display">
+                
             </div>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script src="~/lib/marked/marked.min.js"></script>
+    <script>
+        $(function(){
+            var markedprompt=marked.parse(`@Model.PromptData.SystemPrompt`);
+
+            $("#system-prompt-display").html(markedprompt)
+        })
+    </script>
+}

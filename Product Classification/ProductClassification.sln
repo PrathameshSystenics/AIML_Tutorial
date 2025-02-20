@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassificationDatabase.MigrationService", "..\ProductClassificationDatabase.MigrationService\ProductClassificationDatabase.MigrationService.csproj", "{58930BCF-BC5B-4411-9985-A475F1034597}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorStore.SeedingService", "..\VectorStore.SeedingService\VectorStore.SeedingService.csproj", "{AD4D22A6-1F88-4A08-B94D-8E83BC4357A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.CSVReader", "..\ProductClassification.CSVReader\ProductClassification.CSVReader.csproj", "{F62BDB43-8C7B-4114-B8DD-E37593E6A654}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{58930BCF-BC5B-4411-9985-A475F1034597}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58930BCF-BC5B-4411-9985-A475F1034597}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58930BCF-BC5B-4411-9985-A475F1034597}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD4D22A6-1F88-4A08-B94D-8E83BC4357A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD4D22A6-1F88-4A08-B94D-8E83BC4357A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD4D22A6-1F88-4A08-B94D-8E83BC4357A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD4D22A6-1F88-4A08-B94D-8E83BC4357A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62BDB43-8C7B-4114-B8DD-E37593E6A654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62BDB43-8C7B-4114-B8DD-E37593E6A654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62BDB43-8C7B-4114-B8DD-E37593E6A654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62BDB43-8C7B-4114-B8DD-E37593E6A654}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@ namespace ProductClassification.Data
 {
     public static class DBInitializer
     {
-        public static void Initialize(ApplicationDBContext dbContext)
+        public static void SeedEvaluationData(ApplicationDBContext dbContext)
         {
             try
             {
@@ -17,7 +17,7 @@ namespace ProductClassification.Data
                 }
 
                 // Read the Json File 
-                string jsonfilepath = Path.Combine(AppContext.BaseDirectory,Path.Join("Data","Samples","Evaluation.json"));
+                string jsonfilepath = Path.Combine(AppContext.BaseDirectory, Path.Join("Data", "Samples", "Evaluation.json"));
                 string json = File.ReadAllText(jsonfilepath);
 
                 EvaluationData[] evaldata = JsonSerializer.Deserialize<EvaluationListModel>(json).Evaluate.Select((data) => new EvaluationData() { Answer = data.Answer, Description = data.Description, Reason = data.Reason }).ToArray();
@@ -34,5 +34,6 @@ namespace ProductClassification.Data
 
 
         }
+
     }
 }
