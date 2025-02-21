@@ -1,4 +1,3 @@
-using Aspire.Hosting;
 using ProductClassification.AppHost;
 
 var builder = DistributedApplication.CreateBuilder(args);

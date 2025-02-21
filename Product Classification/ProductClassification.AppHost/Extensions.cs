@@ -1,5 +1,4 @@
-﻿using Aspire.Hosting;
-using Npgsql;
+﻿using Npgsql;
 
 namespace ProductClassification.AppHost
 {
