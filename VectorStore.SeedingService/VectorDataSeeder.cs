@@ -63,7 +63,7 @@ IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
                 {
                     try
                     {
-                        await productdatarepo.GenerateAndStoreEmbedding(source);
+                        await productdatarepo.UpsertProductEmbeddingAsync(source);
                     }
                     catch (Exception ex)
                     {
