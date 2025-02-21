@@ -60,14 +60,14 @@ namespace ProductClassification.Data
         }
 
 
-        public async Task<VectorSearchResults<Product>> SearchProductsByDescription(string description, int noofProductsToSearch)
+        public async Task<VectorSearchResults<Product>> SearchProductsByDescription(string searchtext, int noofProductsToSearch)
         {
             VectorSearchResults<Product> searchResults;
             try
             {
                 IVectorStoreRecordCollection<Guid, Product> collection = _vectorstore.GetCollection<Guid, Product>("Products");
 
-                ReadOnlyMemory<float> embeddings = await _embeddingGeneratorService.GenerateEmbeddingAsync(description);
+                ReadOnlyMemory<float> embeddings = await _embeddingGeneratorService.GenerateEmbeddingAsync(searchtext);
 
                 VectorSearchOptions searchoptions = new VectorSearchOptions()
                 {
@@ -83,6 +83,21 @@ namespace ProductClassification.Data
                 throw;
             }
 
+        }
+
+
+        public async Task<Product> GetProductById(Guid id)
+        {
+            try
+            {
+                IVectorStoreRecordCollection<Guid, Product> collection = _vectorstore.GetCollection<Guid, Product>("Products");
+                return await collection.GetAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
         }
     }
 }

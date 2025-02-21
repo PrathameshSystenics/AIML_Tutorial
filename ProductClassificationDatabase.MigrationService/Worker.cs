@@ -38,7 +38,11 @@ IHostApplicationLifetime hostApplicationLifetime, ILogger<Worker> logger) : Back
 
         private static async Task RunMigrationAsync(ApplicationDBContext dbContext, CancellationToken cancellationToken)
         {
-            await dbContext.Database.MigrateAsync(cancellationToken);
+            var strategy = dbContext.Database.CreateExecutionStrategy();
+            await strategy.ExecuteAsync(async () =>
+            {
+                await dbContext.Database.MigrateAsync(cancellationToken);
+            });
         }
 
         private static void SeedData(ApplicationDBContext dbContext)
