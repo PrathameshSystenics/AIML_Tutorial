@@ -40,6 +40,10 @@ namespace ProductClassification.Services
 
                 LLMConnectionConfig GeminiFlash2_ThinkingConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GeminiFlash2_0Thinking) ?? "");
 
+                LLMConnectionConfig GoogleTextEmbeddingConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GoogleTextEmbedding_004) ?? "");
+
+                LLMConnectionConfig OllamaNomicEmbedConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaNomicEmbed_Text) ?? "");
+
                 #endregion
 
                 _kernelbuilder = _kernelbuilder
@@ -100,6 +104,20 @@ namespace ProductClassification.Services
                         modelId: GeminiFlash2_ThinkingConfigs.ModelName,
                         serviceId: Enum.GetName<ModelEnum>(ModelEnum.GeminiFlash2_0Thinking),
                         apiKey: GeminiFlash2_ThinkingConfigs.ApiKey
+                    )
+
+                    // Gemini Text Embedding 004 Model
+                    .AddGoogleAIEmbeddingGeneration(
+                        modelId: GoogleTextEmbeddingConfigs.ModelName,
+                        apiKey: GoogleTextEmbeddingConfigs.ApiKey,
+                        serviceId: Enum.GetName<ModelEnum>(ModelEnum.GoogleTextEmbedding_004)
+                    )
+
+                    // Ollama Nomic Embedded Text
+                    .AddOllamaTextEmbeddingGeneration(
+                        serviceId: Enum.GetName(ModelEnum.OllamaNomicEmbed_Text),
+                        modelId: OllamaNomicEmbedConfigs.ModelName,
+                        endpoint: new Uri(OllamaNomicEmbedConfigs.Url)
                     );
 
                 return _kernelbuilder.Build();

@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "cdnjs",
+      "library": "marked@15.0.6",
+      "destination": "wwwroot/lib/marked/"
+    }
+  ]
+}

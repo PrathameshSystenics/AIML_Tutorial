@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Pgvector;
 using ProductClassification.Data;
 
 #nullable disable
@@ -21,7 +20,6 @@ namespace ProductClassification.Migrations
                 .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "vector");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("ProductClassification.Models.EvaluatedResult", b =>
@@ -100,39 +98,6 @@ namespace ProductClassification.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("EvaluationData");
-                });
-
-            modelBuilder.Entity("ProductClassification.Models.Product", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Vector>("DescriptionEmbedding")
-                        .IsRequired()
-                        .HasColumnType("vector(768)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Vector>("TitleEmbedding")
-                        .IsRequired()
-                        .HasColumnType("vector(768)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ProductClassification.Models.PromptData", b =>

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ProductClassificationDatabase.MigrationService\ProductClassificationDatabase.MigrationService.csproj" />
+    <ProjectReference Include="..\..\VectorStore.SeedingService\VectorStore.SeedingService.csproj" />
     <ProjectReference Include="..\ProductClassification.csproj" />
   </ItemGroup>
 

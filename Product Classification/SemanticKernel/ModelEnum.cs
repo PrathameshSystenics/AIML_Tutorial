@@ -13,6 +13,9 @@
         OllamaPhi3_8b,
         GeminiFlash2,
         GeminiFlash1_5,
-        GeminiFlash2_0Thinking
+        GeminiFlash2_0Thinking,
+        GoogleTextEmbedding_004,
+        OllamaNomicEmbed_Text
     }
+
 }
