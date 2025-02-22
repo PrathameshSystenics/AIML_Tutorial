@@ -43,12 +43,12 @@ var migrationservice = builder.AddProject<Projects.ProductClassificationDatabase
 #endregion
 
 #region Product Classification - PgVector Data Seeding Service
-var vectordataseedingservice = builder.AddProject<Projects.VectorStore_SeedingService>("vectorstore-seedingservice")
+/*var vectordataseedingservice = builder.AddProject<Projects.VectorStore_SeedingService>("vectorstore-seedingservice")
        .WithReference(promptevaluationdb)
        .WaitFor(promptevaluationdb)
        .WaitForCompletion(migrationservice)
        .WaitFor(ollama)
-       .AddOllamaEndpointToEnvironmentVariables(ollamacontainerendpoint);
+       .AddOllamaEndpointToEnvironmentVariables(ollamacontainerendpoint);*/
 #endregion
 
 #region Product Classification

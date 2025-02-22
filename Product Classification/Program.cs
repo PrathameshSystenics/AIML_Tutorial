@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProductClassification.Data;
 using ProductClassification.Extensions;
 

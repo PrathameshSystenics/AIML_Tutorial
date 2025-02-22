@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using OpenTelemetry.Trace;
 using ProductClassification.Data;
 using System.Diagnostics;
@@ -23,7 +25,7 @@ IHostApplicationLifetime hostApplicationLifetime, ILogger<Worker> logger) : Back
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
 
                 await RunMigrationAsync(dbContext, stoppingToken);
-                SeedData(dbContext);
+                //await SeedData(dbContext);
             }
             catch (Exception ex)
             {
@@ -39,18 +41,41 @@ IHostApplicationLifetime hostApplicationLifetime, ILogger<Worker> logger) : Back
         private static async Task RunMigrationAsync(ApplicationDBContext dbContext, CancellationToken cancellationToken)
         {
             var strategy = dbContext.Database.CreateExecutionStrategy();
+            await EnsureDatabaseAsync(dbContext, cancellationToken);
+
             await strategy.ExecuteAsync(async () =>
             {
                 await dbContext.Database.MigrateAsync(cancellationToken);
             });
+
         }
 
-        private static void SeedData(ApplicationDBContext dbContext)
+        private static async Task SeedData(ApplicationDBContext dbContext)
         {
-            DBInitializer.SeedEvaluationData(dbContext);
+            await DBInitializer.SeedEvaluationData(dbContext);
         }
 
+        /// <summary>
+        /// Make sure if the database exists else create one 
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private static async Task EnsureDatabaseAsync(ApplicationDBContext dbContext, CancellationToken cancellationToken)
+        {
+            var dbCreator = dbContext.GetService<IRelationalDatabaseCreator>();
 
+            var strategy = dbContext.Database.CreateExecutionStrategy();
+            await strategy.ExecuteAsync(async () =>
+            {
+                // Create the database if it does not exist.
+                // Do this first so there is then a database to start a transaction against.
+                if (!await dbCreator.ExistsAsync(cancellationToken))
+                {
+                    await dbCreator.CreateAsync(cancellationToken);
+                }
+            });
+        }
     }
 }
 
