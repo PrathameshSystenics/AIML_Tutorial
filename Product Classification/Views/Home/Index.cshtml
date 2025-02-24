@@ -24,7 +24,7 @@
             <p class="fw-bold">Classification Result:</p>
             <div class="border-1 h-100 rounded-1 p-2" id="classification-result">
             </div>
-            
+
         </div>
         <div class="mt-3" id="">
             <p class="fw-bold">Thinking Steps: </p>
@@ -38,4 +38,14 @@
 
 @section Scripts {
     <script src="~/js/Home.js"></script>
+    <script>
+        $(function(){
+        @if (TempData.ContainsKey("message"))
+        {
+            <text>
+                    showToast("Danger", "@TempData["message"]")
+            </text>
+        }
+        })
+    </script>
 }

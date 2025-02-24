@@ -26,7 +26,7 @@ namespace ProductClassification.Controllers
             {
                 if (String.IsNullOrWhiteSpace(searchtext))
                 {
-                    return RedirectToAction("Index", "Home");
+                    return View(products);
                 }
 
                 VectorSearchResults<Product> productsearchresults = await _productdatarepository.SearchProductsByDescription(searchtext, noofproductstosearch);
@@ -40,6 +40,7 @@ namespace ProductClassification.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                TempData["message"] = "Searching Services are currently busy in doing other Operations";
                 return RedirectToAction("Index", "Home");
             }
         }

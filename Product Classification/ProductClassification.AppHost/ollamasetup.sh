@@ -12,6 +12,7 @@ echo "🔴 Retrieve models"
 ollama pull deepseek-r1:1.5b 
 ollama pull phi3:3.8b 
 ollama pull qwen:1.8b
+ollama pull nomic-embed-text:latest
 echo "🟢 Done!"
 
 # Wait for Ollama process to finish.

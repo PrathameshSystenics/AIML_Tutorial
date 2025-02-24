@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.VectorData;
+using Microsoft.SemanticKernel;
 using Npgsql;
+using Polly;
 using ProductClassification.CSVReader;
 using ProductClassification.Data;
 using ProductClassification.Models;
 using System.Diagnostics;
+using System.Net;
 
 namespace VectorStore.SeedingService
 {
@@ -60,18 +63,34 @@ IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
                     ProductDataRepository productdatarepo = Scope.ServiceProvider.GetRequiredService<ProductDataRepository>();
                     string csvfilepath = Path.Combine(AppContext.BaseDirectory, Path.Join("Samples", "train.csv"));
 
-                    IEnumerable<ProductCsvModel> productscsv = ProductCsvReader.ReadProducts(csvfilepath).Take(500);
+                    IEnumerable<ProductCsvModel> productscsv = ProductCsvReader.ReadProducts(csvfilepath).Skip(28251);
 
-                    await Parallel.ForEachAsync(productscsv, new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount }, async (source, stoppingToken) =>
+                    int insertedproductcount = 0;
+
+                    var retryPolicy = Policy
+                                     .Handle<HttpOperationException>(ex => ex.StatusCode == HttpStatusCode.TooManyRequests)
+                                     .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMinutes(1.5), (ex, ts) =>
+                                     {
+                                         _logger.LogWarning($"Rate limit hit. Retrying after {ts.TotalSeconds} seconds. Exception => {ex.Message}");
+                                     });
+
+                    await Parallel.ForEachAsync(productscsv, new ParallelOptions() { MaxDegreeOfParallelism = 1 }, async (source, stoppingToken) =>
                     {
                         try
                         {
-                            await productdatarepo.UpsertProductEmbeddingAsync(source);
+                            await retryPolicy.ExecuteAsync(async () =>
+                            {
+                                await productdatarepo.UpsertProductEmbeddingAsync(source);
+
+                                // Automatically increment the counter.
+                                int incrementcount = Interlocked.Increment(ref insertedproductcount);
+                                _logger.LogInformation("Inserted Record count : {count}, Total Products Remaining : {remainingcount}", insertedproductcount, productscsv.Count() - insertedproductcount);
+                            });
                         }
                         catch (Exception ex)
                         {
-
                             _logger.LogError(ex.Message);
+                            throw;
                         }
                     });
                 }
@@ -88,7 +107,7 @@ IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
 
                 NpgsqlCommand command = new NpgsqlCommand("""select count(*) from "Products";""", connection);
 
-                object countofproducts = command.ExecuteScalar();
+                object countofproducts = command.ExecuteScalar()!;
 
                 return Convert.ToInt32(countofproducts) == 0 ? true : false;
             }

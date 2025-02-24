@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProductClassification.Data;
 using ProductClassificationDatabase.MigrationService;
 
@@ -18,9 +17,9 @@ builder.Services.AddDbContextPool<ApplicationDBContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("promptevaldb"), sqlOptions =>
     {
         sqlOptions.MigrationsAssembly("ProductClassification");
-        //sqlOptions.UseVector();
         sqlOptions.EnableRetryOnFailure();
     })
-    );
+);
+
 var host = builder.Build();
 host.Run();

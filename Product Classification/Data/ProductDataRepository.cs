@@ -41,7 +41,7 @@ namespace ProductClassification.Data
 
 
             }
-            catch (HttpOperationException ex)
+           /* catch (HttpOperationException ex)
             {
                 _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());
                 if (ex.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
@@ -50,7 +50,7 @@ namespace ProductClassification.Data
                     await Task.Delay(1000);
                     await UpsertProductEmbeddingAsync(product);
                 }
-            }
+            }*/
             catch (Exception ex)
             {
                 _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());

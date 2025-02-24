@@ -9,12 +9,11 @@
 
   <ItemGroup>
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+	<PackageReference Include="Polly" Version="8.5.2" />
   </ItemGroup>
 
   <ItemGroup>
 	<ProjectReference Include="..\Product Classification\ProductClassification.csproj" />
-	<ProjectReference Include="..\Product Classification\ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj" />
-	<ProjectReference Include="..\ProductClassification.CSVReader\ProductClassification.CSVReader.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

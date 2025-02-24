@@ -13,7 +13,7 @@ var postgres = builder.AddPostgres("postgres", postgresUsernameParameterResource
                           configs.WithImage("elestio/pgadmin");
                           configs.WithBindMount("./Postgres", "/home/Postgres");
                       })
-                      .WithEnvironment("POSTGRES_DB","promptevaluationdb")
+                      .WithEnvironment("POSTGRES_DB", "promptevaluationdb")
                       .WithBindMount("./Postgres/Init", "/docker-entrypoint-initdb.d")
                       .WithLifetime(ContainerLifetime.Persistent)
                       .WithDataVolume("pgvolume")
@@ -43,12 +43,12 @@ var migrationservice = builder.AddProject<Projects.ProductClassificationDatabase
 #endregion
 
 #region Product Classification - PgVector Data Seeding Service
-/*var vectordataseedingservice = builder.AddProject<Projects.VectorStore_SeedingService>("vectorstore-seedingservice")
+var vectordataseedingservice = builder.AddProject<Projects.VectorStore_SeedingService>("vectorstore-seedingservice")
        .WithReference(promptevaluationdb)
        .WaitFor(promptevaluationdb)
        .WaitForCompletion(migrationservice)
        .WaitFor(ollama)
-       .AddOllamaEndpointToEnvironmentVariables(ollamacontainerendpoint);*/
+       .AddOllamaEndpointToEnvironmentVariables(ollamacontainerendpoint);
 #endregion
 
 #region Product Classification

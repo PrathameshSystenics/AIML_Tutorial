@@ -25,7 +25,7 @@ IHostApplicationLifetime hostApplicationLifetime, ILogger<Worker> logger) : Back
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
 
                 await RunMigrationAsync(dbContext, stoppingToken);
-                //await SeedData(dbContext);
+                await SeedData(dbContext);
             }
             catch (Exception ex)
             {
