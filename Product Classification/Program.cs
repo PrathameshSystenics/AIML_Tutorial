@@ -1,7 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProductClassification.Data;
 using ProductClassification.Extensions;
-using ProductClassification.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

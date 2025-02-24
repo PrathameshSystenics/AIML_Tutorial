@@ -20,7 +20,7 @@ namespace ProductClassification.Data
 
         }
 
-        public async Task GenerateAndStoreEmbedding(ProductCsvModel product)
+        public async Task UpsertProductEmbeddingAsync(ProductCsvModel product)
         {
             try
             {
@@ -41,16 +41,16 @@ namespace ProductClassification.Data
 
 
             }
-            catch (HttpOperationException ex)
+           /* catch (HttpOperationException ex)
             {
                 _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());
                 if (ex.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
                 {
                     _logger.LogWarning("Rate limit exceeded. Waiting 1 minute before retrying...");
                     await Task.Delay(1000);
-                    await GenerateAndStoreEmbedding(product);
+                    await UpsertProductEmbeddingAsync(product);
                 }
-            }
+            }*/
             catch (Exception ex)
             {
                 _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());
@@ -60,21 +60,44 @@ namespace ProductClassification.Data
         }
 
 
-        /*public async List<Product> SearchProduct(string description)
+        public async Task<VectorSearchResults<Product>> SearchProductsByDescription(string searchtext, int noofProductsToSearch)
         {
+            VectorSearchResults<Product> searchResults;
             try
             {
                 IVectorStoreRecordCollection<Guid, Product> collection = _vectorstore.GetCollection<Guid, Product>("Products");
 
-                ReadOnlyMemory<float> embeddings=await _embeddingGeneratorService.GenerateEmbeddingAsync(description);
+                ReadOnlyMemory<float> embeddings = await _embeddingGeneratorService.GenerateEmbeddingAsync(searchtext);
 
-                var products = collection.VectorizedSearchAsync(embeddings,)
+                VectorSearchOptions searchoptions = new VectorSearchOptions()
+                {
+                    Top = noofProductsToSearch
+                };
+
+                searchResults = await collection.VectorizedSearchAsync(embeddings, searchoptions);
+                return searchResults;
             }
             catch (Exception ex)
             {
                 _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());
-                return new List<Product>();
+                throw;
             }
-        }*/
+
+        }
+
+
+        public async Task<Product> GetProductById(Guid id)
+        {
+            try
+            {
+                IVectorStoreRecordCollection<Guid, Product> collection = _vectorstore.GetCollection<Guid, Product>("Products");
+                return await collection.GetAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
     }
 }

@@ -5,11 +5,10 @@ namespace ProductClassification.Data
 {
     public static class DBInitializer
     {
-        public static void SeedEvaluationData(ApplicationDBContext dbContext)
+        public static async Task SeedEvaluationData(ApplicationDBContext dbContext)
         {
             try
             {
-                dbContext.Database.EnsureCreated();
 
                 if (dbContext.EvaluationData.Any())
                 {
@@ -23,7 +22,7 @@ namespace ProductClassification.Data
                 EvaluationData[] evaldata = JsonSerializer.Deserialize<EvaluationListModel>(json).Evaluate.Select((data) => new EvaluationData() { Answer = data.Answer, Description = data.Description, Reason = data.Reason }).ToArray();
 
                 dbContext.EvaluationData.AddRange(evaldata);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
             }
             catch (Exception ex)

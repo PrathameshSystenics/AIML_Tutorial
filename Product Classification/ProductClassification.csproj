@@ -14,11 +14,9 @@
 	<ItemGroup>
 		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
 		<PackageReference Include="bootstrap" Version="5.3.3" />
-		<PackageReference Include="CsvHelper" Version="33.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.SemanticKernel" Version="1.35.0" />
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureAIInference" Version="1.35.0-beta" />
@@ -27,7 +25,6 @@
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.35.0-alpha" />
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Postgres" Version="1.35.0-alpha" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
 
 	</ItemGroup>
 
@@ -41,6 +38,53 @@
 		<EmbeddedResource Remove="ProductClassification.ServiceDefaults\**" />
 		<None Remove="ProductClassification.AppHost\**" />
 		<None Remove="ProductClassification.ServiceDefaults\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.js" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.js.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.js" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.js.map" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
+	  <Content Remove="C:\Users\PrathameshDhande\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
 	</ItemGroup>
 
 	<ItemGroup>

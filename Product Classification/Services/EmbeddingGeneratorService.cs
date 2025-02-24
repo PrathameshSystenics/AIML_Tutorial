@@ -22,7 +22,7 @@ namespace ProductClassification.Services
         {
             try
             {
-                string serviceid = Enum.GetName<ModelEnum>(ModelEnum.GoogleTextEmbedding_004);
+                string serviceid = Enum.GetName<ModelEnum>(ModelEnum.GoogleTextEmbedding_004)!;
 
                 ITextEmbeddingGenerationService kernelembeddinggeneratorService = _kernel.GetRequiredService<ITextEmbeddingGenerationService>(serviceid);
 

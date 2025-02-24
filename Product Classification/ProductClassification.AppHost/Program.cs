@@ -1,4 +1,4 @@
-using Aspire.Hosting;
+using Aspire.Hosting.Lifecycle;
 using ProductClassification.AppHost;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -14,7 +14,7 @@ var postgres = builder.AddPostgres("postgres", postgresUsernameParameterResource
                           configs.WithImage("elestio/pgadmin");
                           configs.WithBindMount("./Postgres", "/home/Postgres");
                       })
-                      .WithEnvironment("POSTGRES_DB","promptevaluationdb")
+                      .WithEnvironment("POSTGRES_DB", "promptevaluationdb")
                       .WithBindMount("./Postgres/Init", "/docker-entrypoint-initdb.d")
                       .WithLifetime(ContainerLifetime.Persistent)
                       .WithDataVolume("pgvolume")
@@ -28,10 +28,10 @@ var ollama = builder.AddContainer("ollama", "ollama/ollama")
                     .WithContainerName("ollama-aspire")
                     .WithHttpEndpoint(11434, 11434, "ollamaendpoint")
                     .WithLifetime(ContainerLifetime.Persistent)
-                    .WithVolume("ollmodels", "/root/.ollama")
-                    .WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
-                    .WithEntrypoint("/bin/sh")
-                    .WithArgs("/ollamasetup.sh");
+                    .WithVolume("ollamavol", "/root/.ollama");
+//.WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
+//.WithEntrypoint("/bin/sh")
+//.WithArgs("/ollamasetup.sh");
 
 var ollamacontainerendpoint = ollama.GetEndpoint("ollamaendpoint");
 #endregion
@@ -61,7 +61,7 @@ builder.AddProject<Projects.ProductClassification>("productclassification")
         .AddOllamaEndpointToEnvironmentVariables(ollamacontainerendpoint);
 #endregion
 
-
+builder.Services.AddLifecycleHook<OllamaContainerLifecycleHook>();
 
 
 builder.Build().Run();

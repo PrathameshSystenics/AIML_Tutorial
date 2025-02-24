@@ -1,11 +1,13 @@
-using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.VectorData;
-using OpenAI.VectorStores;
-using OpenTelemetry.Resources;
+using Microsoft.SemanticKernel;
+using Npgsql;
+using Polly;
 using ProductClassification.CSVReader;
 using ProductClassification.Data;
 using ProductClassification.Models;
 using System.Diagnostics;
+using System.Net;
 
 namespace VectorStore.SeedingService
 {
@@ -14,6 +16,7 @@ namespace VectorStore.SeedingService
         private readonly ILogger<VectorDataSeeder> _logger;
         private readonly IServiceProvider _serviceprovider;
         private readonly IHostApplicationLifetime _hostapplicationlifetime;
+        private readonly IConfiguration _configuration;
 
         public VectorDataSeeder(ILogger<VectorDataSeeder> logger, IServiceProvider serviceProvider,
 IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
@@ -21,6 +24,7 @@ IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
             _logger = logger;
             _serviceprovider = serviceProvider;
             _hostapplicationlifetime = hostApplicationLifetime;
+            _configuration = configuration;
         }
 
         public const string ActivitySourceName = "Migrations";
@@ -52,25 +56,65 @@ IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
 
         private async Task SeedVectorData(CancellationToken stoppingToken)
         {
-            using (var Scope = _serviceprovider.CreateScope())
+            if (await IsProductsCollectionEmpty())
             {
-                ProductDataRepository productdatarepo = Scope.ServiceProvider.GetRequiredService<ProductDataRepository>();
-                string csvfilepath = Path.Combine(AppContext.BaseDirectory, Path.Join("Samples", "train.csv"));
-
-                IEnumerable<ProductCsvModel> productscsv = ProductCsvReader.ReadProducts(csvfilepath).Take(500);
-
-                await Parallel.ForEachAsync(productscsv, new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount }, async (source, stoppingToken) =>
+                using (var Scope = _serviceprovider.CreateScope())
                 {
-                    try
-                    {
-                        await productdatarepo.GenerateAndStoreEmbedding(source);
-                    }
-                    catch (Exception ex)
-                    {
+                    ProductDataRepository productdatarepo = Scope.ServiceProvider.GetRequiredService<ProductDataRepository>();
+                    string csvfilepath = Path.Combine(AppContext.BaseDirectory, Path.Join("Samples", "train.csv"));
 
-                        _logger.LogError(ex.Message);
-                    }
-                });
+                    IEnumerable<ProductCsvModel> productscsv = ProductCsvReader.ReadProducts(csvfilepath);
+
+                    int insertedproductcount = 0;
+
+                    var retryPolicy = Policy
+                                     .Handle<HttpOperationException>(ex => ex.StatusCode == HttpStatusCode.TooManyRequests)
+                                     .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMinutes(1.5), (ex, ts) =>
+                                     {
+                                         _logger.LogWarning($"Rate limit hit. Retrying after {ts.TotalSeconds} seconds. Exception => {ex.Message}");
+                                     });
+
+                    await Parallel.ForEachAsync(productscsv, new ParallelOptions() { MaxDegreeOfParallelism = 1 }, async (source, stoppingToken) =>
+                    {
+                        try
+                        {
+                            await retryPolicy.ExecuteAsync(async () =>
+                            {
+                                await productdatarepo.UpsertProductEmbeddingAsync(source);
+
+                                // Automatically increment the counter.
+                                int incrementcount = Interlocked.Increment(ref insertedproductcount);
+                                _logger.LogInformation("Inserted Record count : {count}, Total Products Remaining : {remainingcount}", insertedproductcount, productscsv.Count() - insertedproductcount);
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex.Message);
+                            throw;
+                        }
+                    });
+                }
+            }
+        }
+
+        private async Task<bool> IsProductsCollectionEmpty()
+        {
+            try
+            {
+                NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("promptevaldb"));
+
+                await connection.OpenAsync();
+
+                NpgsqlCommand command = new NpgsqlCommand("""select count(*) from "Products";""", connection);
+
+                object countofproducts = command.ExecuteScalar()!;
+
+                return Convert.ToInt32(countofproducts) == 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
             }
         }
     }

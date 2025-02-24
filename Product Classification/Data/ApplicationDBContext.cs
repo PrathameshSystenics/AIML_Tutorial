@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProductClassification.Models;
 
 namespace ProductClassification.Data
@@ -10,5 +9,6 @@ namespace ProductClassification.Data
         public DbSet<EvaluationBatch> EvaluationBatch { get; set; }
         public DbSet<EvaluatedResult> EvaluatedResult { get; set; }
         public DbSet<PromptData> PromptData { get; set; }
+
     }
 }

@@ -12,15 +12,15 @@ using ProductClassification.Data;
 namespace ProductClassification.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250220063306_Inital")]
-    partial class Inital
+    [Migration("20250222063127_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.1")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
