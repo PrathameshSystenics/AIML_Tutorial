@@ -1,3 +1,4 @@
+using Aspire.Hosting.Lifecycle;
 using ProductClassification.AppHost;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -27,10 +28,10 @@ var ollama = builder.AddContainer("ollama", "ollama/ollama")
                     .WithContainerName("ollama-aspire")
                     .WithHttpEndpoint(11434, 11434, "ollamaendpoint")
                     .WithLifetime(ContainerLifetime.Persistent)
-                    .WithVolume("ollmodels", "/root/.ollama")
-                    .WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
-                    .WithEntrypoint("/bin/sh")
-                    .WithArgs("/ollamasetup.sh");
+                    .WithVolume("ollamavol", "/root/.ollama");
+//.WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
+//.WithEntrypoint("/bin/sh")
+//.WithArgs("/ollamasetup.sh");
 
 var ollamacontainerendpoint = ollama.GetEndpoint("ollamaendpoint");
 #endregion
@@ -60,7 +61,7 @@ builder.AddProject<Projects.ProductClassification>("productclassification")
         .AddOllamaEndpointToEnvironmentVariables(ollamacontainerendpoint);
 #endregion
 
-
+builder.Services.AddLifecycleHook<OllamaContainerLifecycleHook>();
 
 
 builder.Build().Run();
