@@ -26,11 +26,8 @@ namespace ProductClassification.AppHost
             try
             {
                 IResource containerresource = appModel.GetContainerResources().Where(resource => resource.Name.Equals("ollama")).FirstOrDefault()!;
-
                 EndpointAnnotation containerendpoint = containerresource.Annotations.OfType<EndpointAnnotation>().Where(endpoint => endpoint.Name.Equals("ollamaendpoint")).FirstOrDefault()!;
-
                 string connectionstring = containerendpoint.AllocatedEndpoint!.UriString;
-
                 await DownloadModelInOllama(connectionstring, containerresource);
             }
             catch (Exception ex)
@@ -60,7 +57,6 @@ namespace ProductClassification.AppHost
             try
             {
                 IAsyncEnumerable<PullModelResponse> modelresponse = ollamaapiclient.PullModelAsync(modelname)!;
-
                 await foreach (PullModelResponse response in modelresponse)
                 {
                     await _notificationservice.PublishUpdateAsync(resource, state => state with
@@ -68,7 +64,6 @@ namespace ProductClassification.AppHost
                         State = new ResourceStateSnapshot($"Downloading {modelname} Model: {response.Percent.ToMetric(decimals: 0)}% ", KnownResourceStateStyles.Info)
                     });
                 }
-
                 await _notificationservice.PublishUpdateAsync(resource, state => state with
                 {
                     State = new ResourceStateSnapshot(KnownResourceStates.Running, KnownResourceStateStyles.Success)
@@ -87,9 +82,7 @@ namespace ProductClassification.AppHost
             try
             {
                 OllamaApiClient ollamaapiclient = new OllamaApiClient(connectionstring);
-
                 string[] ollamamodelstodownload = _configuration.GetSection("OllamaModels").Get<string[]>()!;
-
                 foreach (string model in ollamamodelstodownload)
                 {
                     bool hasmodel = await HasModelAsync(ollamaapiclient, model);
