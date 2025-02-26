@@ -81,3 +81,42 @@ input[type="number"] {
     opacity: 0.7;
     pointer-events: none;
 }
+
+
+.nav-link {
+    position: relative;
+    color: white;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: #17a2b8;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #17a2b8;
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+.chat-input-container {
+    position: relative;
+}
+
+
+.send-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
+}

@@ -38,19 +38,7 @@ namespace ProductClassification.Data
                 });
 
                 _logger.LogInformation("Embedding Generated for ID = {id}, Title = {description}", insertedID, product.Title);
-
-
             }
-           /* catch (HttpOperationException ex)
-            {
-                _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());
-                if (ex.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
-                {
-                    _logger.LogWarning("Rate limit exceeded. Waiting 1 minute before retrying...");
-                    await Task.Delay(1000);
-                    await UpsertProductEmbeddingAsync(product);
-                }
-            }*/
             catch (Exception ex)
             {
                 _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());
@@ -60,9 +48,9 @@ namespace ProductClassification.Data
         }
 
 
-        public async Task<VectorSearchResults<Product>> SearchProductsByDescription(string searchtext, int noofProductsToSearch)
+        public async Task<List<Product>> SearchProductsByDescription(string searchtext, int noofProductsToSearch)
         {
-            VectorSearchResults<Product> searchResults;
+            List<Product> products = new List<Product>();
             try
             {
                 IVectorStoreRecordCollection<Guid, Product> collection = _vectorstore.GetCollection<Guid, Product>("Products");
@@ -74,19 +62,23 @@ namespace ProductClassification.Data
                     Top = noofProductsToSearch
                 };
 
-                searchResults = await collection.VectorizedSearchAsync(embeddings, searchoptions);
-                return searchResults;
+                var searchResults = await collection.VectorizedSearchAsync(embeddings, searchoptions);
+                await foreach (var product in searchResults.Results)
+                {
+                    if (product.Score < 0.9)
+                        products.Add(product.Record);
+                }
+                return products;
             }
             catch (Exception ex)
             {
                 _logger.LogError("Message = {message}, Type => {type}", ex.Message, ex.GetType());
                 throw;
             }
-
         }
 
 
-        public async Task<Product> GetProductById(Guid id)
+        public async Task<Product?> GetProductById(Guid id)
         {
             try
             {

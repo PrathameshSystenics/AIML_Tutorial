@@ -29,12 +29,8 @@ namespace ProductClassification.Controllers
                     return View(products);
                 }
 
-                VectorSearchResults<Product> productsearchresults = await _productdatarepository.SearchProductsByDescription(searchtext, noofproductstosearch);
+                products = await _productdatarepository.SearchProductsByDescription(searchtext, noofproductstosearch);
 
-                await foreach (var product in productsearchresults.Results)
-                {
-                    products.Add(product.Record);
-                }
                 return View(products);
             }
             catch (Exception ex)
@@ -50,7 +46,7 @@ namespace ProductClassification.Controllers
         {
             try
             {
-                Product product = await _productdatarepository.GetProductById(id);
+                Product? product = await _productdatarepository.GetProductById(id);
                 if (product == null)
                 {
                     return NotFound(new
@@ -58,7 +54,6 @@ namespace ProductClassification.Controllers
                         message = "No Product Found"
                     });
                 }
-
                 return Ok(product);
             }
             catch (Exception ex)

@@ -14,6 +14,7 @@
 	<ItemGroup>
 		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
 		<PackageReference Include="bootstrap" Version="5.3.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.13" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -31,13 +32,17 @@
 	<ItemGroup>
 		<Compile Remove="ProductClassification.AppHost\**" />
 		<Compile Remove="ProductClassification.ServiceDefaults\**" />
+		<Compile Remove="SemanticKernel\NewFolder\**" />
 		<Content Remove="ProductClassification.AppHost/*"></Content>
 		<Content Remove="ProductClassification.AppHost\**" />
 		<Content Remove="ProductClassification.ServiceDefaults\**" />
+		<Content Remove="SemanticKernel\NewFolder\**" />
 		<EmbeddedResource Remove="ProductClassification.AppHost\**" />
 		<EmbeddedResource Remove="ProductClassification.ServiceDefaults\**" />
+		<EmbeddedResource Remove="SemanticKernel\NewFolder\**" />
 		<None Remove="ProductClassification.AppHost\**" />
 		<None Remove="ProductClassification.ServiceDefaults\**" />
+		<None Remove="SemanticKernel\NewFolder\**" />
 	</ItemGroup>
 
 	<ItemGroup>

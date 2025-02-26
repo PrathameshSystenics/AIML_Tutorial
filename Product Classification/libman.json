@@ -5,6 +5,10 @@
     {
       "library": "marked@15.0.6",
       "destination": "wwwroot/lib/marked/"
+    },
+    {
+      "library": "bootstrap-icons@1.11.3",
+      "destination": "wwwroot/lib/bootstrap-icons/"
     }
   ]
 }

@@ -32,6 +32,13 @@
             </message>
             """;
 
+        public const string ChatSystemPrompt = """
+            You are the Product Category Classifier Bot. 
+            Your Role:
+               1. Help the User Related to the Provided Product Description.
+               2. Keep the Answers Short.
+               3. If the User input is not relevant to your Context give some Helpful Message to Him.
 
+            """;
     }
 }

@@ -113,7 +113,6 @@ namespace ProductClassification.Controllers
         {
             try
             {
-
                 List<EvaluationBatch> batches = await _evaldatarepo.GetEvaluationBatchesWithMetrics();
                 return View(batches);
             }

@@ -10,7 +10,7 @@ namespace ProductClassification.Extensions
             builder.AddServicesRequiredForEmbedding();
             builder.Services.AddScoped<EvaluationService>();
             builder.Services.AddScoped<ClassificationService>();
-            
+            builder.Services.AddScoped<RagChatService>();
             return builder;
         }
 

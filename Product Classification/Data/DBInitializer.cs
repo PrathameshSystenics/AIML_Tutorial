@@ -19,7 +19,7 @@ namespace ProductClassification.Data
                 string jsonfilepath = Path.Combine(AppContext.BaseDirectory, Path.Join("Data", "Samples", "Evaluation.json"));
                 string json = File.ReadAllText(jsonfilepath);
 
-                EvaluationData[] evaldata = JsonSerializer.Deserialize<EvaluationListModel>(json).Evaluate.Select((data) => new EvaluationData() { Answer = data.Answer, Description = data.Description, Reason = data.Reason }).ToArray();
+                EvaluationData[] evaldata = JsonSerializer.Deserialize<EvaluationListModel>(json)!.Evaluate.Select((data) => new EvaluationData() { Answer = data.Answer, Description = data.Description, Reason = data.Reason }).ToArray();
 
                 dbContext.EvaluationData.AddRange(evaldata);
                 await dbContext.SaveChangesAsync();

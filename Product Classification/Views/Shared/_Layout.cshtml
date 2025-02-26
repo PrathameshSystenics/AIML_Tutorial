@@ -33,6 +33,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-action="PreviousEvalResult" asp-controller="Evaluate">Previous Evaluation Results</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-action="SearchProducts" asp-controller="Search"><i class="bi bi-search"></i> Search </a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link text-white" asp-action="Index" asp-controller="Chat"><i class="bi bi-chat-left-dots-fill"></i> Chat</a>
+                        </li>
 
                     </ul>
                     @if(!controllername.Equals("Search")){
