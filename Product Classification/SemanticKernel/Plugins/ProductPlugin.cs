@@ -10,12 +10,20 @@ namespace ProductClassification.SemanticKernel.Plugins
         private ProductDataRepository _productdatarepo;
         private ILogger<ProductPlugin> _logger;
 
+        public ProductPlugin()
+        {
+   /*         _productdatarepo = productdatarepo;
+            _logger = logger;*/
+        }
+
         [KernelFunction("getsimilarproducts"), Description("Retrieve a list of products similar to the given description.")]
         public async Task<List<Product>> GetSimilarProducts(string description)
         {
             try
             {
-                return await _productdatarepo.SearchProductsByDescription(description, 10);
+                _logger.LogInformation("Using the Product Plugin");
+                return new List<Product>();
+                //return await _productdatarepo.SearchProductsByDescription(description, 10);
             }
             catch (Exception ex)
             {

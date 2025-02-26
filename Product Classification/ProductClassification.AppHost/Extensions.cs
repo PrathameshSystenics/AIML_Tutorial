@@ -9,7 +9,6 @@ namespace ProductClassification.AppHost
             builder.WithEnvironment("OllamaDeepSeek:Url", endpoint);
             builder.WithEnvironment("OllamaPhi3_8b:Url", endpoint);
             builder.WithEnvironment("OllamaQwen1_8b:Url", endpoint);
-            builder.WithEnvironment("OllamaNomicEmbed_Text:Url", endpoint);
             return builder;
         }
 

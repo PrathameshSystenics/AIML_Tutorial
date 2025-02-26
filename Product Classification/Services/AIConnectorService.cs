@@ -1,6 +1,7 @@
 ﻿using Microsoft.SemanticKernel;
 using ProductClassification.SemanticKernel;
 using ProductClassification.Extensions;
+using ProductClassification.SemanticKernel.Plugins;
 
 namespace ProductClassification.Services
 {
@@ -118,8 +119,9 @@ namespace ProductClassification.Services
                         serviceId: Enum.GetName(ModelEnum.OllamaNomicEmbed_Text),
                         modelId: OllamaNomicEmbedConfigs.ModelName,
                         endpoint: new Uri(OllamaNomicEmbedConfigs.Url)
-                    );
+                );
 
+                _kernelbuilder.Plugins.AddFromObject(new ProductPlugin());
                 return _kernelbuilder.Build();
             }
             catch (Exception ex)

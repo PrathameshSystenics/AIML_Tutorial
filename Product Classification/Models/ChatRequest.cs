@@ -13,13 +13,15 @@ namespace ProductClassification.Models
             get
             {
                 ChatHistory chathistory = new ChatHistory();
+                if (Messages == null)
+                    return chathistory;
                 foreach (ChatMessage message in Messages)
                 {
-                    if (String.Equals(message.Role,"user",StringComparison.OrdinalIgnoreCase))
+                    if (String.Equals(message.Role, "user", StringComparison.OrdinalIgnoreCase))
                     {
                         chathistory.AddUserMessage(message.Content);
                     }
-                    else if (String.Equals(message.Role,"assistant",StringComparison.OrdinalIgnoreCase))
+                    else if (String.Equals(message.Role, "assistant", StringComparison.OrdinalIgnoreCase))
                     {
                         chathistory.AddAssistantMessage(message.Content);
                     }

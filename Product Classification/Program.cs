@@ -23,6 +23,7 @@ builder.AddServicesRequiredForAI();
 // Injecting the Required Service
 builder.Services.AddScoped<EvaluationDataRepository>();
 builder.AddVectorDbSupport(builder.Configuration);
+builder.AddKernelPlugins();
 
 
 

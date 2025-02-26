@@ -1,101 +1,35 @@
 ﻿@{
     ViewData["Title"] = "Chat";
 }
-
-<div class="container-fluid" style="min-height: calc(100vh - 120px);">
+@model List<SelectListItem>
+<div class="container-fluid bg-light" style="min-height: calc(105vh - 150px);">
     <div class="d-flex flex-column">
 
         <!-- Model Selection Area -->
-        <div class="p-3">
-            <div class="d-flex align-items-center">
-                <label for="modelSelect" class="me-2 fw-bold">Select Model:</label>
-                <select id="modelSelect" name="modelSelect" class="form-select" style="max-width: 200px;">
-                    <option>GPT-3.5</option>
-                    <option>GPT-4</option>
-                </select>
+        <div class="p-3 border-bottom border-2 border-primary">
+            <div class="d-flex flex-wrap gap-2 justify-content-between">
+
+                <div class="d-flex align-items-center">
+                    <label for="modelSelect" class="me-2 fw-bold">Select Model:</label>
+                    <select id="modelSelect" name="modelSelect" class="form-select" asp-items="Model" style="max-width: 200px;">
+                    </select>
+                </div>
+                <div>
+                    <a type="button" class="btn btn-dark" id="newchat-btn" asp-action="Index" asp-controller="Chat">
+                        <span>
+                            New Chat
+                        </span>
+                        <i class="bi bi-plus"></i>
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- Chat Messages Area (scrollable) -->
-        <div class="flex-grow-1 overflow-auto p-3" style="height:70vh;">
-            <!-- AI Message (Left Side) -->
-            <div class="d-flex mb-3">
-                <div class="bg-success text-white rounded p-2 d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; min-width: 40px;">
-                    AI
-                </div>
-                <div class="bg-white rounded p-3 shadow-sm" style="max-width: 80%;">
-                    <div class="fw-bold mb-1">ChatGPT</div>
-                    <p class="mb-2">To create a responsive website, you can:</p>
-                    <ol>
-                        <li>Use a responsive framework like Bootstrap</li>
-                        <li>Implement media queries in your CSS</li>
-                        <li>Use flexible grid layouts</li>
-                        <li>Design with a mobile-first approach</li>
-                    </ol>
-                    <p class="mb-0">Would you like me to elaborate on any of these points?</p>
-                </div>
-            </div>
-
-            <!-- User Message (Right Side) -->
-            <div class="d-flex mb-3 justify-content-end">
-                <div class="bg-light rounded p-3 shadow-sm" style="max-width: 80%;">
-                    <div class="fw-bold mb-1">You</div>
-                    <p class="mb-0">Yes, please explain more about media queries and how they work.</p>
-                </div>
-                <div class="bg-primary text-white rounded p-2 d-flex align-items-center justify-content-center ms-2" style="width: 40px; height: 40px; min-width: 40px;">
-                    U
-                </div>
-            </div>
-
-            <!-- Another AI Message (Left Side) -->
-            <div class="d-flex mb-3">
-                <div class="bg-success text-white rounded p-2 d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; min-width: 40px;">
-                    AI
-                </div>
-                <div class="bg-white rounded p-3 shadow-sm" style="max-width: 80%;">
-                    <div class="fw-bold mb-1">ChatGPT</div>
-                    <p class="mb-2">Media queries are a CSS technique that allows you to apply different styles based on device characteristics, primarily the screen width. Here's how they work:</p>
-                    <p class="mb-0">This conditional CSS only applies when the screen width is 768px or less, allowing you to create tailored layouts for various devices.</p>
-                </div>
-            </div>
-
-            <!-- Another AI Message (Left Side) -->
-            <div class="d-flex mb-3">
-                <div class="bg-success text-white rounded p-2 d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; min-width: 40px;">
-                    AI
-                </div>
-                <div class="bg-white rounded p-3 shadow-sm" style="max-width: 80%;">
-                    <div class="fw-bold mb-1">ChatGPT</div>
-                    <p class="mb-2">Media queries are a CSS technique that allows you to apply different styles based on device characteristics, primarily the screen width. Here's how they work:</p>
-                    <p class="mb-0">This conditional CSS only applies when the screen width is 768px or less, allowing you to create tailored layouts for various devices.</p>
-                </div>
-            </div>
-
-            <!-- Another AI Message (Left Side) -->
-            <div class="d-flex mb-3">
-                <div class="bg-success text-white rounded p-2 d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; min-width: 40px;">
-                    AI
-                </div>
-                <div class="bg-white rounded p-3 shadow-sm" style="max-width: 80%;">
-                    <div class="fw-bold mb-1">ChatGPT</div>
-                    <p class="mb-2">Media queries are a CSS technique that allows you to apply different styles based on device characteristics, primarily the screen width. Here's how they work:</p>
-                    <p class="mb-0">This conditional CSS only applies when the screen width is 768px or less, allowing you to create tailored layouts for various devices.</p>
-                </div>
-            </div>
-
-            <!-- Another AI Message (Left Side) -->
-            <div class="d-flex mb-3">
-                <div class="bg-success text-white rounded p-2 d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; min-width: 40px;">
-                    AI
-                </div>
-                <div class="bg-white rounded p-3 shadow-sm" style="max-width: 80%;">
-                    <div class="fw-bold mb-1">ChatGPT</div>
-                    <p class="mb-2">Media queries are a CSS technique that allows you to apply different styles based on device characteristics, primarily the screen width. Here's how they work:</p>
-                    <p class="mb-0">This conditional CSS only applies when the screen width is 768px or less, allowing you to create tailored layouts for various devices.</p>
-                </div>
-            </div>
+        <div class="flex-grow-1 overflow-auto p-3" id="message-area" style="height:73vh;">
         </div>
 
+        <!--Message Input Area-->
         <div class="p-3 bg-white border-top">
             <div class="position-relative">
                 <textarea class="form-control chat-textarea" placeholder="Enter Your Message..." rows="2" style="resize: none; padding-right: 50px;"></textarea>
@@ -112,6 +46,27 @@
         </div>
     </div>
 </div>
+
+<!--Model Selection Change Warning Modal-->
+<div class="modal fade" id="modelChangeWarningModal" tabindex="-1" aria-labelledby="modelChangeWarningModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title" id="modelChangeWarningModalLabel">Warning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Changing the current model will erase your chat session. Do you wish to proceed?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmModelChange">Yes, Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
+    <script src="~/lib/marked/marked.min.js"></script>
+    <script src="~/js/PostEventSource.js"></script>
     <script src="~/js/Chat.js"></script>
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
+using ProductClassification.Extensions;
 using ProductClassification.Models;
 using ProductClassification.SemanticKernel;
 using ProductClassification.Services;
@@ -11,17 +12,28 @@ namespace ProductClassification.Controllers
     public class ChatController : Controller
     {
         private ILogger<ChatController> _logger;
-        private RagChatService _ragchatservice;
+        private readonly RagChatService _ragchatservice;
+        private readonly IConfiguration _configuration;
 
-        public ChatController(ILogger<ChatController> logger, RagChatService ragchatservice)
+        public ChatController(ILogger<ChatController> logger, RagChatService ragchatservice, IConfiguration config)
         {
             _logger = logger;
             _ragchatservice = ragchatservice;
+            _configuration = config;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string model = "GeminiFlash2")
         {
-            return View();
+            Dictionary<string, string> models = _configuration.MapConfigurationToClass<Dictionary<string, string>>("ChatCompletionModels");
+
+            List<SelectListItem> modelitems = models.Keys.Select(key =>
+            {
+                bool isdefault = key.Equals(model);
+                return new SelectListItem(models[key], key, isdefault);
+
+            }).ToList();
+
+            return View(modelitems);
         }
 
         [HttpPost]
@@ -51,7 +63,7 @@ namespace ProductClassification.Controllers
                     return;
                 }
 
-                IAsyncEnumerable<StreamingChatMessageContent> messagecontents = _ragchatservice.ChatMessageContents(chatrequest.ToChatHistory, selectedmodel);
+                IAsyncEnumerable<StreamingChatMessageContent> messagecontents = _ragchatservice.StreamChatMessagesAsync(chatrequest.ToChatHistory, selectedmodel);
 
                 await foreach (StreamingChatMessageContent content in messagecontents)
                 {
@@ -64,9 +76,21 @@ namespace ProductClassification.Controllers
                 }, "complete");
                 return;
             }
+            catch (HttpOperationException ex)
+            {
+                _logger.LogError("Message => {message}, Type => {type}", ex.Message, ex.GetType());
+                if (ex.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+                {
+                    await SentSSEEventAsync(new
+                    {
+                        message = "Rate Limit Exceed Please Try Again Later!",
+                        exception = ex.Message
+                    }, "error");
+                }
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Message => {message}, Type => {type}", ex.Message, ex.GetType());
                 await SentSSEEventAsync(new
                 {
                     message = "Error Occurred during Streaming the Responses",

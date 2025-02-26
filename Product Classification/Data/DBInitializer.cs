@@ -25,7 +25,7 @@ namespace ProductClassification.Data
                 await dbContext.SaveChangesAsync();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

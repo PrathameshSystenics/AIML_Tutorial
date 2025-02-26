@@ -8,7 +8,7 @@ namespace ProductClassification.Extensions
 
         public static IHostApplicationBuilder AddVectorDbSupport(this IHostApplicationBuilder builder,IConfiguration config)
         {
-            builder.Services.AddPostgresVectorStore(config.GetConnectionString("promptevaldb"));
+            builder.Services.AddPostgresVectorStore(config.GetConnectionString("promptevaldb")!);
             builder.Services.AddScoped<ProductDataRepository>();
             return builder;
         }
