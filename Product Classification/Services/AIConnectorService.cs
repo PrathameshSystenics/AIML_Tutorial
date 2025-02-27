@@ -120,8 +120,6 @@ namespace ProductClassification.Services
                         modelId: OllamaNomicEmbedConfigs.ModelName,
                         endpoint: new Uri(OllamaNomicEmbedConfigs.Url)
                 );
-
-                _kernelbuilder.Plugins.AddFromObject(new ProductPlugin());
                 return _kernelbuilder.Build();
             }
             catch (Exception ex)

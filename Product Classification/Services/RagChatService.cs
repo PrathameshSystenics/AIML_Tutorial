@@ -11,19 +11,19 @@ namespace ProductClassification.Services
     {
 
         private Kernel _kernel;
+        private ProductPlugin _productplugin;
 
 
-        public RagChatService(AIConnectorService aiconnectorservice)
+        public RagChatService(AIConnectorService aiconnectorservice, ProductPlugin productplugin)
         {
             _kernel = aiconnectorservice.BuildModels();
+            _productplugin = productplugin;
         }
 
         public async IAsyncEnumerable<StreamingChatMessageContent> StreamChatMessagesAsync(ChatHistory userchathistory, ModelEnum modelselected)
         {
+            _kernel.Plugins.AddFromObject(_productplugin);
             string modelselectedservicekey = Enum.GetName<ModelEnum>(modelselected)!;
-
-            
-
 
             IChatCompletionService chatcompletionservice = _kernel.GetRequiredService<IChatCompletionService>(modelselectedservicekey);
 
@@ -31,20 +31,9 @@ namespace ProductClassification.Services
             chathistory.AddSystemMessage(Prompt.ChatSystemPrompt);
             chathistory.AddRange(userchathistory);
 
+            PromptExecutionSettings promptexecsettings = PromptExecutionSettingsProvider.CreateExecutionSettingsForModel(modelselected);
 
-            /* PromptExecutionSettings promptexecsettings = new PromptExecutionSettings()
-             {
-                 FunctionChoiceBehavior = GeminiToolCallBehavior.AutoInvokeKernelFunctions,
-                 ServiceId = modelselectedservicekey
-             };*/
-
-            GeminiPromptExecutionSettings promptexecsettings = new GeminiPromptExecutionSettings()
-            {
-                ServiceId = modelselectedservicekey,
-                ToolCallBehavior = GeminiToolCallBehavior.AutoInvokeKernelFunctions
-            };
-
-            IAsyncEnumerable<StreamingChatMessageContent> message = chatcompletionservice.GetStreamingChatMessageContentsAsync(chathistory, promptexecsettings);
+            IAsyncEnumerable<StreamingChatMessageContent> message = chatcompletionservice.GetStreamingChatMessageContentsAsync(chathistory, kernel: _kernel, executionSettings: promptexecsettings);
 
             await foreach (StreamingChatMessageContent chatcontent in message)
             {

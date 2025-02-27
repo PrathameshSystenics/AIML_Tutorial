@@ -7,10 +7,16 @@
     $("#chat-button").on("click", initiateChatConversation)
     $(document).on("keypress", function (e) {
         chattextarea.trigger("focus")
-        if (e.key === "Enter") {
-            e.preventDefault();
-            initiateChatConversation()
-            chattextarea.val("")
+        if ($("#message-area .ongoing").length === 0) {
+            if (e.key === "Enter") {
+                if (e.ctrlKey) {
+                    chattextarea.val(chattextarea.val() + "\n");
+                } else {
+                    e.preventDefault();
+                    initiateChatConversation();
+                    chattextarea.val("");
+                }
+            }
         }
     })
 
@@ -50,7 +56,7 @@
 
         eventSource.addEventListener("complete", function (e) {
             currentassistantmessagebox.removeClass("ongoing");
-            var markdownmessage = marked.parseInline(currentassistantmessagebox.html().trim());
+            var markdownmessage = marked.parse(currentassistantmessagebox.html().trim());
             currentassistantmessagebox.html(markdownmessage)
             eventSource.close();
             enabledisableButton("#chat-button", false)
@@ -133,7 +139,7 @@
             if (currentelement.data("role")) {
                 chathistory.push({
                     Role: currentelement.data("role"),
-                    Content: currentelement.html()
+                    Content: currentelement.text()
                 })
             }
         })
@@ -152,5 +158,10 @@
             let currentmodel = $("#modelSelect").val()
             window.location.href = "/Chat?model=" + currentmodel
         })
+    })
+
+    $(".example-badge").on("click", function () {
+        chattextarea.val($(this).data("example"))
+        initiateChatConversation()
     })
 })

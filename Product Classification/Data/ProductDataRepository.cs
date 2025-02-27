@@ -65,7 +65,7 @@ namespace ProductClassification.Data
                 var searchResults = await collection.VectorizedSearchAsync(embeddings, searchoptions);
                 await foreach (var product in searchResults.Results)
                 {
-                    if (product.Score < 0.9)
+                    if (product.Score < 1)
                         products.Add(product.Record);
                 }
                 return products;

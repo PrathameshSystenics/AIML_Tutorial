@@ -26,14 +26,15 @@ namespace ProductClassification.Controllers
         {
             Dictionary<string, string> models = _configuration.MapConfigurationToClass<Dictionary<string, string>>("ChatCompletionModels");
 
-            List<SelectListItem> modelitems = models.Keys.Select(key =>
+            ChatViewModel chatviewmodel = new ChatViewModel()
             {
-                bool isdefault = key.Equals(model);
-                return new SelectListItem(models[key], key, isdefault);
-
-            }).ToList();
-
-            return View(modelitems);
+                Models = models.Keys.Select(key =>
+                {
+                    bool isdefault = key.Equals(model);
+                    return new SelectListItem(models[key], key, isdefault);
+                }).ToList()
+            };
+            return View(chatviewmodel);
         }
 
         [HttpPost]
@@ -84,6 +85,14 @@ namespace ProductClassification.Controllers
                     await SentSSEEventAsync(new
                     {
                         message = "Rate Limit Exceed Please Try Again Later!",
+                        exception = ex.Message
+                    }, "error");
+                }
+                else
+                {
+                    await SentSSEEventAsync(new
+                    {
+                        message = "Something Wrong Happened at our end!",
                         exception = ex.Message
                     }, "error");
                 }

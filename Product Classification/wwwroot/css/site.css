@@ -154,3 +154,18 @@ input[type="number"] {
         background-position: 0% 50%, 50% 50%,100% 100%
     }
 }
+
+
+.example-badge {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+@media (max-width: 576px) {
+    .example-badge {
+        max-width: 150px;
+    }
+}
