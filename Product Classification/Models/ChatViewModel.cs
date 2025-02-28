@@ -4,7 +4,7 @@ namespace ProductClassification.Models
 {
     public class ChatViewModel
     {
-        public List<SelectListItem> Models { get; set; }
+        public List<SelectListItem> Models { get; set; } = new List<SelectListItem>();
         public List<string> SuggestedExamples
         {
             get

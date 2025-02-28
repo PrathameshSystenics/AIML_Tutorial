@@ -85,7 +85,7 @@ namespace ProductClassification.Data
             return await query.ToListAsync();
         }
 
-        public EvaluationBatch GetEvaluationResultsByBatch(int batchID)
+        public EvaluationBatch? GetEvaluationResultsByBatch(int batchID)
         {
             var query = (from eb in _dbcontext.EvaluationBatch
                          where eb.ID == batchID

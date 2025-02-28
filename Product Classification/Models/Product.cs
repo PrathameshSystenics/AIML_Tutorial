@@ -7,19 +7,19 @@ namespace ProductClassification.Models
     {
         [VectorStoreRecordKey]
         [JsonPropertyName("id")]
-        public Guid ID { get; set; }
+        public Guid ID { get; set; }= Guid.NewGuid();
 
         [VectorStoreRecordData]
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [VectorStoreRecordData]
         [JsonPropertyName("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [VectorStoreRecordData]
         [JsonPropertyName("category")]
-        public string Category { get; set; }
+        public string Category { get; set; } = string.Empty;
 
         [VectorStoreRecordVector(768, DistanceFunction.EuclideanDistance)]
         [JsonPropertyName("descriptionembedding")]

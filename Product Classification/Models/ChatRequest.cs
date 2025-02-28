@@ -4,9 +4,9 @@ namespace ProductClassification.Models
 {
     public class ChatRequest
     {
-        public string ModelId { get; set; }
+        public string ModelId { get; set; } = string.Empty;
 
-        public List<ChatMessage> Messages { get; set; }
+        public List<ChatMessage> Messages { get; set; }= new List<ChatMessage>();
 
         public ChatHistory ToChatHistory
         {
@@ -32,8 +32,8 @@ namespace ProductClassification.Models
 
         public class ChatMessage
         {
-            public string Role { get; set; }
-            public string Content { get; set; }
+            public string Role { get; set; } = string.Empty;
+            public string Content { get; set; } = string.Empty;
         }
     }
 }

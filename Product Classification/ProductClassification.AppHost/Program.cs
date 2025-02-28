@@ -29,13 +29,9 @@ var ollama = builder.AddContainer("ollama", "ollama/ollama")
                     .WithHttpEndpoint(11434, 11434, "ollamaendpoint")
                     .WithLifetime(ContainerLifetime.Persistent)
                     .WithVolume("ollamavol", "/root/.ollama");
-//.WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
-//.WithEntrypoint("/bin/sh")
-//.WithArgs("/ollamasetup.sh");
 
 var ollamacontainerendpoint = ollama.GetEndpoint("ollamaendpoint");
 #endregion
-
 
 #region Product Classification - Migration Service
 var migrationservice = builder.AddProject<Projects.ProductClassificationDatabase_MigrationService>("productclassificationdatabase-migrationservice")

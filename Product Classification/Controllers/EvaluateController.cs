@@ -125,7 +125,7 @@ namespace ProductClassification.Controllers
 
         public IActionResult EvalResultByBatch(int id)
         {
-            EvaluationBatch batch = _evaldatarepo.GetEvaluationResultsByBatch(id);
+            EvaluationBatch? batch = _evaldatarepo.GetEvaluationResultsByBatch(id);
             if (batch == null)
             {
                 return RedirectToAction("PreviousEvalResult");
