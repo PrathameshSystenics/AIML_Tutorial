@@ -22,7 +22,6 @@ namespace ProductClassification.SemanticKernel
             {
                 return new AzureOpenAIPromptExecutionSettings()
                 {
-                    FunctionChoiceBehavior = FunctionChoiceBehavior.Auto(),
                     ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
                     ServiceId = Enum.GetName<ModelEnum>(selectedmodel)!
                 };
