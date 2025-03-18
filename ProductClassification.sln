@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification", "ProductClassification.csproj", "{1299888C-11B6-4F28-B225-F790082FBF3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification", ".\Product Classification\ProductClassification.csproj", "{1299888C-11B6-4F28-B225-F790082FBF3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.AppHost", "ProductClassification.AppHost\ProductClassification.AppHost.csproj", "{35F9E178-2C84-474E-BBEA-5E1D385D7E64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.AppHost", ".\Product Classification\ProductClassification.AppHost\ProductClassification.AppHost.csproj", "{35F9E178-2C84-474E-BBEA-5E1D385D7E64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.ServiceDefaults", "ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj", "{A289BB13-586F-4BF3-BC9F-32885B5CCB24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.ServiceDefaults", ".\Product Classification\ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj", "{A289BB13-586F-4BF3-BC9F-32885B5CCB24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassificationDatabase.MigrationService", "..\ProductClassificationDatabase.MigrationService\ProductClassificationDatabase.MigrationService.csproj", "{58930BCF-BC5B-4411-9985-A475F1034597}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassificationDatabase.MigrationService", ".\ProductClassificationDatabase.MigrationService\ProductClassificationDatabase.MigrationService.csproj", "{58930BCF-BC5B-4411-9985-A475F1034597}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorStore.SeedingService", "..\VectorStore.SeedingService\VectorStore.SeedingService.csproj", "{AD4D22A6-1F88-4A08-B94D-8E83BC4357A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorStore.SeedingService", ".\VectorStore.SeedingService\VectorStore.SeedingService.csproj", "{AD4D22A6-1F88-4A08-B94D-8E83BC4357A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.CSVReader", "..\ProductClassification.CSVReader\ProductClassification.CSVReader.csproj", "{F62BDB43-8C7B-4114-B8DD-E37593E6A654}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductClassification.CSVReader", ".\Product Classification\ProductClassification.CSVReader\ProductClassification.CSVReader.csproj", "{F62BDB43-8C7B-4114-B8DD-E37593E6A654}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

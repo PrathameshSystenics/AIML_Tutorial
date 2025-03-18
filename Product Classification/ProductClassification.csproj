@@ -30,17 +30,21 @@
 
 	<ItemGroup>
 		<Compile Remove="ProductClassification.AppHost\**" />
+		<Compile Remove="ProductClassification.CSVReader\**" />
 		<Compile Remove="ProductClassification.ServiceDefaults\**" />
 		<Compile Remove="SemanticKernel\NewFolder\**" />
 		<Content Remove="ProductClassification.AppHost/*"></Content>
 		<Content Remove="ProductClassification.AppHost\**" />
+		<Content Remove="ProductClassification.CSVReader\**" />
 		<Content Remove="ProductClassification.ServiceDefaults\**" />
 		<Content Remove="SemanticKernel\NewFolder\**" />
 		<EmbeddedResource Remove="ProductClassification.AppHost\**" />
+		<EmbeddedResource Remove="ProductClassification.CSVReader\**" />
 		<EmbeddedResource Remove="ProductClassification.ServiceDefaults\**" />
 		<EmbeddedResource Remove="SemanticKernel\NewFolder\**" />
 		<None Remove="ProductClassification.AppHost\**" />
 		<None Remove="ProductClassification.ServiceDefaults\**" />
+		<None Remove="ProductClassification.CSVReader\**" />
 		<None Remove="SemanticKernel\NewFolder\**" />
 	</ItemGroup>
 
@@ -93,6 +97,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ProductClassification.CSVReader\ProductClassification.CSVReader.csproj" />
+		<ProjectReference Include="ProductClassification.CSVReader\ProductClassification.CSVReader.csproj" />
 		<ProjectReference Include="ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj" />
 	</ItemGroup>
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.VectorData;
 using Microsoft.SemanticKernel;
-using ProductClassification.CSVReader;
 using ProductClassification.Models;
+using ProductClassification.CSVReader;
 using ProductClassification.Services;
 
 namespace ProductClassification.Data
