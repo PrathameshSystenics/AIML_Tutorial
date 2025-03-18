@@ -92,7 +92,7 @@ namespace ProductClassification.AppHost
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
