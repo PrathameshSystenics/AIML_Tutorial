@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductClassification.Models;
 
-namespace ProductClassification.Data
+namespace ProductClassification.Postgres
 {
     public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : DbContext(options)
     {

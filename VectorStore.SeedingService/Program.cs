@@ -1,4 +1,4 @@
-using ProductClassification.Data;
+using ProductClassification.Postgres;
 using ProductClassification.Extensions;
 using VectorStore.SeedingService;
 

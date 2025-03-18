@@ -1,5 +1,7 @@
+using ProductClassification.Postgres;
 using ProductClassification.Data;
 using ProductClassification.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,16 +18,20 @@ builder.Services.AddMvc();
 builder.Services.AddSession();
 
 // Adding the DB Support
-builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb");
-builder.AddServicesRequiredForAI();
+builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb", configureDbContextOptions: (options) =>
+{
+    options.UseNpgsql(sqloptions =>
+    {
+        sqloptions.MigrationsAssembly("ProductClassification.Postgres");
+    });
+});
+//builder.AddServicesRequiredForAI();
 
 
 // Injecting the Required Service
-builder.Services.AddScoped<EvaluationDataRepository>();
-builder.AddVectorDbSupport(builder.Configuration);
-builder.AddKernelPlugins();
-
-
+//builder.Services.AddScoped<EvaluationDataRepository>();
+//builder.AddVectorDbSupport(builder.Configuration);
+//builder.AddKernelPlugins();
 
 var app = builder.Build();
 
@@ -42,7 +48,7 @@ if (!app.Environment.IsDevelopment())
 
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();

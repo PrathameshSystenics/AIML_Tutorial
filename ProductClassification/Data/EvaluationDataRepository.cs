@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ProductClassification.Models;
+using ProductClassification.Postgres;
 
 namespace ProductClassification.Data
 {

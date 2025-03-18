@@ -12,7 +12,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.13" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
 		  <PrivateAssets>all</PrivateAssets>
@@ -29,23 +28,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Remove="ProductClassification.AppHost\**" />
-		<Compile Remove="ProductClassification.CSVReader\**" />
-		<Compile Remove="ProductClassification.ServiceDefaults\**" />
-		<Compile Remove="SemanticKernel\NewFolder\**" />
-		<Content Remove="ProductClassification.AppHost/*"></Content>
-		<Content Remove="ProductClassification.AppHost\**" />
-		<Content Remove="ProductClassification.CSVReader\**" />
-		<Content Remove="ProductClassification.ServiceDefaults\**" />
-		<Content Remove="SemanticKernel\NewFolder\**" />
-		<EmbeddedResource Remove="ProductClassification.AppHost\**" />
-		<EmbeddedResource Remove="ProductClassification.CSVReader\**" />
-		<EmbeddedResource Remove="ProductClassification.ServiceDefaults\**" />
-		<EmbeddedResource Remove="SemanticKernel\NewFolder\**" />
-		<None Remove="ProductClassification.AppHost\**" />
-		<None Remove="ProductClassification.ServiceDefaults\**" />
-		<None Remove="ProductClassification.CSVReader\**" />
-		<None Remove="SemanticKernel\NewFolder\**" />
+	  <Compile Remove="Data\Samples\**" />
+	  <Compile Remove="ProductClassification.AppHost\**" />
+	  <Compile Remove="ProductClassification.CSVReader\**" />
+	  <Compile Remove="ProductClassification.ServiceDefaults\**" />
+	  <Content Remove="Data\Samples\**" />
+	  <Content Remove="ProductClassification.AppHost\**" />
+	  <Content Remove="ProductClassification.CSVReader\**" />
+	  <Content Remove="ProductClassification.ServiceDefaults\**" />
+	  <EmbeddedResource Remove="Data\Samples\**" />
+	  <EmbeddedResource Remove="ProductClassification.AppHost\**" />
+	  <EmbeddedResource Remove="ProductClassification.CSVReader\**" />
+	  <EmbeddedResource Remove="ProductClassification.ServiceDefaults\**" />
+	  <None Remove="Data\Samples\**" />
+	  <None Remove="ProductClassification.AppHost\**" />
+	  <None Remove="ProductClassification.CSVReader\**" />
+	  <None Remove="ProductClassification.ServiceDefaults\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,22 +94,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ProductClassification.CSVReader\ProductClassification.CSVReader.csproj" />
+		<ProjectReference Include="..\ProductionClassification.Postgres\ProductClassification.Postgres.csproj" />
 		<ProjectReference Include="ProductClassification.CSVReader\ProductClassification.CSVReader.csproj" />
 		<ProjectReference Include="ProductClassification.ServiceDefaults\ProductClassification.ServiceDefaults.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="Data\Samples\Evaluation.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</None>
-
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Data\Samples\" />
 	</ItemGroup>
 
 

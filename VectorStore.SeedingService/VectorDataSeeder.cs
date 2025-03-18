@@ -62,7 +62,7 @@ IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
                 {
                     ProductDataRepository productdatarepo = Scope.ServiceProvider.GetRequiredService<ProductDataRepository>();
                     string csvfilepath = Path.Combine(AppContext.BaseDirectory, Path.Join("Samples", "train.csv"));
-
+                    _logger.LogInformation("CSV File Found at {path}", csvfilepath);
                     IEnumerable<ProductCsvModel> productscsv = ProductCsvReader.ReadProducts(csvfilepath);
 
                     int insertedproductcount = 0;

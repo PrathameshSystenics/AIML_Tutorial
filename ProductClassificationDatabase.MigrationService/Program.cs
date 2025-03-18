@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ProductClassification.Data;
+using ProductClassification.Postgres;
 using ProductClassificationDatabase.MigrationService;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -16,7 +16,7 @@ builder.Services.AddOpenTelemetry()
 builder.Services.AddDbContextPool<ApplicationDBContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("promptevaldb"), sqlOptions =>
     {
-        sqlOptions.MigrationsAssembly("ProductClassification");
+        sqlOptions.MigrationsAssembly("ProductClassification.Postgres");
         sqlOptions.EnableRetryOnFailure();
     })
 );

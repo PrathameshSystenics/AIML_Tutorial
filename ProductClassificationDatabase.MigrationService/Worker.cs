@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using OpenTelemetry.Trace;
-using ProductClassification.Data;
+using ProductClassification.Postgres;
 using System.Diagnostics;
 
 namespace ProductClassificationDatabase.MigrationService
