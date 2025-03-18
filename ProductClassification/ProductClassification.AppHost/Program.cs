@@ -17,7 +17,7 @@ var postgres = builder.AddPostgres("postgres", postgresUsernameParameterResource
                       .WithEnvironment("POSTGRES_DB", "promptevaluationdb")
                       .WithBindMount("./Postgres/Init", "/docker-entrypoint-initdb.d")
                       .WithLifetime(ContainerLifetime.Persistent)
-                      .WithDataVolume("pgvolum")
+                      .WithDataVolume("pgvolume")
                       .AddCommandForClearEvaluationData();
 
 var promptevaluationdb = postgres.AddDatabase("promptevaldb", "promptevaluationdb");

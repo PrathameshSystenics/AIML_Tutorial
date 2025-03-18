@@ -16,7 +16,7 @@
         /// <exception cref="KeyNotFoundException">Throws if the <paramref name="key"/> is not Found.</exception>
         public static T MapConfigurationToClass<T>(this IConfiguration config, string key)
         {
-            T t = config.GetSection(key).Get<T>();
+            T t = config.GetSection(key).Get<T>()!;
             return t == null ? throw new KeyNotFoundException($"The {key} requested is not Present in the appsettings.json") : t;
         }
 

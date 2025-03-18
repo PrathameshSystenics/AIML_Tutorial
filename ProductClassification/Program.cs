@@ -25,13 +25,13 @@ builder.AddNpgsqlDbContext<ApplicationDBContext>("promptevaldb", configureDbCont
         sqloptions.MigrationsAssembly("ProductClassification.Postgres");
     });
 });
-//builder.AddServicesRequiredForAI();
+builder.AddServicesRequiredForAI();
 
 
 // Injecting the Required Service
-//builder.Services.AddScoped<EvaluationDataRepository>();
-//builder.AddVectorDbSupport(builder.Configuration);
-//builder.AddKernelPlugins();
+builder.Services.AddScoped<EvaluationDataRepository>();
+builder.AddVectorDbSupport(builder.Configuration);
+builder.AddKernelPlugins();
 
 var app = builder.Build();
 

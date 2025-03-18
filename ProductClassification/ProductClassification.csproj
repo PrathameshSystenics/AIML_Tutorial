@@ -7,7 +7,6 @@
 		<NoWarn>SKEXP0070,SKEXP0001,SKEXP0020</NoWarn>
 		<UserSecretsId>42598f63-fb18-4e01-b4e8-71053c30a261</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<DockerfileContext>.</DockerfileContext>
 
 	</PropertyGroup>
 
