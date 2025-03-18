@@ -25,15 +25,15 @@ namespace ProductClassification.Services
             try
             {
                 #region Configs
-                LLMConnectionConfig OllamaDeekSeekConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaDeepSeek) ?? "");
+                //LLMConnectionConfig OllamaDeekSeekConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaDeepSeek) ?? "");
 
                 AzureOpenAIConnectionConfig AzureOpenAIConfigs = _config.MapConfigurationToClass<AzureOpenAIConnectionConfig>(Enum.GetName(ModelEnum.AzureOpenAI) ?? "");
 
                 LLMConnectionConfig AzureDeepSeekConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.AzureDeepSeek) ?? "");
 
-                LLMConnectionConfig OllamaPhi3_8bConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaPhi3_8b) ?? "");
+                //LLMConnectionConfig OllamaPhi3_8bConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaPhi3_8b) ?? "");
 
-                LLMConnectionConfig OllamaQwen4bConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaQwen1_8b) ?? "");
+                //LLMConnectionConfig OllamaQwen4bConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaQwen1_8b) ?? "");
 
                 LLMConnectionConfig GeminiFlash2Configs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GeminiFlash2) ?? "");
 
@@ -43,17 +43,17 @@ namespace ProductClassification.Services
 
                 LLMConnectionConfig GoogleTextEmbeddingConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.GoogleTextEmbedding_004) ?? "");
 
-                LLMConnectionConfig OllamaNomicEmbedConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaNomicEmbed_Text) ?? "");
+                //LLMConnectionConfig OllamaNomicEmbedConfigs = _config.MapConfigurationToClass<LLMConnectionConfig>(Enum.GetName(ModelEnum.OllamaNomicEmbed_Text) ?? "");
 
                 #endregion
 
                 _kernelbuilder = _kernelbuilder
                     // Ollama DeepSeek 
-                    .AddOllamaChatCompletion(
-                        serviceId: Enum.GetName(ModelEnum.OllamaDeepSeek),
-                        modelId: OllamaDeekSeekConfigs.ModelName,
-                        endpoint: new Uri(OllamaDeekSeekConfigs.Url)
-                    )
+                    //.AddOllamaChatCompletion(
+                    //    serviceId: Enum.GetName(ModelEnum.OllamaDeepSeek),
+                    //    modelId: OllamaDeekSeekConfigs.ModelName,
+                    //    endpoint: new Uri(OllamaDeekSeekConfigs.Url)
+                    //)
 
                     // Azure OpenAI 
                     .AddAzureOpenAIChatCompletion(
@@ -73,18 +73,18 @@ namespace ProductClassification.Services
                     )
 
                     // Ollama Phi3.8b Model
-                    .AddOllamaChatCompletion(
-                        serviceId: Enum.GetName(ModelEnum.OllamaPhi3_8b),
-                        modelId: OllamaPhi3_8bConfigs.ModelName,
-                        endpoint: new Uri(OllamaPhi3_8bConfigs.Url)
-                    )
+                    //.AddOllamaChatCompletion(
+                    //    serviceId: Enum.GetName(ModelEnum.OllamaPhi3_8b),
+                    //    modelId: OllamaPhi3_8bConfigs.ModelName,
+                    //    endpoint: new Uri(OllamaPhi3_8bConfigs.Url)
+                    //)
 
-                    // Ollama Qwen Models
-                    .AddOllamaChatCompletion(
-                        serviceId: Enum.GetName(ModelEnum.OllamaQwen1_8b),
-                        modelId: OllamaQwen4bConfigs.ModelName,
-                        endpoint: new Uri(OllamaQwen4bConfigs.Url)
-                    )
+                    //// Ollama Qwen Models
+                    //.AddOllamaChatCompletion(
+                    //    serviceId: Enum.GetName(ModelEnum.OllamaQwen1_8b),
+                    //    modelId: OllamaQwen4bConfigs.ModelName,
+                    //    endpoint: new Uri(OllamaQwen4bConfigs.Url)
+                    //)
 
                     // Gemini flash 2 model
                     .AddGoogleAIGeminiChatCompletion(
@@ -112,14 +112,14 @@ namespace ProductClassification.Services
                         modelId: GoogleTextEmbeddingConfigs.ModelName,
                         apiKey: GoogleTextEmbeddingConfigs.ApiKey,
                         serviceId: Enum.GetName<ModelEnum>(ModelEnum.GoogleTextEmbedding_004)
-                    )
+                    );
 
-                    // Ollama Nomic Embedded Text
-                    .AddOllamaTextEmbeddingGeneration(
-                        serviceId: Enum.GetName(ModelEnum.OllamaNomicEmbed_Text),
-                        modelId: OllamaNomicEmbedConfigs.ModelName,
-                        endpoint: new Uri(OllamaNomicEmbedConfigs.Url)
-                );
+                // Ollama Nomic Embedded Text
+                //.AddOllamaTextEmbeddingGeneration(
+                //    serviceId: Enum.GetName(ModelEnum.OllamaNomicEmbed_Text),
+                //    modelId: OllamaNomicEmbedConfigs.ModelName,
+                //    endpoint: new Uri(OllamaNomicEmbedConfigs.Url)
+
                 return _kernelbuilder.Build();
             }
             catch (Exception ex)
