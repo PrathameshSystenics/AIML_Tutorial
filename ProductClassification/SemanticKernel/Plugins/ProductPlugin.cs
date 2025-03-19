@@ -31,9 +31,7 @@ namespace ProductClassification.SemanticKernel.Plugins
             }
         }
 
-        [KernelFunction("get_categories_for_classification")]
-        [Description("Get the list of categories which are useful for classifying the product based on description")]
-        public List<string> GetCategories()
+        public static List<string> GetCategories()
         {
             List<string> categories = new List<string>
             {
