@@ -25,7 +25,12 @@ await azureopenai.RunModel();*/
 #endregion
 
 #region Hand Digit Recognition 
-_06_ImagetoText_Sample imagetotext = new _06_ImagetoText_Sample(config);
-await imagetotext.RunModel();
+/*_06_ImagetoText_Sample imagetotext = new _06_ImagetoText_Sample(config);
+await imagetotext.RunModel();*/
+#endregion
+
+#region Agent Framework
+_07_AgentFramework agentframework = new _07_AgentFramework(config);
+agentframework.RunGeminiAgent();
 #endregion
 
