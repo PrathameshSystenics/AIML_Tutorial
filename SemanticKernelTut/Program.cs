@@ -30,7 +30,7 @@ await imagetotext.RunModel();*/
 #endregion
 
 #region Agent Framework
-_07_AgentFramework agentframework = new _07_AgentFramework(config);
-agentframework.RunGeminiAgent();
+/*_07_AgentFramework agentframework = new _07_AgentFramework(config);
+agentframework.RunGeminiAgent();*/
 #endregion
 

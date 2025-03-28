@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.SemanticKernel;
+﻿using Microsoft.SemanticKernel;
+using Microsoft.Extensions.Configuration;
 using Microsoft.SemanticKernel.Agents;
-using Microsoft.SemanticKernel.Agents.Chat;
 using Microsoft.SemanticKernel.ChatCompletion;
 namespace SemanticKernelTut
 {
@@ -44,11 +43,11 @@ namespace SemanticKernelTut
                 history.AddUserMessage(userinput);
 
                 Console.Write("\nAgent >> ");
-                
+
                 await foreach (var content in agent.InvokeAsync(history))
                 {
                     Console.Write(content);
-                    
+
                 }
             }
         }
