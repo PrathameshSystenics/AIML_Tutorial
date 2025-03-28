@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCPTutorial.Console", "MCPTutorial.Console.csproj", "{746A4839-6C17-473E-A5B0-EEE41C21FF0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCPTutorial.SemanticKernelIntegrations", "..\MCPTutorial.SemanticKernelIntegrations\MCPTutorial.SemanticKernelIntegrations.csproj", "{B7C45CC0-66F6-4F88-986F-B5502203F52F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{746A4839-6C17-473E-A5B0-EEE41C21FF0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746A4839-6C17-473E-A5B0-EEE41C21FF0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746A4839-6C17-473E-A5B0-EEE41C21FF0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746A4839-6C17-473E-A5B0-EEE41C21FF0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7C45CC0-66F6-4F88-986F-B5502203F52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C45CC0-66F6-4F88-986F-B5502203F52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C45CC0-66F6-4F88-986F-B5502203F52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C45CC0-66F6-4F88-986F-B5502203F52F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
