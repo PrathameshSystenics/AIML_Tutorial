@@ -8,8 +8,8 @@ using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Connectors.Google;
 using Microsoft.SemanticKernel.Data;
 using Microsoft.SemanticKernel.Plugins.Web.Google;
+using ModelContextProtocol;
 using ModelContextProtocol.Client;
-using ModelContextProtocol.Configuration;
 using ModelContextProtocol.Protocol.Transport;
 using ModelContextProtocol.Protocol.Types;
 using System.Text;
@@ -59,7 +59,7 @@ kernelbuilder.AddAzureOpenAIChatCompletion(
 #endregion
 
 #region Tools from the MCP Server
-IList<AIFunction> aifunctions = await mcpclient.GetAIFunctionsAsync(new CancellationTokenSource().Token);
+IList<McpClientTool> aifunctions = await mcpclient.ListToolsAsync(new CancellationTokenSource().Token);
 kernelbuilder.Plugins.AddFromFunctions("MCPTools", aifunctions.Select(func => func.AsKernelFunction()));
 #endregion
 

@@ -3,10 +3,10 @@ using System.ComponentModel;
 
 namespace MCPTutorial.SSEServer.Tools
 {
-/*    [McpServerToolType]
+    [McpServerToolType]
     public static class SampleTool
     {
-        [McpServerTool("sayhello"), Description("Greets the User")]
+        [McpServerTool(Name = "sayhello", Title = "Says Hello to the User"), Description("Greets the User")]
         public static string SayHello()
         {
             return "Hello from MCPServer";
@@ -17,7 +17,7 @@ namespace MCPTutorial.SSEServer.Tools
         {
             return a + b;
         }
-    }*/
+    }
 
     [McpServerToolType]
     public static class GithubTool
@@ -40,9 +40,9 @@ namespace MCPTutorial.SSEServer.Tools
             _httpClient = new HttpClient()
             {
                 BaseAddress = new Uri("https://v2.jokeapi.dev/joke/"),
-                
+
             };
-            
+
         }
 
         [McpServerTool, Description("Fetches a collection of jokes from the specified category. Valid categories include 'Programming', 'Misc', and 'Christmas'. If no amount is specified, 10 jokes are returned by default.")]

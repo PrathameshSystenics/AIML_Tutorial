@@ -1,5 +1,5 @@
-﻿using ModelContextProtocol.Client;
-using ModelContextProtocol.Configuration;
+﻿using ModelContextProtocol;
+using ModelContextProtocol.Client;
 using ModelContextProtocol.Protocol.Transport;
 using ModelContextProtocol.Protocol.Types;
 
@@ -30,7 +30,7 @@ namespace MCPTutorial.STDIO
         public async Task RunAsync()
         {
             // Listing all the Tools present in the MCP Server
-            await foreach (Tool tool in mcpClient.ListToolsAsync(new CancellationTokenSource().Token))
+            await foreach (McpClientTool tool in mcpClient.EnumerateToolsAsync(new CancellationTokenSource().Token))
             {
                 Console.WriteLine($"Name={tool.Name}\tDescription:{tool.Description}");
             }

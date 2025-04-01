@@ -1,13 +1,15 @@
-using MCPTutorial.SSEServer.Extensions;
-using ModelContextProtocol;
+
 using System.Net;
+using ModelContextProtocol.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add default services
 builder.Services.AddProblemDetails();
 builder.Services.AddSingleton<HttpListener>();
-builder.Services.AddMcpServer().WithToolsFromAssembly();
+builder.Services.AddMcpServer()
+                .WithToolsFromAssembly()
+                .WithPromptsFromAssembly(); // New in Preview 4
 
 builder.Services.AddLogging((configure) =>
 {
@@ -23,6 +25,6 @@ app.UseHttpsRedirection();
 
 // map endpoints
 app.MapGet("/", () => $"Hello World! {DateTime.Now}");
-app.MapMcpSse();
 
+app.MapMcp(); // new in Preview 4
 app.Run();

@@ -1,6 +1,6 @@
 ﻿
+using ModelContextProtocol;
 using ModelContextProtocol.Client;
-using ModelContextProtocol.Configuration;
 using ModelContextProtocol.Protocol.Transport;
 using ModelContextProtocol.Protocol.Types;
 
@@ -36,9 +36,14 @@ namespace MCPTutorial.SSE
 
         public async Task RunAsync()
         {
-            await foreach (Tool tool in mcpclient.ListToolsAsync(new CancellationTokenSource().Token))
+            await foreach (McpClientTool tool in mcpclient.EnumerateToolsAsync(new CancellationTokenSource().Token))
             {
                 Console.WriteLine($"Name={tool.Name}\tDescription:{tool.Description}");
+            }
+
+            await foreach(Prompt prompt in mcpclient.EnumeratePromptsAsync(new CancellationTokenSource().Token))
+            {
+                Console.WriteLine($"Name={prompt.Name}\tDescription:{prompt.Description}");
             }
         }
     }
