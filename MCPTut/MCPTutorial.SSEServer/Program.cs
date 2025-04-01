@@ -1,10 +1,12 @@
 using MCPTutorial.SSEServer.Extensions;
 using ModelContextProtocol;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add default services
 builder.Services.AddProblemDetails();
+builder.Services.AddSingleton<HttpListener>();
 builder.Services.AddMcpServer().WithToolsFromAssembly();
 
 builder.Services.AddLogging((configure) =>

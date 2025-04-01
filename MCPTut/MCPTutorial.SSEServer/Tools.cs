@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace MCPTutorial.SSEServer.Tools
 {
-    [McpServerToolType]
+/*    [McpServerToolType]
     public static class SampleTool
     {
         [McpServerTool("sayhello"), Description("Greets the User")]
@@ -17,7 +17,7 @@ namespace MCPTutorial.SSEServer.Tools
         {
             return a + b;
         }
-    }
+    }*/
 
     [McpServerToolType]
     public static class GithubTool

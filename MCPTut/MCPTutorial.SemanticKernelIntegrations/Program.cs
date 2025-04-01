@@ -1,20 +1,25 @@
-﻿using Microsoft.Extensions.AI;
+﻿
+using Google.Apis.Http;
+using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Connectors.Google;
+using Microsoft.SemanticKernel.Data;
+using Microsoft.SemanticKernel.Plugins.Web.Google;
 using ModelContextProtocol.Client;
 using ModelContextProtocol.Configuration;
 using ModelContextProtocol.Protocol.Transport;
 using ModelContextProtocol.Protocol.Types;
 using System.Text;
+using System.Text.Json;
 
 string settingspath = "D:\\Training\\AIML\\MCPTut\\MCPTutorial.SemanticKernelIntegrations\\appsettings.json";
 IConfiguration config = new ConfigurationManager().AddJsonFile(settingspath).Build();
 
 
-#region MCP: Client
+#region MCP: Client - Our Own MCP Server.
 HttpClient httpClient = new()
 {
     BaseAddress = new Uri(config["MCPServerUrl"]!)
@@ -33,9 +38,8 @@ McpClientOptions clientoptions = new()
     ClientInfo = new Implementation() { Name = "Tool Client", Version = "1.0.0" }
 };
 
-IMcpClient mcpclient = McpClientFactory.CreateAsync(serverconfig, clientoptions).ConfigureAwait(ConfigureAwaitOptions.ContinueOnCapturedContext).GetAwaiter().GetResult();
+IMcpClient mcpclient = await McpClientFactory.CreateAsync(serverconfig, clientoptions);
 #endregion
-
 
 #region Kernel: Connector Gemini Model And Azure OpenAI Model
 IKernelBuilder kernelbuilder = Kernel.CreateBuilder();
@@ -52,10 +56,22 @@ kernelbuilder.AddAzureOpenAIChatCompletion(
     modelId: config["AzureOpenAI:ModelVersion"]!,
     serviceId: "azureopenaimodel"
 );
+#endregion
 
 #region Tools from the MCP Server
 IList<AIFunction> aifunctions = await mcpclient.GetAIFunctionsAsync(new CancellationTokenSource().Token);
 kernelbuilder.Plugins.AddFromFunctions("MCPTools", aifunctions.Select(func => func.AsKernelFunction()));
+#endregion
+
+#region Google Search Engine Plugin in Kernel
+GoogleTextSearch textsearch = new GoogleTextSearch(initializer: new()
+{
+    ApiKey = config["GoogleSearch:ApiKey"]!
+}, searchEngineId: config["GoogleSearch:EngineId"]!);
+
+//KernelPlugin plugin=KernelPluginFactory.CreateFromFunctions("GoogleSearch", "Search any query when a user requests it", []);
+kernelbuilder.Plugins.Add(textsearch.CreateWithGetTextSearchResults("GoogleSearch", "Search Any query when a user requests it"));
+
 #endregion
 
 Kernel kernel = kernelbuilder.Build();
@@ -101,5 +117,3 @@ while (true)
     Console.WriteLine();
     chathistory.AddAssistantMessage(stringbuilder.ToString());
 }
-
-#endregion
