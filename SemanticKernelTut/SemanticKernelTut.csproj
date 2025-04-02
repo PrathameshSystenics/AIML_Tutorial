@@ -13,21 +13,24 @@
 		<!--Removing the Reference form the Actual Project-->
 		<Content Remove="HandDigitRecoginition\**" />
 		<Compile Remove="HandDigitRecoginition\**" />
+		<Compile Remove="ProcessFramework\**" />
 		<EmbeddedResource Remove="HandDigitRecoginition\**" />
+		<EmbeddedResource Remove="ProcessFramework\**" />
 		<None Remove="HandDigitRecoginition\**" />
+		<None Remove="ProcessFramework\**" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0-preview.2.25163.2" />
 	  <PackageReference Include="Microsoft.SemanticKernel" Version="1.43.0" />
 	  <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.43.0-preview" />
-	  <PackageReference Include="Microsoft.SemanticKernel.Connectors.Google" Version="1.43.0-alpha" />
 	  <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.43.0-alpha" />
 	  <PackageReference Include="Microsoft.SemanticKernel.PromptTemplates.Handlebars" Version="1.43.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="HandDigitRecoginition\HandDigitRecoginition.csproj" />
+	  <ProjectReference Include="ProcessFramework\ProcessFramework.csproj" />
 	</ItemGroup>
 
 </Project>

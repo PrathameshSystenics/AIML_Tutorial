@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using ProcessFramework;
 using SemanticKernelTut;
 
 #region Configuration Manager - JSON
@@ -32,5 +33,12 @@ await imagetotext.RunModel();*/
 #region Agent Framework
 /*_07_AgentFramework agentframework = new _07_AgentFramework(config);
 agentframework.RunGeminiAgent();*/
+#endregion
+
+#region Process Framework
+DocumentationProcess docprocess = new DocumentationProcess(config);
+docprocess.BuildSimpleProcess();
+await docprocess.RunBuildProcessAsync();
+docprocess.GetProcessMermaidDiagram();
 #endregion
 
