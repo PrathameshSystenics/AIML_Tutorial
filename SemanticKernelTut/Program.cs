@@ -32,13 +32,18 @@ await imagetotext.RunModel();*/
 
 #region Agent Framework
 /*_07_AgentFramework agentframework = new _07_AgentFramework(config);
-agentframework.RunGeminiAgent();*/
+await agentframework.RunGeminiAgent();*/
 #endregion
 
 #region Process Framework
-DocumentationProcess docprocess = new DocumentationProcess(config);
+/*DocumentationProcess docprocess = new DocumentationProcess(config);
 docprocess.BuildSimpleProcess();
 await docprocess.RunBuildProcessAsync();
-docprocess.GetProcessMermaidDiagram();
+docprocess.GetProcessMermaidDiagram();*/
+#endregion
+
+#region Google Search Library
+_08_GoogleSearch googlesearch = new _08_GoogleSearch(config);
+await googlesearch.ReadAsTextFromHtml("how to create the agent in semantic kernel code");
 #endregion
 

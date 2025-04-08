@@ -28,7 +28,8 @@ namespace SemanticKernelTut
             {
                 Name = "JokeBot",
                 Instructions = "You are the joke Provider Agent. Provide the joke based on user input or type.",
-                Kernel = kernel
+                Kernel = kernel,
+                InstructionsRole = AuthorRole.System
             };
 
             ChatHistory history = [];
@@ -47,7 +48,6 @@ namespace SemanticKernelTut
                 await foreach (var content in agent.InvokeAsync(history))
                 {
                     Console.Write(content);
-
                 }
             }
         }
