@@ -20,7 +20,7 @@ IConfiguration config = new ConfigurationManager().AddJsonFile(settingspath).Bui
 
 
 #region MCP: Client - Our Own MCP Server.
-HttpClient httpClient = new()
+/*HttpClient httpClient = new()
 {
     BaseAddress = new Uri(config["MCPServerUrl"]!)
 };
@@ -38,7 +38,7 @@ McpClientOptions clientoptions = new()
     ClientInfo = new Implementation() { Name = "Tool Client", Version = "1.0.0" }
 };
 
-IMcpClient mcpclient = await McpClientFactory.CreateAsync(serverconfig, clientoptions);
+IMcpClient mcpclient = await McpClientFactory.CreateAsync(serverconfig, clientoptions);*/
 #endregion
 
 #region Kernel: Connector Gemini Model And Azure OpenAI Model
@@ -59,8 +59,8 @@ kernelbuilder.AddAzureOpenAIChatCompletion(
 #endregion
 
 #region Tools from the MCP Server
-IList<McpClientTool> aifunctions = await mcpclient.ListToolsAsync(new CancellationTokenSource().Token);
-kernelbuilder.Plugins.AddFromFunctions("MCPTools", aifunctions.Select(func => func.AsKernelFunction()));
+/*IList<McpClientTool> aifunctions = await mcpclient.ListToolsAsync(new CancellationTokenSource().Token);
+kernelbuilder.Plugins.AddFromFunctions("MCPTools", aifunctions.Select(func => func.AsKernelFunction()));*/
 #endregion
 
 #region Google Search Engine Plugin in Kernel
@@ -70,7 +70,7 @@ GoogleTextSearch textsearch = new GoogleTextSearch(initializer: new()
 }, searchEngineId: config["GoogleSearch:EngineId"]!);
 
 //KernelPlugin plugin=KernelPluginFactory.CreateFromFunctions("GoogleSearch", "Search any query when a user requests it", []);
-kernelbuilder.Plugins.Add(textsearch.CreateWithGetTextSearchResults("GoogleSearch", "Search Any query when a user requests it"));
+kernelbuilder.Plugins.Add(textsearch.CreateWithSearch("GoogleSearch", "Search Any query when a user requests it"));
 
 #endregion
 
@@ -78,7 +78,7 @@ Kernel kernel = kernelbuilder.Build();
 
 string systemprompt = @"""You are a helpful assistant bot. 
     Helps the user to solve the problem.
-    Keep The conversation short and precise.
+   
     Don't use any vulgar language or simple chit chat.
     """;
 
