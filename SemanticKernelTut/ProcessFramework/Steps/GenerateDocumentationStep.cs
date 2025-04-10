@@ -6,7 +6,7 @@ namespace ProcessFramework.Steps
     // Step can be Stateful or stateless
     public class GenerateDocumentationStep : KernelProcessStep<GeneratedDocumentationState>
     {
-        private GeneratedDocumentationState _state = new();
+        protected GeneratedDocumentationState _state = new();
 
         private string systemPrompt =
                 """
@@ -21,6 +21,7 @@ namespace ProcessFramework.Steps
         public override ValueTask ActivateAsync(KernelProcessStepState<GeneratedDocumentationState> state)
         {
             this._state = state.State!;
+            this._state.Title = "DocuStepTitle";
             this._state.ChatHistory ??= new ChatHistory(systemPrompt);
 
             return base.ActivateAsync(state);
@@ -52,5 +53,6 @@ namespace ProcessFramework.Steps
     public class GeneratedDocumentationState
     {
         public ChatHistory? ChatHistory { get; set; }
+        public string Title { get; set; } = "Default";
     }
 }

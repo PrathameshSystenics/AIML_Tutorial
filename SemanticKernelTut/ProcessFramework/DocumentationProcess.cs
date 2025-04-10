@@ -25,6 +25,7 @@ namespace ProcessFramework
             // Adding the Steps into the Process Builder
             ProcessStepBuilder gatherinformationstep = processbuilder.AddStepFromType<GatherInformationStep>();
             ProcessStepBuilder generateDocumentationStep = processbuilder.AddStepFromType<GenerateDocumentationStep>();
+            ProcessStepBuilder statefulstep = processbuilder.AddStepFromType<StatefulStep>();
             ProcessStepBuilder publishdocumentationstep = processbuilder.AddStepFromType<PublishDocumentationStep>();
 
             // Defining the process Steps flow or orchestrating the steps
@@ -32,7 +33,9 @@ namespace ProcessFramework
 
             gatherinformationstep.OnFunctionResult().SendEventTo(new(generateDocumentationStep));
 
-            generateDocumentationStep.OnEvent("DocumentationGenerated").SendEventTo(new(publishdocumentationstep));
+            generateDocumentationStep.OnEvent("DocumentationGenerated").SendEventTo(new(statefulstep,functionName: "LoggingData"));
+
+            statefulstep.OnEvent("PublishDocument").SendEventTo(new(publishdocumentationstep));
 
             // Building the process
             _kernelprocess = processbuilder.Build();
