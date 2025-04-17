@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<NoWarn>SKEXP0080,SKEXP0070</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AngleSharp" Version="1.2.0" />
+		<PackageReference Include="AngleSharp.Js" Version="0.15.0" />
+		<PackageReference Include="Google.Apis.CustomSearchAPI.v1" Version="1.68.0.3520" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
+		<PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.45.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.45.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Google" Version="1.45.0-alpha" />
+		<PackageReference Include="Microsoft.SemanticKernel.Process.Core" Version="1.45.0-alpha" />
+		<PackageReference Include="Microsoft.SemanticKernel.Process.LocalRuntime" Version="1.45.0-alpha" />
+		<PackageReference Include="Microsoft.SemanticKernel.PromptTemplates.Handlebars" Version="1.45.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.Yaml" Version="1.45.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="PromptTemplates/*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

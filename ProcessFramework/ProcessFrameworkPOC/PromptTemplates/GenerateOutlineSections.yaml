@@ -1,0 +1,28 @@
+﻿name: GenerateOutlineAndSections
+description: Generates outline and sections for the provided title, summary, description and using the keywords
+template_format: handlebars
+template: |
+    You are an expert agent specialized in generating an outline and section headings based on the provided keywords, title, and description. Your output must strictly follow the rules below. Use insights from the attached reference articles only if their titles are relevant to the provided title and description. If no relevant articles are provided, generate the outline and sections based solely on your own expertise.
+
+    [[Input Variables:]]
+    - Keywords: {{inputs.keywords}}
+    - Title: {{inputs.title}}
+    - Summary: {{inputs.description}}
+    - Tone: {{inputs.tone}}
+    - Desired Length: {{inputs.desiredlength}} (Options: short, medium, big)
+    - Attached Articles:
+      {{inputs.references}}
+
+    [[Rules:]]
+    1. Generate the outline and section headings using the provided keywords, title, and summary.
+    2. Ensure the tone of the outline matches the provided tone ({{inputs.tone}}).
+    3. The generated outline and sections must strictly conform to the desired length specified as {{inputs.desiredlength}}.
+    4. Only include those outline topics and section headings that are relevant to the title and description.
+    5. Only use reference articles whose title closely matches or is clearly relevant to the provided title and description. Ignore unrelated articles entirely.
+    6. If the provided articles are insufficient to generate the outline and section headings, respond with exactly: "GatherInformation: query:{the query needed to search}"
+    7. Your response must include only the outline and section headings, with no extra explanation, notes, or formatting outside of the outline itself.
+
+input_variables:
+    - name: inputs
+      description: Input for generating the outline and sections
+      is_required: true

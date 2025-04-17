@@ -1,0 +1,39 @@
+﻿name: ContentReviewer
+description: Reviews the content based on Provided Title, Description, Keywords, Tone, Desired Length and Following Outline and sections
+template_format: handlebars
+template: |
+    Your task is to review the provided blog content, but only if the input variables are internally consistent. First, validate that the title, description, and keywords logically relate to each other. If they do not match or are clearly misaligned (e.g., the title is unrelated to the description or keywords), respond with the following only:
+
+    "InconsistentInputs: which is input is inconsistent like title or description or keywords and why?"
+
+    If the inputs are consistent, then proceed to determine whether the blog content fully aligns with the following criteria: title, description, keywords, tone, desired length, and content outline/sections. Focus solely on evaluating the blog content's alignment with the provided inputs, without suggesting changes to the inputs themselves.
+
+    [[Input Variables:]]
+    - Keywords: {{inputs.keywords}}
+    - Title: {{inputs.title}}
+    - Description: {{inputs.description}}
+    - Tone: {{inputs.tone}}
+    - Desired Length: {{inputs.desiredlength}} (Options: short, medium, big)
+    - Content: {{inputs.content}}
+
+    [[Instructions:]]
+    1. If the title, description, and keywords do not form a coherent topic, stop and return "InconsistentInputs".
+    2. If inputs are consistent, verify that the blog content accurately reflects the title and description, and uses the specified tone and length.
+    3. Check that the keywords are reasonably represented where contextually appropriate, but do not require every keyword to be included if they are not relevant to the title or description.
+    4. Follow the provided outline and structure, if available.
+    5. Identify any content-level discrepancies, missing information, or deviations from the expected alignment.
+    6. Do not evaluate or suggest changes to the input values—only assess the blog content itself.
+    7. If revisions are needed, summarize the necessary content changes in one paragraph only (no lists).
+    8. If the content fully meets all criteria, indicate that it is ready for publishing.
+
+    [[Response Format:]]
+    - If input inconsistency is found, return:
+      "InconsistentInputs: which input is inconsistent like title or description or keywords specify it and why?"
+    - If content revisions are needed, return:
+      "Modification": "Provide a one-paragraph summary of the content revisions needed."
+    - If no revisions are necessary, return:
+      "ContentReviewed"
+input_variables:
+    - name: inputs
+      description: Input for generating the outline and sections
+      is_required: true

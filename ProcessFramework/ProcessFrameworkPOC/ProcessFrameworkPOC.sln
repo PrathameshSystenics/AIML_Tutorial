@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessFrameworkPOC", "ProcessFrameworkPOC.csproj", "{E36DF5F9-D45F-4ABF-A7BE-5B308A5A0D6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessFrameworkBlog", "..\ProcessFrameworkBlog\ProcessFrameworkBlog.csproj", "{F3633775-5D65-417E-A97D-8D6249666863}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E36DF5F9-D45F-4ABF-A7BE-5B308A5A0D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E36DF5F9-D45F-4ABF-A7BE-5B308A5A0D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E36DF5F9-D45F-4ABF-A7BE-5B308A5A0D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E36DF5F9-D45F-4ABF-A7BE-5B308A5A0D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3633775-5D65-417E-A97D-8D6249666863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3633775-5D65-417E-A97D-8D6249666863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3633775-5D65-417E-A97D-8D6249666863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3633775-5D65-417E-A97D-8D6249666863}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
