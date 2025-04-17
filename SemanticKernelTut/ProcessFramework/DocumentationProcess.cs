@@ -35,7 +35,9 @@ namespace ProcessFramework
 
             generateDocumentationStep.OnEvent("DocumentationGenerated").SendEventTo(new(statefulstep,functionName: "LoggingData"));
 
-            statefulstep.OnEvent("PublishDocument").SendEventTo(new(publishdocumentationstep));
+            statefulstep.OnEvent("GenerateMore").SendEventTo(new(generateDocumentationStep));
+
+            
 
             // Building the process
             _kernelprocess = processbuilder.Build();

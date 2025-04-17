@@ -36,14 +36,14 @@ await agentframework.RunGeminiAgent();*/
 #endregion
 
 #region Process Framework
-/*DocumentationProcess docprocess = new DocumentationProcess(config);
+DocumentationProcess docprocess = new DocumentationProcess(config);
 docprocess.BuildSimpleProcess();
 await docprocess.RunBuildProcessAsync();
-docprocess.GetProcessMermaidDiagram();*/
+docprocess.GetProcessMermaidDiagram();
 #endregion
 
 #region Google Search Library
-_08_GoogleSearch googlesearch = new _08_GoogleSearch(config);
-await googlesearch.ReadAsTextFromHtml("what is agents in ai");
+/*_08_GoogleSearch googlesearch = new _08_GoogleSearch(config);
+await googlesearch.ReadAsTextFromHtml("what is agents in ai");*/
 #endregion
 

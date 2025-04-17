@@ -22,7 +22,7 @@ namespace ProcessFramework.Steps
         public async Task LoggingData(Kernel _kernel,KernelProcessStepContext context,string docs)
         {
             Console.WriteLine($"The Title is {this._state.Title}");
-            await context.EmitEventAsync("PublishDocument", docs);
+            await context.EmitEventAsync("GenerateMore", docs);
 
         }
     }
