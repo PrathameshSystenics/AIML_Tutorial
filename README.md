@@ -14,6 +14,7 @@
     - HandDigitRecognition Project using Semantic Kernel as the MoonDream Model for Ollama
     - Vector DB Connector for Semantic Kernel
     - Qdrant Vector DB Connection with the Semantic Kernel
+    - Process Framework and Agent Framework.
 3. **.NET Tutorial**
     - Dependency Injection
     - AsyncEnumerable
