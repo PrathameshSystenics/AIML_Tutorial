@@ -19,7 +19,7 @@ namespace ProcessFrameworkPOC.Steps
         public async Task<UserInputs> GetInformationRegardingQuery(UserInputs inputs, Kernel _kernel)
         {
             string yamlfilepath = Path.Combine(Directory.GetCurrentDirectory(), Path.Join("PromptTemplates", "GatherInformation.yaml"));
-
+            
             string yamltext = File.ReadAllText(yamlfilepath);
 
             PromptTemplateConfig promptTemplateConfig = KernelFunctionYaml.ToPromptTemplateConfig(yamltext);

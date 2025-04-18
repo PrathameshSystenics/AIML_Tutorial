@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessFrameworkBlog", "ProcessFrameworkBlog.csproj", "{E602722B-68B7-1FDC-899B-DA4C299CB30F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E602722B-68B7-1FDC-899B-DA4C299CB30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E602722B-68B7-1FDC-899B-DA4C299CB30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E602722B-68B7-1FDC-899B-DA4C299CB30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E602722B-68B7-1FDC-899B-DA4C299CB30F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B7D7D19-4D86-4DF3-BE16-87A7CF066895}
+	EndGlobalSection
+EndGlobal
