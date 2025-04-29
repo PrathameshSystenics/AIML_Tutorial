@@ -1,0 +1,88 @@
+﻿using Dapr.Client;
+using DaprTutorial.Hubs;
+using DaprTutorial.Models;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
+using System.Text;
+
+namespace ProcessFramework.Steps
+{
+    // Step can be Stateful or stateless
+    public class GenerateDocumentationStep : KernelProcessStep<GeneratedDocumentationState>
+    {
+        protected GeneratedDocumentationState _state = new();
+
+        private string systemPrompt =
+                """
+            Your job is to write high quality and engaging customer facing documentation for a new product from Contoso. You will be provide with information
+            about the product in the form of internal documentation, specs, and troubleshooting guides and you must use this information and
+            nothing else to generate the documentation. If suggestions are provided on the documentation you create, take the suggestions into account and
+            rewrite the documentation. Make sure the product sounds amazing.
+            """;
+
+        // Injecting the Dapr Client
+        private readonly DaprClient _daprClient;
+        private IHubContext<StepDataHub, IStepMessage> _hubcontext;
+
+        public GenerateDocumentationStep(DaprClient daprClient, IHubContext<StepDataHub, IStepMessage> hubcontext)
+        {
+            _hubcontext = hubcontext;
+            _daprClient = daprClient;
+        }
+
+        // Called by the process runtime when the step instance is activated. Use this to load state that may be persisted from previous activations.
+
+        public override ValueTask ActivateAsync(KernelProcessStepState<GeneratedDocumentationState> state)
+        {
+            this._state = state.State!;
+            this._state.Title = "DocuStepTitle";
+            this._state.ChatHistory ??= new ChatHistory(systemPrompt);
+
+            return base.ActivateAsync(state);
+        }
+
+        [KernelFunction]
+        public async Task GenerateDocumentationAsync(Kernel kernel, KernelProcessStepContext context, UserInputs inputs)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"[{nameof(GenerateDocumentationStep)}]: Generating the Documentation");
+            Console.ResetColor();
+
+            // Add the new product info to the chat history
+            this._state.ChatHistory!.AddUserMessage($"Product Info:\n\n{inputs.PreviousProcessOutput}");
+
+            // Get a response from the LLM
+            IChatCompletionService chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
+
+            StringBuilder stringbuilder = new StringBuilder();
+            var airesponse = chatCompletionService.GetStreamingChatMessageContentsAsync(this._state.ChatHistory!);
+
+            await foreach (var response in airesponse)
+            {
+                stringbuilder.Append(response.Content!.ToString());
+
+                await _hubcontext.Clients.Client(inputs.ConnectionID).SendMessage(response.Content.ToString());
+                //await this._daprClient.PublishEventAsync("pubsub", "stepsdata", response.Content!);
+            }
+
+            await _hubcontext.Clients.Client(inputs.ConnectionID).SendMessage("<next>");
+            inputs.Content = stringbuilder.ToString();
+            /* var generatedDocumentationResponse = await chatCompletionService.GetChatMessageContentAsync(this._state.ChatHistory!);*/
+
+            // Streaming the Message Content
+
+            // Emmitting the event
+            await context.EmitEventAsync("DocumentationGenerated", inputs);
+        }
+
+
+    }
+    // Stateful state
+    public class GeneratedDocumentationState
+    {
+        public ChatHistory? ChatHistory { get; set; }
+        public string Title { get; set; } = "Default";
+    }
+}

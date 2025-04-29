@@ -1,4 +1,5 @@
 using Aspire.Hosting.Lifecycle;
+using CommunityToolkit.Aspire.Hosting.Dapr;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Store;
@@ -10,6 +11,9 @@ var builder = DistributedApplication.CreateBuilder(args);
 // getting the parameter from the secrets.json
 var postgrespasswordparameter = builder.AddParameter("postgres-password", true);
 var postgrespasswordusername = builder.AddParameter("postgres-username", true);
+
+// Adding the Dapr Pub/Sub
+//var pubsub = builder.AddDaprPubSub("pubsub");
 
 // Adding the Postgres Database specifying the name, image, and Tag
 var postgres = builder.AddPostgres("postgres", postgrespasswordusername, postgrespasswordparameter)
@@ -31,13 +35,12 @@ builder.Eventing.Subscribe<ResourceReadyEvent>(postgres.Resource, (rev, token) =
     return Task.CompletedTask;
 });
 
-
 // adding the container with the image, specifying the container, exposing the port.
 var ollama = builder.AddContainer("ollama", "ollama/ollama")
                     .WithContainerName("ollama-aspire")
                     .WithHttpEndpoint(11434, 11434, "ollamaendpoint")
                     .WithLifetime(ContainerLifetime.Persistent)
-                    .WithVolume("ollmodels","/root/.ollama")
+                    .WithVolume("ollmodels", "/root/.ollama")
                     .WithBindMount("./ollamasetup.sh", "/ollamasetup.sh")
                     .WithEntrypoint("/bin/sh")
                     .WithArgs("/ollamasetup.sh");
@@ -86,5 +89,19 @@ builder.AddProject<Projects.Store>("store")
     // Providing the Evironment as the parameter to it. 
     .WithEnvironment("SMTP_MAIL", smtpmailparameter);
 
+// DaprSideCarOptions for configuring the Dapr
+DaprSidecarOptions sidecarOptions = new()
+{
+    AppId = "daprsidecar",
+    DaprGrpcPort = 50001,
+    DaprHttpPort = 3500,
+    MetricsPort = 9090
+};
+
+// Adding the Dapr Project to the Aspire Orchestrator and configuring the Dapr Sidecar.
+var daprtutorial = builder.AddProject<Projects.DaprTutorial>("daprtutorial")
+                          .WithDaprSidecar(sidecarOptions)
+                          .WithEnvironment("OTEL_SERVICE_NAME", "processframeworkmvc");
+                          //.WithReference(pubsub);
 
 builder.Build().Run();

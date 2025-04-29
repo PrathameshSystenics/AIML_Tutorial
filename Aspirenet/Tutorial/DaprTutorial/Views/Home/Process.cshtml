@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Dapr process Framework";
+}
+
+<h3>Dapr Process Framework</h3>
+
+<input type="text" placeholder="Enter Process ID" id="processid-text" />
+<button class="btn btn-primary" id="runprocessbtn">Click To Run the Process</button>
+
+<div id="message-box">
+</div>
+
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}
