@@ -15,9 +15,11 @@
     - Vector DB Connector for Semantic Kernel
     - Qdrant Vector DB Connection with the Semantic Kernel
     - Process Framework and Agent Framework.
+    - Process Framework with Dapr and Aspire
 3. **.NET Tutorial**
     - Dependency Injection
     - AsyncEnumerable
+    - SignalR Tutorial
 4. **Aspire .NET**
     - Adding Aspire to a Project
     - Adding the Container to the Project
@@ -27,12 +29,14 @@
     - Endpoint Reference
     - Setting Environment Variables
     - Aspirate: Creating the Docker Compose File from the Aspire Project
+    - Dapr SideCar Initialization
 5. **Product Classification**
     - Classifying the Product Category using the Semantic Kernel (Base) Project
 6. **Model Context Protocol**
     - Creation of the MCP Server using SSE/STDIO in C#
     - Connecting to the MCP Server using C#
     - Integrating MCP Server Tools with the Semantic Kernel
+
 
 ## Repository Branches 
 - **OldProductClassification**: Base Project for the Product Classification Project
