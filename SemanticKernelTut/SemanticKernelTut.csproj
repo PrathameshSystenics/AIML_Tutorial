@@ -14,10 +14,13 @@
 		<Content Remove="HandDigitRecoginition\**" />
 		<Compile Remove="HandDigitRecoginition\**" />
 		<Compile Remove="ProcessFramework\**" />
+		<Compile Remove="SemanticKernelGithubModels\**" />
 		<EmbeddedResource Remove="HandDigitRecoginition\**" />
 		<EmbeddedResource Remove="ProcessFramework\**" />
+		<EmbeddedResource Remove="SemanticKernelGithubModels\**" />
 		<None Remove="HandDigitRecoginition\**" />
 		<None Remove="ProcessFramework\**" />
+		<None Remove="SemanticKernelGithubModels\**" />
 	</ItemGroup>
 
 	<ItemGroup>
