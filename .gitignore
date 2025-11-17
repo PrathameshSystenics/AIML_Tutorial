@@ -7,3 +7,4 @@ obj/
 semantic-kernel/
 /Aspirenet/StarterTemplate/*
 /Aspirenet/Sample/*
+__pycache__/
