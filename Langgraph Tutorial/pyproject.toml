@@ -1,0 +1,18 @@
+[project]
+name = "langgraph-tutorial"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "jupyter>=1.1.1",
+    "jupyter-contrib-nbextensions>=0.7.0",
+    "jupyterlab>=4.5.0",
+    "jupyterlab-lsp>=5.2.0",
+    "langchain>=1.0.8",
+    "langchain-google-genai>=3.1.0",
+    "langgraph>=1.0.3",
+    "langgraph-cli>=0.4.7",
+    "python-lsp-server[all]>=1.13.2",
+]
