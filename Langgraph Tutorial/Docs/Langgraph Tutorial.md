@@ -87,3 +87,43 @@ for chunk in compile_graph.stream({"text": "The langgraph library is a powerful 
 ```
 
 ---
+## Map - Reduce (SEND)
+Map is used to break a task into smaller sub-tasks, processing each sub-task in parallel. **Reduce** aggregate the results across all of the computed, parallelized sub-tasks. 
+These particularly also known as **Fan-In** & **Fan-out** 
+
+In Software engineering, Fan-out is when one process or function sends its output to many other processes, while fan-in is when multiple processes or functions send their outputs to a single process. 
+
+For Implementing these in Langgraph there is already api available called **Send** for dynamically creating worker executions. It lets a routing functions returns a list of Send objects. Each `Send`launch a separate run of `node_name`with its own state. The state must support the reducer as the `operator.add`. 
+
+```python
+def continue_to_jokes(state: OverallState):
+    return [Send("generate_joke", {"subject": s}) for s in state["subjects"]]
+```
+These nodes creates the multiple workers, with `node_name`as generate_joke and sending its state with its. 
+
+```python
+graph = StateGraph(OverallState)
+graph.add_node("generate_topics", generate_topics)
+graph.add_node("generate_joke", generate_joke)
+graph.add_node("best_joke", best_joke)
+
+graph.add_edge(START, "generate_topics")
+graph.add_conditional_edges("generate_topics", continue_to_jokes, ["generate_joke"])
+graph.add_edge("generate_joke", "best_joke")
+graph.add_edge("best_joke", END)
+
+app = graph.compile()
+Image(app.get_graph().draw_mermaid_png())
+```
+Here is the graph 
+![[Pasted image 20251130141341.png]]
+For the above code. 
+*Output:*
+```txt
+{'generate_topics': {'subjects': ['pets', 'wildlife', 'marine life']}}
+{'generate_joke': {'jokes': ['Why did the cat sit on the computer? To keep an eye on the mouse!']}}
+{'generate_joke': {'jokes': ['Why did the fish get bad grades? Because it was below C-level!']}}
+{'generate_joke': {'jokes': ["Why did the bear break up with the deer? Because they weren't on the same fawn-length!"]}}
+{'best_joke': {'best_selected_joke': 'Why did the cat sit on the computer? To keep an eye on the mouse!'}}
+```
+You can see in the output that `generate_joke` have been created three times. 
