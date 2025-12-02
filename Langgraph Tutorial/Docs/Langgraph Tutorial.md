@@ -127,3 +127,10 @@ For the above code.
 {'best_joke': {'best_selected_joke': 'Why did the cat sit on the computer? To keep an eye on the mouse!'}}
 ```
 You can see in the output that `generate_joke` have been created three times. 
+
+---
+## Long-Term and Short Term Memory
+
+**Short Term Memory** exists only during a single agent execution. It is stored in the variables, state and messages, context, and state object.
+
+**Long term Memory** saved across multiple runs to help the agent recall past context. Stored in Vector Databases, Langgraph Checkpointer. 
