@@ -17,4 +17,5 @@ dependencies = [
     "langgraph-checkpoint-sqlite>=3.0.0",
     "langgraph-cli[inmem]>=0.4.7",
     "python-lsp-server[all]>=1.13.2",
+    "trustcall>=0.0.39",
 ]
